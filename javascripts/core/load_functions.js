@@ -439,6 +439,7 @@ function doNGp3Init1() {
 	tmp.ngp3_mul = tmp.ngp3 && aarMod.newGameMult!== undefined
 	tmp.ngp3_exp = tmp.ngp3 && aarMod.newGameExpVersion !== undefined
 	tmp.ngp3_em = getNGP3EterMilestones()
+	tmp.googol = 0
 
 	setupSaveDataNGP3()
 
@@ -2092,12 +2093,16 @@ function setupNGP31Versions() {
 		player.dilation.studies = []
 	}
 	if (aarMod.ngp3Build < 20210802) PCs.reset()
-	if (aarMod.ngp3Build < 20210802 && Decimal.log10(player.money) >= 2e13) rollback = 1e20
-	if (aarMod.ngp3Build < 20211204 && Decimal.log10(player.money) >= 6e13) rollback = 1e190
 	if (aarMod.ngp3Build < 20211231) {
 		str_save.vibrated = []
 		str.updateTmp()
 	}
+	if (aarMod.ngp3Build < 20220105) {
+		PCs.respecSet([51, 52, 53, 54], true)
+		PCs.updateTmp()
+	}
+	if (aarMod.ngp3Build < 20220105 && Decimal.log10(player.money) >= 2e13) rollback = 1e20
+	if (aarMod.ngp3Build < 20220106 && Decimal.log10(player.money) >= 6e13) rollback = 1e190
 
 	welcomeUpdates = []
 	if (aarMod.ngp3Build) {
@@ -2113,7 +2118,7 @@ function setupNGP31Versions() {
 	}
 	aarMod.ngp3r = 0.7
 	aarMod.ngp3Alpha = beta
-	aarMod.ngp3Build = 20220103
+	aarMod.ngp3Build = 20220106
 
 	if (tmp.ngp3_boost && !player.timestudy.auto) player.timestudy.auto = {}
 	if (rollback) {
@@ -2272,6 +2277,16 @@ function export_save(id) {
 	copyToClipboard(save, null, "save #" + placement)
 }
 
+//Credits to MrRedShark77 from https://github.com/MrRedShark77/incremental-mass-rewritten/blob/main/js/saves.js
+function exporty() {
+    let file = new Blob([btoa(JSON.stringify(player, function(k, v) { return (v === Infinity) ? "Infinity" : v }))], {type: "text/plain"})
+    window.URL = window.URL || window.webkitURL;
+    let a = document.createElement("a")
+    a.href = window.URL.createObjectURL(file)
+    a.download = "Antimatter Dimensions - "+new Date().toGMTString()+".txt"
+    a.click()
+}
+
 function copyToClipboard(x, el_, msg) {
 	let output = el(el_ || "output")
 	let parent = output.parentElement
@@ -2338,7 +2353,7 @@ function delete_save(saveId) {
 
 var ngModeMessages=[]
 function new_game(type) {
-	if (mods.ngmm == 4 && !confirm("Warning: NG-5 is currently in work in progress! It is not recommended to play this mod until a more stable version has been released. However, if you want to help test NG+5, you can disregard this message. You can contribute by talking in the NG-5 channel on the NG+3 Discord Server.")) return
+	if (!type && mods.ngmm == 4 && !confirm("Warning: NG-5 is currently in work in progress! It is not recommended to play this mod until a more stable version has been released. However, if you want to help test NG+5, you can disregard this message. You can contribute by talking in the NG-5 channel on the NG+3 Discord Server.")) return
 
 	save_game(true)
 	clearInterval(gameLoopIntervalId)

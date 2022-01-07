@@ -106,7 +106,6 @@
 
 		<div id="tickSpeedRow">
 			<div id="tickLabel" style="visibility: hidden">Make the game 10% faster.</div>
-			<span id="softcap_tsRed_disp"></span>
 			<button id="tickSpeed" style="color:black; visibility: hidden; height: 25px;width: 200px; font-size: 12px" class="storebtn">Cost: 1000</button>
 			<button id="tickSpeedMax" onclick="buyMaxTickSpeed()" style="color:black; visibility: hidden; height: 25px; font-size: 12px" class="storebtn">Buy Max</button>
 			<div id="tickSpeedAmount" style="visibility: hidden">Tickspeed: 1000</div>
@@ -1424,7 +1423,7 @@
 		<div id="options" class="tab" align="center">
 			<table class="table" align="center" style="margin: auto">
 				<tr>
-					<td><button class="secondarytabbtn" onclick="showOptionTab('saving')">Saves</button></td>
+					<td><button class="secondarytabbtn" onclick="showOptionTab('saving')">Saving</button></td>
 					<td><button class="secondarytabbtn" onclick="showOptionTab('displays')">Displays</button></td>
 					<td><button class="secondarytabbtn" onclick="showOptionTab('otheroptions')">Other Options</button></td>
 					<td id="lstabbtn"><button class="secondarytabbtn" onclick="showOptionTab('light_speed')">Light Speed</button></td>
@@ -1436,39 +1435,47 @@
 				<table>
 					<tr>
 						<td><div><button id="save" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px">Save</button></div></td>
-						<td><div><button id="load" class="storebtn" onclick='load_saves()' style="color:black; width: 200px; height: 55px; font-size: 20px">Load</button></div></td>
 						<td><div><button id="exportbtn" class="storebtn" onclick='export_save()' style="color:black; width: 200px; height: 55px; font-size: 20px">Export</button></div></td>
+						<td><div><button id="exportbtn" class="storebtn" onclick='exporty()' style="color:black; width: 200px; height: 55px; font-size: 18px">Export into file</button></div></td>
 						<td><div><button id="importbtn" class="storebtn" onclick='import_save("current")' style="color:black; width: 200px; height: 55px; font-size: 20px">Import</button></div></td>
 					</tr>
 					<tr>
 						<td><div><button id="autoSave" onclick='toggleAutoSave()' class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px"></button></div></td>
-						<td><div><button onclick="pauseGame()" class="storebtn" id="pause" style="color:black; width: 200px; height: 55px; font-size: 8px"><p id="pauseStatus" style="font-size:20px">Pause</p>(Stops all time, production, and automation)</button></div></td>
-						<td><div><button onclick='reload()' class="storebtn" id="reload" style="color:black; width: 200px; height: 55px; font-size: 8px"><p style="font-size: 20px">Rollback</p>(to last save point)</button></div></td>
-						<td><div><button id="reset" onclick="reset_game()" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px">RESET THE GAME</button></div></td>
+						<td></td>
+						<td></td>
+						<td><div><button id="load" class="storebtn" onclick='load_saves()' style="color:black; width: 200px; height: 55px; font-size: 20px">Load</button></div></td>
+					</tr>
+					<tr>
+						<td colspan=4><br><hr></td>
 					</tr>
 					<tr>
 						<td><div class="storebtn" id="autoSaveIntDiv" style="color:black; width: 198px; height: 55px; font-size:130%; text-align: center;"><b id="autoSaveInterval">Auto-save interval: 30s</b><input id="autoSaveIntervalSlider" style="width: 170px;" type="range" min="15" max="120" value="30" class="slider" oninput="changeAutoSaveInterval()"></div></td>
-						<td><div><button id="rename" class="storebtn" onclick='rename_save()' style="color:black; width: 200px; height: 55px; font-size: 20px">Rename</button></div></td>
 						<td><div><button id="offlineProgress" onclick='toggleOfflineProgress()' class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 15px"></button></div></td>
-						<td><div><button id="tabsSave" onclick="toggleTabsSave()" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px"></button></div></td>
+						<td><div><button id="rename" class="storebtn" onclick='rename_save()' style="color:black; width: 200px; height: 55px; font-size: 20px">Rename</button></div></td>
+						<td><div><button onclick="pauseGame()" class="storebtn" id="pause" style="color:black; width: 200px; height: 55px; font-size: 8px"><p id="pauseStatus" style="font-size:20px">Pause</p>(Stops all time, production, and automation)</button></div></td>
 					</tr>
 					<tr>
-						<td><div><button id="bugExport" onclick="bugExport()" class="storebtn" style="color:black; width:200px; height:55px; font-size:12px; display:none">Export "Infinite" bug save<br><b>(WARNING: This disappears when you reload the game!)</button></b></div></td>
+						<td colspan=4><br><hr></td>
+					</tr>
+					<tr>
 						<td><div><button id="convertSave" onclick="convertSave(convert)" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px"></button></div></td>
-						<td></td>
+						<td><div><button id="bugExport" onclick="bugExport()" class="storebtn" style="color:black; width:200px; height:55px; font-size:12px; display:none">Export "Infinite" bug save<br><b>(WARNING: This disappears when you reload the game!)</button></b></div></td>
+						<td><div><button onclick='reload()' class="storebtn" id="reload" style="color:black; width: 200px; height: 55px; font-size: 8px"><p style="font-size: 20px">Rollback</p>(to last save point)</button></div></td>
+						<td><div><button id="reset" onclick="reset_game()" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 20px">RESET THE GAME</button></div></td>
 					</tr>
 				</table>
 			</div>
 			<div class='optionstab' id='displays' style='display:none'>
 				<table>
 					<tr>
-						<td><div class="storebtn" id="renderrate_div" style="color:black; width: 198px; height: 55px; font-size: 130%; text-align: center"><b id="renderrate">Render rate: 1 tick</b><input id="renderrateslider" style="width: 170px;" type="range" min="1" max="20" value="1" class="slider"></div></td>
 						<td><div><button id="theme" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 12px" onclick="showOptions('thememenu')"></button></div></td>
 						<td><div><button onclick="showOptions('visibilityoptions')" class="storebtn" id="visibilityOpts" style="color:black; width: 200px; height: 55px; font-size: 15px">Show/hide stuff</button></div></td>
+						<td><div class="storebtn" id="renderrate_div" style="color:black; width: 198px; height: 55px; font-size: 130%; text-align: center"><b id="renderrate">Render rate: 1 tick</b><input id="renderrateslider" style="width: 170px;" type="range" min="1" max="20" value="1" class="slider"></div></td>
 					</tr>
 					<tr>
-						<td><div><button id="animationoptionsbtn" class="storebtn" onclick="showOptions('animationoptions')" style="color:black; width: 200px; height: 55px; font-size:160%;">Animations</button></div></td>
+						<td></td>
 						<td><div><button id="layerDispOptions" onclick="showOptions('layervisibilitymenu')" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 15px">Show/hide layers</button></div></td>
+						<td><div><button id="animationoptionsbtn" class="storebtn" onclick="showOptions('animationoptions')" style="color:black; width: 200px; height: 55px; font-size:160%;">Animations</button></div></td>
 					</tr>
 					<tr>
 						<td><div><button id="notation" class="storebtn" style="color:black; width: 200px; height: 55px; font-size:10px" onclick="showOptions('notationmenu')"></button></div></td>
@@ -1501,7 +1508,7 @@
 						<td><div><button id="autoApply" onclick="updateAutoApplyDisp(true)" class="storebtn" style="color:black; width: 200px; height: 55px">Auto-apply changes: ON</button></div></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td><div><button id="tabsSave" onclick="toggleTabsSave()" class="storebtn" style="color:black; width: 200px; height: 55px"></button></div></td>
 						<td><div><button ach-tooltip="Shows more options for Antimatter Dimensions, but less significant." id="advOpts" onclick="updateAdvOpts(true)" class="storebtn" style="color:black; width: 200px; height: 55px">Advanced Options: ON</button></div></td>
 						<td></td>
 					</tr>
@@ -1561,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/3/22b Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(1/6/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -1676,7 +1683,6 @@
 				NOTE^2: This does not encompass all softcaps, instead only the ones that are handeled by the general softcapping function
 				<br>
 				<br>
-				<div id="softcap_tsRed"></div>
 				<div id="softcap_rep"></div>
 				<div id="softcap_rInt"></div>
 				<div id="softcap_it"></div>
@@ -2287,13 +2293,13 @@
 								<div id="Completing the Quantum" class="achievement achievementlocked" style="background-image: url(images/ng3p/32.png)" ach-tooltip="Unlock Strings. Reward: Charging requires 20% + 2 less."></div>
 							</td>
 							<td>
-								<div id="Bursted Em All!" class="achievement achievementlocked" style="background-image: url(images/ng3p/33.png)" ach-tooltip="Charge 6 Positronic Boosts with at least 9x multiplier. Reward: Non-charged boosts are slightly charged."></div>
+								<div id="Bursted Em All!" class="achievement achievementlocked" style="background-image: url(images/ng3p/33.png)" ach-tooltip="Charge 6 Positronic Boosts with at least 8x multiplier. Reward: Non-charged boosts are slightly charged."></div>
 							</td>
 							<td>
 								<div id="The Power of Science!" class="achievement achievementlocked" style="background-image: url(images/ng3p/34.png)" ach-tooltip="Reach ^1 Quantum efficiency. Reward: You gain 10% more Quantum Power and add +0.5x charge multiplier."></div>
 							</td>
 							<td>
-								<div id="The Challenging Day" class="achievement achievementlocked" style="background-image: url(images/ng3p/35.png)" ach-tooltip="Complete all milestones with 3 combinations. PC goals increase 5% slower from PC combinations."></div>
+								<div id="The Challenging Day" class="achievement achievementlocked" style="background-image: url(images/ng3p/35.png)" ach-tooltip="Complete all milestones with 3 combinations."></div>
 							</td>
 							<td>
 								<div id="I can't get my multipliers higher!" class="achievement achievementlocked" style="background-image: url(images/ng3p/36.png)"><br></div>
@@ -3393,20 +3399,16 @@
 				</table>
 			</div>
 			<div id="quantumchallenges" class="challengeTab">
-				<button class="secondarytabbtn" id="qc_perks" style="width: 200px" onclick="QCs.viewPerks()">View perks</button>
-				<br>
 				<span id="qc_effects"></span>
-				<span id="qc_perks_note"></span>
 				<br>
 				<button class="storebtn" id="restart_qc" style="width: 120px; height: 48px" onclick="QCs.restart()">Restart Challenge</button>
 				<button class="storebtn" id="auto_qc" style="width: 120px; height: 48px; font-size: 11px" onclick="QCs.toggle_auto()"></button>
 				<button class="storebtn" id="swaps_toggle" style="width: 120px; height: 48px" onclick="QCs.disable_swaps()"></button>
-				<button class="storebtn" id="disable_qc2_perk" style="width: 120px; height: 48px" onclick="QCs.disablePerk(2)"></button>
 				<table class="table" id="qcs_div" style="margin: 0 auto"></table>
 			</div>
 			<div id="pairedChalls" class="challengeTab">
 				<button class="secondarytabbtn" id="pctabbtn_milestone" onclick="showChallengesTab('pairedChallMilestones')">Milestones</button>
-				<button class="secondarytabbtn" id="pctabbtn_perk" onclick="showChallengesTab('pairedChallPerks')">Perks [soon]</button>
+				<button class="secondarytabbtn" id="pctabbtn_perk" onclick="showChallengesTab('pairedChallPerks')">Perks</button>
 				<b class="fluc_boost" id="fluc_boost_pc"></b>
 				<div id="pc_info">
 					<span id="pc_lvl" style="font-size: 25px"></span>
@@ -3416,14 +3418,15 @@
 				</div>
 				<span id="pc_enter">
 					<br>
-					<b class="red" id="pc_penalty">Paired Challenges have a ^0.95 Meta Dimensions penalty!</b>
+					<b class="warning" id="pc_penalty">Paired Challenges have a ^0.95 Meta Dimensions penalty!</b>
 					<br>
 					<button class="storebtn" onclick="PCs.exportPreset()" style="width: 96px; height: 48px">Export</button>
 					<button class="storebtn" onclick="PCs.importPreset()" style="width: 96px; height: 48px">Import</button>
+					<button class="storebtn" id="disable_qc2_perk" style="width: 96px; height: 48px" onclick="QCs.disablePerk(2)"></button>
 				</span>
 				<span id="pc_omega">
 					<br>
-					<b class="warning">You are assigning in a Omega Set! You can assign any combination you want to!</b>
+					<b class="warning">You are assigning in a Omega Set! You can do any unassignable combination you want to!</b>
 				</span>
 				<span id="pc_pick"></span>
 				<table id="pc_table" align="center" style="margin: auto"></table>
@@ -3468,7 +3471,7 @@
 			<div id="pairedChallPerks" class="challengeTab">
 				<button class="secondarytabbtn" onclick="showChallengesTab('pairedChalls')">Back</button>
 				<br>
-				<b class="red">Perks will be moved into here soon! For now, check out Quantum Challenges and click the Perks button if possible.</b>
+				<b class="red">All perks only work in any Quantum Challenge!</b>
 				<table class="table" align="center" style="margin: auto">
 					<tr>
 						<td>Perk #1</td>
@@ -3477,10 +3480,10 @@
 						<td>Perk #4</td>
 					</tr>
 					<tr>
-						<td><button class="qMs_reward">??? (Locked)</button></td>
-						<td><button class="qMs_reward">???</button></td>
-						<td><button class="qMs_reward">??? (Activated)</button></td>
-						<td><button class="qMs_reward">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_1" style="font-size: 10px">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_2" onclick="QCs.disablePerk(2)" style="font-size: 10px">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_3">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_4">???</button></td>
 					</tr>
 					<tr>
 						<td>Perk #5</td>
@@ -3489,10 +3492,10 @@
 						<td>Perk #8</td>
 					</tr>
 					<tr>
-						<td><button class="qMs_reward">???</button></td>
-						<td><button class="qMs_reward">???</button></td>
-						<td><button class="qMs_reward">???</button></td>
-						<td><button class="qMs_reward">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_5">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_6">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_7">???</button></td>
+						<td><button class="qMs_reward" id="pc_perk_8">???</button></td>
 					</tr>
 				</table>
 			</div>
@@ -5634,7 +5637,7 @@
 	</div>
 	<div class="popup loadmenu" id="loadmenu" style="overflow-y:hidden; height: 360px">
 		<button class="closebtn storebtn" onclick="closeToolTip(true)">&times;</button>
-		<button id="newSaveBtn" class="storebtn" style="font-size: 15px" onclick="show_mods('basic')">New game</button>
+		<button id="newSaveBtn" class="storebtn" style="font-size: 15px" onclick="new_save()">New game</button>
 		<button id="newImportBtn" class="storebtn" style="font-size: 15px" onclick="import_save('new')">Import</button>
 		<button id="cancelNewSaveBtn" class="storebtn" style="font-size: 15px; display: none" onclick="show_mods()">Saves</button>
 		<button id="newAdvSaveBtn" class="storebtn" style="font-size: 15px; display: none" onclick="show_mods('adv')" >Other mods</button>

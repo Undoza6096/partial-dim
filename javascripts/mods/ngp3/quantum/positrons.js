@@ -215,7 +215,7 @@ var pos = {
 			for (var i = 1; i <= enB.pos.max; i++) {
 				if (!enB.mastered("pos", i)) continue
 
-				el("pos_boost" + i + "_btn").setAttribute('ach-tooltip', "Boost: " + enB.pos[i].dispFull(enB_tmp["pos" + i]) + (enB.pos.charged(i) ? "\nCharge: " + shortenDimensions(enB.pos.chargeEff(i)) + "x stronger" : ""))
+				el("pos_boost" + i + "_btn").setAttribute('ach-tooltip', "Boost: " + enB.pos[i].dispFull(enB_tmp.eff["pos" + i]) + (enB.pos.charged(i) ? "\nCharge: " + shortenDimensions(enB.pos.chargeEff(i)) + "x stronger" : ""))
 				if (enB.mastered("pos", i)) pos.updateCharge(i)
 			}
 		}
@@ -233,10 +233,9 @@ var pos = {
 		var lvl = enB.pos.lvl(i)
 		var match = enB.pos.lvl(i, true) == lvl
 		var charged = match && enB.pos.charged(i)
-		var undercharged = match && this.isUndercharged(i)
+		var undercharged = match && !str.unl() && this.isUndercharged(i)
 		el("pos_boost" + i + "_charge").textContent = undercharged ?
-			(shiftDown ? shortenMoney(enB.pos.chargeEff(i)) + "x Undercharged!" :
-			"Undercharged! (Switch to Tier " + pos_tmp.undercharged[i] + ")") :
+			"Undercharged! (Switch to Tier " + pos_tmp.undercharged[i] + ")" :
 			charged ? shortenMoney(enB.pos.chargeEff(i)) + "x Charged" :
 			"Charge: " + shorten(enB.pos.chargeReq(i, true))
 		el("pos_boost" + i + "_charge").className = undercharged ? "undercharged" : charged ? "charged" : ""

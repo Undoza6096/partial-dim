@@ -1,6 +1,6 @@
 //FLUCTUATE
 let fluc = {
-	unl: () => (force) => force ? (fluc_save && fluc_save.energy > 0) : fluc_tmp.unl,
+	unl: (force) => force ? (fluc_save && fluc_save.energy > 0) : fluc_tmp.unl,
 
 	setup() {
 		fluc_save = {
@@ -26,7 +26,7 @@ let fluc = {
 			delete player.flun
 		}
 
-		fluc_tmp = { unl: this.unl(true)  }
+		fluc_tmp = { unl: this.unl(true) }
 		fluc.updateConf()
 		if (!tmp.ngp3) return
 

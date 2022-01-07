@@ -26,7 +26,7 @@ var PCs = {
 		53: "Compressor Time raises Replicanti Stealth to Chance.",
 		63: "QC6 reward decay is 5x slower.",
 		73: "Remove the second softcap of TT generation.",
-		83: "Unlock the first Omega Set.",
+		83: "Unlock the Omega Sets.",
 
 		14: "Perk: Gain extra Compressors on quick Compressing",
 		24: "Perk: Mastery is stronger, but requires more",
@@ -43,13 +43,13 @@ var PCs = {
 		var data = {
 			row_unls: [null,
 				true,
-				true,
-				true,
-				() => str.unl(),
+				() => PCs_save.lvl >= PCs.lvlReq(21),
+				() => PCs_save.lvl >= PCs.lvlReq(31),
+				() => PCs_save.lvl >= PCs.lvlReq(41) && str.unl(),
 				() => PCs.milestoneDone(83),
-				false,
-				false,
-				false,
+				() => PCs.milestoneDone(83) && fluc.unl() && PCs.lvl >= 14,
+				() => PCs.milestoneDone(83) && fluc.unl() && PCs.lvl >= 18,
+				false
 			],
 			goal_divs: [null, 0.1, 0.95, 0.35, 0.95, 0.45, 0.5, 0.4, 0.775],
 			milestone_reqs: [null, 1, 2, 3, 4, 5],
@@ -58,7 +58,7 @@ var PCs = {
 				true,
 				() => hasAch("ng3pr12"),
 				() => hasAch("ng3pr12"),
-				() => false //hasAch("ng3pr12")
+				() => fluc.unl()
 			],
 			letters: [null, "A", "B", "C", "D", "Ω1", "Ω2", "Ω3", "Ω4"],
 			all: [],
@@ -117,6 +117,7 @@ var PCs = {
 		PCs_tmp.occupied = []
 		if (PCs_tmp.pick) {
 			var l = PCs_tmp.picked.length + 1
+			var f = PCs_tmp.picked[0]
 			var s = Math.floor(PCs_tmp.pick / 10)
 			var c = PCs_save.challs
 			for (var i = 1; i <= 4; i++) {
@@ -126,8 +127,8 @@ var PCs = {
 					this.occupy(c_a % 10)
 				}
 			}
-			if (PCs_tmp.picked) this.occupy(PCs_tmp.picked[0])
 
+			if (f) this.occupy(f)
 			if (l == 1) {
 				var d = PCs_tmp.used.d1
 				for (var i = 0; i < d.length; i++) this.occupy(d[i])
@@ -135,16 +136,15 @@ var PCs = {
 			if (l == 2) {
 				var d = PCs_tmp.used.d2
 				for (var i = 1; i <= 8; i++) {
-					var p = PCs.sort(i * 10 + PCs_tmp.picked[0])
+					var p = PCs.sort(i * 10 + f)
 					if (d.includes(p)) this.occupy(i)
 				}
-			}
 
-			if (PCs_tmp.pick < 50 && l == 2) {
 				var p1 = PCs_tmp.used.p1
 				var p2 = PCs_tmp.used.p2
+				var omega = PCs_tmp.pick < 50
 				var p = p1.includes(PCs_tmp.picked[0]) ? p1 : p2
-				for (var i = 1; i <= 8; i++) if (p.includes(i)) this.occupy(i)
+				for (var i = 1; i <= 8; i++) if (omega == p.includes(i)) this.occupy(i)
 			}
 		}
 
@@ -251,13 +251,13 @@ var PCs = {
 		PCs.updateDisp()
 	},
 	start(x) {
+		if (!PCs.posUnl(x)) return
 		if (PCs_tmp.pick && PCs_tmp.pick != x) return
 		var c = PCs_save.challs
 		if (c[x]) {
 			quantum(false, true, {pc: x}, "pc")
 			return
 		} else {
-			if (!PCs.posUnl(x)) return
 			if (PCs_tmp.pick == x) delete PCs_tmp.pick
 			else PCs_tmp.pick = x
 			PCs_tmp.picked = []
@@ -279,15 +279,16 @@ var PCs = {
 		var qc1 = QCs.data[list[0]].goalMA
 		var qc2 = QCs.data[list[1]].goalMA
 		var div = PCs.data.goal_divs[list[0]] + PCs.data.goal_divs[list[1]] + 1
-		if (fluc.unl() && fluc_tmp.temp) div += fluc_tmp.temp.pc
+		var relDiv = div
+		if (fluc.unl() && fluc_tmp.temp) relDiv += fluc_tmp.temp.pc
 
 		var base = Number.MAX_VALUE
-		var r = qc1.pow(qc2.log(base) / div)
+		var r = qc1.pow(qc2.log(base) / relDiv)
 
-		var scaling = hasAch("ng3pr16") ? 0.95 : 1
+		var scaling = 1
 		if (str.unl() && str_tmp.effs) scaling /= str_tmp.effs.b2
 
-		var mul = PCs_save.comps.length * 3 * scaling + //Completion Scaling
+		var mul = PCs_save.comps.length * Math.max(PCs_save.comps.length / 4, 3) * scaling + //Completion Scaling
 			(Math.floor(pos / 10) - 1) + //Row Scaling
 			PCs_tmp.row_comps[Math.floor(pos / 10)] - //Row Completion Scaling
 			(PCs_tmp.row_comps[5] + PCs_tmp.row_comps[6] + PCs_tmp.row_comps[7]) * 5 //Omega Sets
@@ -339,18 +340,19 @@ var PCs = {
 	},
 	lvlReq(pc) {
 		let y = Math.floor(pc / 10)
-		if (y > 4 && !this.rowUnl(y)) return 1/0
+		if (y > 4) return this.rowUnl(y) ? 0 : 1/0
 
 		let lvl = pc % 10
-		if (y >= 3) lvl += y * 3
+		if (y >= 3) lvl += y * 3 - 1
 		else if (y == 2) lvl += 2
+		return lvl
 	},
 	posUnl(pc) {
 		let y = Math.floor(pc / 10)
-		if (y > 4 && !this.rowUnl(y)) return
+		if (y > 4) return PCs.milestoneDone(83) && (pc % 10 == 1 || PCs.posDone(pc - 1))
 
 		let lvl = pc % 10
-		if (y >= 3) lvl += y * 3
+		if (y >= 3) lvl += y * 3 - 1
 		else if (y == 2) lvl += 2
 
 		return PCs_save.comps.length + 1 >= lvl
@@ -365,13 +367,15 @@ var PCs = {
 	setupButton: (pc) => '<td><button id="pc' + pc + '" class="challengesbtn" style="border-radius: 10px" onclick="PCs.start(' + pc + ')"></button></td>',
 	buttonTxt(pc) {
 		var id = PCs.sort(PCs_save.challs[pc])
-		return '<b style="font-size: 16px">' + PCs.name(pc) + '</b><br>' + (
+		var r = '<b style="font-size: 16px">' + PCs.name(pc) + "</b>"
+		if (PCs.posUnl(pc)) r += '<br>' + (
 			PCs_save.challs[pc] ? "QC " + wordizeList(PCs.convBack(id), false, " + ", false) :
 			PCs_tmp.pick == pc ? "Cancel" :
-			PCs.posUnl(pc) && !PCs_tmp.pick ? "Assign" : ""
+			!PCs_tmp.pick ? "Assign" : ""
 		) + (
 			PCs_tmp.pick || !PCs_save.challs[pc] || PCs.posDone(pc) ? "" : "<br>Goal: " + shorten(PCs.goal(id, pc)) + " MA"
 		)
+		return r
 	},
 	setupMilestone: (qc) => (qc % 4 == 1 ? "<tr>" : "") + "<td id='pc_comp" + qc + "_div' style='text-align: center'><span style='font-size: 20px'>QC" + qc + "</span><br><span id='pc_comp" + qc + "' style='font-size: 15px'>0 / 8</span><br><button class='secondarytabbtn' onclick='PCs.showMilestones(" + qc + ")'>Show</button></td>" + (qc % 4 == 0 ? "</tr>" : ""),
 	setupMilestoneHeader() {
@@ -442,11 +446,11 @@ var PCs = {
 
 		el_.style.display = ""
 		el_.className = (
+			!PCs.posUnl(pc) ? "lockedchallengesbtn" :
 			PCs_tmp.pick ? (PCs_tmp.pick == pc ? "onchallengebtn" : "lockedchallengesbtn") :
 			PCs_save.in == pc && !exit ? "onchallengebtn" :
 			PCs_save.challs[pc] && PCs_save.comps.includes(PCs.sort(PCs_save.challs[pc])) ? "completedchallengesbtn" :
-			PCs_save.challs[pc] ? "quantumbtn" :
-			PCs.posUnl(pc) ? "challengesbtn" : "lockedchallengesbtn"
+			PCs_save.challs[pc] ? "quantumbtn" : "challengesbtn"
 		)
 		el_.innerHTML = this.buttonTxt(pc)
 	},
@@ -462,7 +466,6 @@ var PCs = {
 		if (!PCs_tmp.unl) return
 		if (!PCs.data.setupHTML) return
 		var data = PCs
-
 
 		for (var i = 1; i <= 8; i++) {
 			el("pc_comp" + i + "_div").style.display = PCs_tmp.comps[i] ? "" : "none"
@@ -495,6 +498,15 @@ var PCs = {
 		}
 
 		this.showMilestones(PCs_tmp.milestone || 0)
+
+		//Perks
+		el("disable_qc2_perk").style.display = QCs.perkUnl(2) ? "" : "none"
+		el("disable_qc2_perk").textContent = (QCs_save.disable_perks[2] ? "Enable" : "Disable") + " QC2 Perk"
+		for (var i = 1; i <= 8; i++) {
+			el("pc_perk_" + i).className = QCs.perkUnl(i) ? 
+				(QCs.data[i].perkToggle ? "qMs_toggle_" + (!QCs_save.disable_perks[i] ? "on" : "off") : "qMs_reward")
+			: "qMs_locked"
+		}
 	},
 	updateDispOnTick() {
 		if (!PCs_tmp.unl) return
@@ -503,6 +515,11 @@ var PCs = {
 		el("pc_eff1").textContent = "^" + enB.glu.boosterExp(0, true).toFixed(3)
 		el("pc_eff1_start").textContent = shorten(PCs_tmp.eff1_start)
 		el("pc_eff2").textContent = "^" + shorten(getAQGainExp())
+	},
+	updatePerksOnTick() {
+		for (var i = 1; i <= 8; i++) {
+			el("pc_perk_" + i).textContent = QCs.perkUnl(i) ? QCs.data[i].perkDesc(QCs_tmp.perks[i]) : "Locked (" + PCs_tmp.row_comps[i] + " / 4 QC" + i + " combinations)"
+		}
 	},
 	showMilestones(qc) {
 		PCs_tmp.milestone = qc
