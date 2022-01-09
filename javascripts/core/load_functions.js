@@ -2834,7 +2834,7 @@ function migrateOldSaves() {
 }
 
 //Save Storage System
-var beta = false
+var beta = true
 var preBeta = false
 var betaId = beta || preBeta ? "A-" : ""
 var correctBetaId = "A-"
