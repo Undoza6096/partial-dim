@@ -26,7 +26,7 @@ function bendTimeCheck(){
 function getOldAgeRequirement() {
 	let sec = Math.floor(new Date().getTime() / 1000 * 3) / 3
 	sec += 1970 * 365.24 * 24 * 3600
-	return Decimal.pow(10, 3 * sec)
+	return pow10(3 * sec)
 }
 
 function checkMarathon(){
@@ -138,8 +138,8 @@ function checkResetCountReqAchieve(){
 function checkMatterAMNDReqAchieve(){
 	if (player.money.gte("9.9999e9999")) giveAchievement("This achievement doesn't exist")
 	if (player.money.gte("1e35000")) giveAchievement("I got a few to spare")
-	if (player.money.gt(Decimal.pow(10, 80))) giveAchievement("Antimatter Apocalypse")
-	if (player.seventhAmount.gt(Decimal.pow(10, 12))) giveAchievement("Multidimensional");
+	if (player.money.gt(pow10(80))) giveAchievement("Antimatter Apocalypse")
+	if (player.seventhAmount.gt(pow10(12))) giveAchievement("Multidimensional");
 	if ((player.matter.gte(2.586e15) && player.currentChallenge == "postc6") || player.matter.gte(Number.MAX_VALUE)) giveAchievement("It's not called matter dimensions is it?")
 	if (getDimensionFinalMultiplier(1).gt(1e31)) giveAchievement("I forgot to nerf that")
 }
@@ -190,7 +190,7 @@ function checkOtherPreNGp3Achieve() {
 	if (player.break) giveAchievement("Limit Break")
 	if (tmp.sacPow >= 600) giveAchievement("The Gods are pleased");
 	if (tmp.sacPow.gte(Number.MAX_VALUE)) giveAchievement("Yet another infinity reference")
-	if (tmp.sacPow.gte(Decimal.pow(10, 9000)) && !inNC(11)) giveAchievement("IT'S OVER 9000")
+	if (tmp.sacPow.gte(pow10(9000)) && !inNC(11)) giveAchievement("IT'S OVER 9000")
 	if (player.currentChallenge.includes("post")) giveAchievement("Infinitely Challenging")
 	if (tmp.ec >= 50) giveAchievement("5 more eternities until the update")
 	if (player.infinitiedBank >= 5000000000) giveAchievement("No ethical consumption");
@@ -279,8 +279,6 @@ function preHiggsNGp3AchieveCheck() {
 	}
 	if (QCs.inAny() && str_tmp.vibrated === 0 && player.meta.bestAntimatter.e >= 1.6e3) giveAchievement("Get rid of you by yourself...")
 
-	return //WILL MOVE FOR UPCOMING UPDATES
-
 	//ROW 17
 	if (pH.can("quantum") && QCs.in(3) && player.meta[2].bought == 0 && player.meta[3].bought == 0 && player.meta[4].bought == 0 && player.meta[5].bought == 0 && player.meta[6].bought == 0 && player.meta[7].bought == 0 && player.meta[8].bought == 0) giveAchievement("ERROR 500: INTERNAL DIMENSION ERROR")
 	if (pH.did("fluctuate")) giveAchievement("Feel the Momentum")
@@ -306,6 +304,8 @@ function preHiggsNGp3AchieveCheck() {
 	if (player.replicanti.amount.log10() >= 1/0 && player.dilation.tachyonParticles.eq(0)) giveAchievement("No dilation means no production.")
 	if (player.infinityPoints.gte(Decimal.pow(Number.MAX_VALUE, 1000)) && ableToGetRid5) giveAchievement("I don't want you to live anymore.")
 
+	return //WILL MOVE FOR UPCOMING UPDATES
+
 	if (player.dilation.dilatedTime.log10() >= 411 && qu_save.notrelative) giveAchievement("Time is not relative")
 	if (!hasAch("ng3p42")) {
 		for (var d = 2; d < 9; d++) {
@@ -314,7 +314,7 @@ function preHiggsNGp3AchieveCheck() {
 		}
 	}
 	if (player.timestudy.theorem >= 1.1e7 && qu_save.wasted) giveAchievement("Studies are wasted")
-	if (player.infinityPoints.gte(Decimal.pow(10, 2.75e5)) && ableToGetRid6) giveAchievement("Are you currently dying?")
+	if (player.infinityPoints.gte(pow10(2.75e5)) && ableToGetRid6) giveAchievement("Are you currently dying?")
 	if (player.replicanti.amount.log10() >= 1/0) giveAchievement("Will it be enough?")
 	if (qu_save.bigRip.active) {
 		let ableToGetRid7 = ableToGetRid2 && player.epmult.eq(1)

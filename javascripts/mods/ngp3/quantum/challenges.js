@@ -162,7 +162,7 @@ var QCs = {
 
 				//Setup
 				let data = {
-					lim: Decimal.pow(10, 6e6),
+					lim: pow10(6e6),
 
 					speedMult: Decimal.pow(2, -boosts),
 					scalingMult: 1,
@@ -187,7 +187,7 @@ var QCs = {
 
 				//Replicanti Limit
 				if (PCs.milestoneDone(13)) data.lim = data.lim.pow(Math.log2(qc1.expands + 1) / 10 + 1)
-				data.lim = data.lim.max(Decimal.pow(10, 1.5e6 * distantBoosts))
+				data.lim = data.lim.max(pow10(1.5e6 * distantBoosts))
 
 				//Replicanti Release
 				var release = 1
@@ -201,7 +201,7 @@ var QCs = {
 				var limLog = QCs_tmp.qc1.lim.log10()
 				if (limLog >= 1e8) {
 					var div = limLog / 1e8
-					data.lim = Decimal.pow(10, 1e8)
+					data.lim = pow10(1e8)
 					data.scalingMult /= div
 				}
 			},
@@ -215,7 +215,7 @@ var QCs = {
 				if (log > 1) log = Math.pow(log, QCs_tmp.qc1.effExp)
 				log *= QCs_tmp.qc1.effMult / dilMult
 
-				x = Decimal.pow(10, log)
+				x = pow10(log)
 				return x
 			},
 
@@ -433,8 +433,8 @@ var QCs = {
 		5: {
 			unl: () => true,
 			desc: "Replicanti effects are disabled, but they generate energy. Replicate interval gets stronger over time since Eternity.",
-			goal: () => player.eternityPoints.gte(Decimal.pow(10, 2.8e6)),
-			goalDisp: () => shortenCosts(Decimal.pow(10, 2.8e6)) + " Eternity Points",
+			goal: () => player.eternityPoints.gte(pow10(2.8e6)),
+			goalDisp: () => shortenCosts(pow10(2.8e6)) + " Eternity Points",
 			goalMA: Decimal.pow(Number.MAX_VALUE, 1.7),
 			hint: "Adjust your auto-Eternity time to maximize your production.",
 
@@ -476,7 +476,7 @@ var QCs = {
 			updateDispOnTick() {		
 				let exp = QCs.data[5].exp()
 				el("qc5_eng").textContent = shorten(QCs_save.qc5)
-				el("qc5_eng_mult").textContent = shiftDown ? " (+" + shorten(Math.max(QCs_tmp.qc5.mult, 1)) + " per " + shorten(Decimal.pow(10, 1 / Math.min(QCs_tmp.qc5.mult, 1))) + "x)" : ""
+				el("qc5_eng_mult").textContent = shiftDown ? " (+" + shorten(Math.max(QCs_tmp.qc5.mult, 1)) + " per " + shorten(pow10(1 / Math.min(QCs_tmp.qc5.mult, 1))) + "x)" : ""
 				el("qc5_eng_exp").textContent = exp > 1 ? shorten(exp) : ""
 				el("qc5_eff").textContent = shorten(QCs_tmp.qc5.eff)
 			},
@@ -485,7 +485,7 @@ var QCs = {
 			unl: () => true,
 			desc: "There are Nullons that speed up Replicanti Slowdown. (less as you have more) Eternitying loses some Nullons, and dilating reduces the production.",
 			goal: () => QCs_save.qc1.boosts >= 3 || (player.replicanti.amount.e >= 4.5e6 && QCs_save.qc1.boosts == 2),
-			goalDisp: () => shortenCosts(Decimal.pow(10, 4.5e6)) + " Replicantis + " + getFullExpansion(2) + " Compressors",
+			goalDisp: () => shortenCosts(pow10(4.5e6)) + " Replicantis + " + getFullExpansion(2) + " Compressors",
 			goalMA: Decimal.pow(Number.MAX_VALUE, 2.45),
 			hint: "Do long Eternity runs.",
 

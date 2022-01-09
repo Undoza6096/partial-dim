@@ -1,8 +1,8 @@
 var setUnlocks
 var powAdds = [null, 0, null, 0, 4, 4, 4]
 function buyRepeatableInfinityUpgrade(id) {
-	if (player.infinityPoints.lt(Decimal.pow(10, player.infinityUpgradesRespecced[id] + powAdds[id]))) return
-	player.infinityPoints = player.infinityPoints.sub(Decimal.pow(10, player.infinityUpgradesRespecced[id] + powAdds[id]))
+	if (player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[id] + powAdds[id]))) return
+	player.infinityPoints = player.infinityPoints.sub(pow10(player.infinityUpgradesRespecced[id] + powAdds[id]))
 	player.infinityUpgradesRespecced[id]++
 	if (id == 1) {
 		player.tickspeed = player.tickspeed.times(Decimal.pow(getTickSpeedMultiplier(), 10))
@@ -27,7 +27,7 @@ function updateSingularity() {
 		el("singularityunlock").style.display = "none"
 		el("singularitydiv").style.display = ""
 		el("sacrificedIP").textContent = shortenDimensions(player.singularity.sacrificed)
-		el("nextUpgrade").textContent = shortenCosts(Decimal.pow(10, player.singularity.upgraded * 2 + 32))
+		el("nextUpgrade").textContent = shortenCosts(pow10(player.singularity.upgraded * 2 + 32))
 		el("sacrificeIP").className = gainedSingularityPower().eq(0) ? "unavailablebtn" : "storebtn"
 		el("singularityPowerGain").textContent = shortenDimensions(gainedSingularityPower())
 		el("singularityPower").textContent = shortenDimensions(player.singularity.singularityPower)
@@ -57,7 +57,7 @@ function sacrificeIP() {
 	player.singularity.singularityPower = player.singularity.singularityPower.add(gainedSingularityPower())
 	player.singularity.sacrificed = player.singularity.sacrificed.add(player.infinityPoints)
 	player.infinityPoints = E(0)
-	player.singularity.upgraded += Math.floor(player.singularity.sacrificed.div(Decimal.pow(10, player.singularity.upgraded * 2 + 30)).log(100))
+	player.singularity.upgraded += Math.floor(player.singularity.sacrificed.div(pow10(player.singularity.upgraded * 2 + 30)).log(100))
 	updateSingularity()
 }
 

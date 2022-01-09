@@ -117,7 +117,7 @@ function updateIndigoLightBoostTemp(){
 	if (log > 250) log = Math.sqrt(log + 375) * 10
 	if (log > 729) log = Math.pow(log * 27, 2 / 3)
 
-	tmp.le[5] = Decimal.pow(10, log)
+	tmp.le[5] = pow10(log)
 }
 
 function updateVioletLightBoostTemp(){
@@ -191,7 +191,7 @@ function updateNGP3TempStuff(init) {
 		if (player.masterystudies.includes("d14")) updateBigRipUpgradesTemp()
 		if (tmp.nrm !== 1 && inBigRip()) {
 			if (!player.dilation.active && qu_save.bigRip.upgrades.includes(14)) tmp.nrm = tmp.nrm.pow(tmp.bru[14])
-			if (tmp.nrm.log10() > 1e9) tmp.nrm = Decimal.pow(10, 1e9 * Math.pow(tmp.nrm.log10() / 1e9, 2/3))
+			if (tmp.nrm.log10() > 1e9) tmp.nrm = pow10(1e9 * Math.pow(tmp.nrm.log10() / 1e9, 2/3))
 		}
 	}
 	if (tmp.quActive || init) {
@@ -255,7 +255,7 @@ function updateBreakEternityUpgrade1Temp(){
 	let em = qu_save.breakEternity.eternalMatter
 	let log1 = ep.div("1e1280").add(1).log10()
 	let log2 = em.times(10).max(1).log10()
-	tmp.beu[1] = Decimal.pow(10, Math.pow(log1, 1/3) * 0.5 + Math.pow(log2, 1/3)).max(1)
+	tmp.beu[1] = pow10(Math.pow(log1, 1/3) * 0.5 + Math.pow(log2, 1/3)).max(1)
 }
 
 function updateBreakEternityUpgrade2Temp(){
@@ -270,7 +270,7 @@ function updateBreakEternityUpgrade3Temp(){
 	let log = ep.div("1e1370").add(1).log10()
 	if (nerfUpgs) log /= 2e6
 	let exp = Math.pow(log, 1/3) * 0.5
-	tmp.beu[3] = Decimal.pow(10, exp)
+	tmp.beu[3] = pow10(exp)
 }
 
 function updateBreakEternityUpgrade4Temp(){
@@ -280,7 +280,7 @@ function updateBreakEternityUpgrade4Temp(){
 	let log2 = ss.div("7e19").add(1).log10()
 	let exp = Math.pow(log1, 1/3) + Math.pow(log2, 1/3) * 8
 	if (exp > 333) exp = 111 * Math.log10(3 * exp + 1)
-	tmp.beu[4] = Decimal.pow(10, exp)
+	tmp.beu[4] = pow10(exp)
 }
 
 function updateBreakEternityUpgrade5Temp(){
@@ -292,7 +292,7 @@ function updateBreakEternityUpgrade5Temp(){
 	if (aarMod.ngudpV && exp > 100) exp = Math.log10(exp) * 50
 	if (exp > 999) exp = 333 * Math.log10(exp + 1)
 	exp *= 4
-	tmp.beu[5] = Decimal.pow(10, exp)
+	tmp.beu[5] = pow10(exp)
 }
 
 function updateBreakEternityUpgrade6Temp(){
@@ -310,7 +310,7 @@ function updateBreakEternityUpgrade6Temp(){
 	if (exp > 200) exp = 50 * Math.log10(50 * exp)
 	if (hasU12) exp += Math.pow(log2, 0.8)
 
-	tmp.beu[6] = Decimal.pow(10, exp)
+	tmp.beu[6] = pow10(exp)
 }
 
 function updateBreakEternityUpgrade8Temp(){
@@ -324,8 +324,8 @@ function updateBreakEternityUpgrade8Temp(){
 function updateBreakEternityUpgrade9Temp(){
 	let em = qu_save.breakEternity.eternalMatter
 	let x = em.div("1e335").add(1).pow(0.05 * Math.log10(4))
-	if (x.gte(Decimal.pow(10,18))) x = Decimal.pow(x.log10() * 5 + 10, 9)
-	if (x.gte(Decimal.pow(10,100))) x = Decimal.pow(x.log10(), 50)
+	if (x.gte(pow10(18))) x = Decimal.pow(x.log10() * 5 + 10, 9)
+	if (x.gte(pow10(100))) x = Decimal.pow(x.log10(), 50)
 	tmp.beu[9] = x.toNumber()
 }
 
@@ -368,7 +368,7 @@ function updateBRU1Temp() {
 	if (qu_save.bigRip.upgrades.includes(17)) exp = tmp.bru[17]
 	if (ghostified && player.ghostify.neutrinos.boosts > 7) exp *= tmp.nb[8]
 	exp *= player.infinityPoints.max(1).log10()
-	tmp.bru[1] = Decimal.pow(10, exp) // BRU1
+	tmp.bru[1] = pow10(exp) // BRU1
 }
 
 function updateBRU8Temp() {
@@ -430,7 +430,7 @@ function updatePhotonsUnlockedBRUpgrades(){
 	tmp.bru[18] = Decimal.pow(bigRipUpg18base, bigRipUpg18exp) // BRU18
 	
 	var bigRipUpg19exp = Math.sqrt(player.timeShards.add(1).log10()) / (tmp.ngp3_exp ? 60 : 80)
-	tmp.bru[19] = Decimal.pow(10, bigRipUpg19exp) // BRU19
+	tmp.bru[19] = pow10(bigRipUpg19exp) // BRU19
 }
 
 function updateBosonicAMDimReturnsTemp() {
@@ -477,7 +477,7 @@ function updateWZBosonsTemp(){
 	let secBase = tmp.ngp3_exp ? 2 : 1
 	data.wbt = Decimal.pow(3, bosonsExp).times(Decimal.pow(secBase, Math.sqrt(bosonsExp))) 
 	//W Bosons boost to extract time
-	data.wbo = Decimal.pow(10, bosonsExp).times(Decimal.pow(secBase, Math.sqrt(bosonsExp))) 
+	data.wbo = pow10(bosonsExp).times(Decimal.pow(secBase, Math.sqrt(bosonsExp))) 
 	//W Bosons boost to Z Neutrino oscillation requirement
 	let div1 = tmp.ngp3_exp ? 2 : 100
 	data.wbp = player.ghostify.wzb.wpb.add(player.ghostify.wzb.wnb).div(div1).max(1).pow(1 / 3).sub(1) 
@@ -487,7 +487,7 @@ function updateWZBosonsTemp(){
 	let zLogMult = 0.5
 	if (isEnchantUsed(25)) zLogMult = tmp.bEn[25]
 
-	data.zbs = Decimal.pow(10, zLog * zLogMult) //Z Bosons boost to W Quark
+	data.zbs = pow10(zLog * zLogMult) //Z Bosons boost to W Quark
 }
 
 //"Powers" tmp (100ms)

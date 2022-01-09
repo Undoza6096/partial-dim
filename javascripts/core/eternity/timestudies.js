@@ -699,7 +699,7 @@ let tsMults = {
 		else log = Math.min(log, 2500)
 
 		if (log < 0) log = 0
-		return Decimal.pow(10, log)
+		return pow10(log)
 	},
 	32() {
 		let ret = Math.pow(Math.max(getTotalDBs(), 1), aarMod.newGameMult ? 4 : 1)
@@ -786,7 +786,7 @@ let tsMults = {
 		rep *= 0.3
 		if (hasMTS(302)) rep *= rep / 1e5 + 1
 
-		return Decimal.pow(10, rep)
+		return pow10(rep)
 	},
 
 	//NG Condensed
@@ -827,7 +827,7 @@ let tsMults = {
 		return x
 	},
 	152() {
-		return Decimal.pow(10, Math.sqrt(player.galaxies * 5))
+		return pow10(Math.sqrt(player.galaxies * 5))
 	},
 	172() {
 		let rg = getFullEffRGs()
@@ -846,12 +846,12 @@ let tsMults = {
 	},
 	202() {
 		let cond = player.condensed.normal.reduce((a,c) => (a||0)+(c||0))
-		let x = Decimal.pow(10, 25000 * Math.sqrt(cond))
+		let x = pow10(25000 * Math.sqrt(cond))
 		return x
 	},
 	203() {
 		let cond = player.condensed.time.reduce((a,c) => (a||0)+(c||0))
-		let x = Decimal.pow(10, 50 * Math.sqrt(cond))
+		let x = pow10(50 * Math.sqrt(cond))
 		return x
 	}
 }

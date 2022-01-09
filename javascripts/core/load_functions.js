@@ -405,7 +405,7 @@ function setAarexModIfUndefined(){
 	}
 
 	el("decimalMode").innerHTML = aarMod.breakInfinity ? "break_infinity.js<br>(slow, up to e9e15)" : "logarithmica_numerus.js<br>(fast, up to e1.79e308)"
-	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, Decimal.pow(10, 9e15)) || !metaSave.adv ? "hidden" : "visible"
+	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, pow10(9e15)) || !metaSave.adv ? "hidden" : "visible"
 
 	if (aarMod.dilationConf === undefined) aarMod.dilationConf = true
 	if (aarMod.offlineProgress === undefined)  aarMod.offlineProgress = true
@@ -586,9 +586,9 @@ function doNGM1Versions(){
                 player.dilation.nextThreshold.e = 6
                 player.dilation.totalTachyonParticles = E(500)
                 player.dilation.rebuyables[2] = 1
-                player.timeDimension5.power = Decimal.pow(10, -3)
+                player.timeDimension5.power = pow10(-3)
                 player.timeDimension6.power = E(0.0004)
-                player.timeDimension7.power = Decimal.pow(10, -4)
+                player.timeDimension7.power = pow10(-4)
                 player.timeDimension8.power = E(0.00004)
         }
         if (aarMod.newGameMinusVersion < 2.1) {
@@ -1265,9 +1265,9 @@ function doNGm3v21tov3202() {
                 aarMod.newGame3MinusVersion = 3.201
         }
         if (aarMod.newGame3MinusVersion < 3.202) {
-                player.replicanti.chanceCost = Decimal.pow(10, 150)
-                player.replicanti.intervalCost = Decimal.pow(10, 140)
-                player.replicanti.galCost = Decimal.pow(10, 170)
+                player.replicanti.chanceCost = pow10(150)
+                player.replicanti.intervalCost = pow10(140)
+                player.replicanti.galCost = pow10(170)
                 aarMod.newGame3MinusVersion = 3.202
         }
 }
@@ -1763,7 +1763,7 @@ function updateNGp3DisplayStuff(){
 	el('autoAssign').textContent="Auto: O"+(qu_save.autoOptions.assignQK?"N":"FF")
 	el('autoAssignRotate').textContent="Rotation: "+(qu_save.autoOptions.assignQKRotate>1?"Left":qu_save.autoOptions.assignQKRotate?"Right":"None")
 	el("ghostifyAnimBtn").textContent="Ghostify: O"+(player.options.animations.ghostify?"N":"FF")
-	el("gphUnl").textContent="To unlock Ghostly Photons, you need to get "+shortenCosts(Decimal.pow(10,6e9))+" antimatter while your universe is Big Ripped first."
+	el("gphUnl").textContent="To unlock Ghostly Photons, you need to get "+shortenCosts(pow10(6e9))+" antimatter while your universe is Big Ripped first."
 	updateBLUnlockDisplay()
 	el("odSlider").value=Math.round((tmp.bl.odSpeed-1)/4*50)
 	for (var g=1;g<=br.limit;g++) el("typeToExtract"+g).className=tmp.bl.typeToExtract==g?"chosenbtn":"storebtn"
@@ -2103,7 +2103,7 @@ function setupNGP31Versions() {
 		PCs.updateTmp()
 	}
 	if (aarMod.ngp3Build < 20220106 && Decimal.log10(player.money) >= 6e13) rollback = 1e190
-	if (aarMod.ngp3Build < 20220109) ff.reset()
+	//if (aarMod.ngp3Build < 20220109) ff.reset()
 
 	welcomeUpdates = []
 	if (aarMod.ngp3Build) {
@@ -2119,7 +2119,7 @@ function setupNGP31Versions() {
 	}
 	aarMod.ngp3r = 0.7
 	aarMod.ngp3Alpha = beta
-	aarMod.ngp3Build = 20220106
+	aarMod.ngp3Build = 20220109
 
 	if (tmp.ngp3_boost && !player.timestudy.auto) player.timestudy.auto = {}
 	if (rollback) {

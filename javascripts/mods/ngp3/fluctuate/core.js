@@ -62,7 +62,7 @@ let fluc = {
 	},
 	req(x) {
 		if (!x) x = fluc_save.energy
-		return Decimal.pow(10, Math.pow(10, 13.5 + x / 20))
+		return pow10(Math.pow(10, 13.5 + x / 20))
 	},
 	reset(auto, force) {
 		if (!force) {
@@ -213,10 +213,10 @@ let FDs = {
 	},
 	updateTmp() {
 		if (!fluc.unl()) return
-		var eng_log = FDs_save.meta.add(1).log10()
+		var meta = FDs_save.meta.max(1)
 		FDs_tmp = {
-			eff_rep: Math.min(Math.cbrt(eng_log / 10 + 1), 4),
-			eff_qe: (12 - 5 / Math.pow(eng_log / 10 + 1, .2)) / 7
+			eff_rep: Math.min(Math.cbrt(meta.log10() / 5 + 1), 4),
+			eff_qe: (12 - 5 / Math.pow(meta.log10() / 5 + 1, .2)) / 7
 		}
 	},
 	updateDisp() {
@@ -277,16 +277,18 @@ let FDs = {
 	},
 
 	dimMult(x) {
-		var r = Decimal.pow(2, FDs_save[x].bgt - 1).max(1)
-		if (hasAch("ng3p31")) r = r.times(1.5)
-		if (hasAch("ng3p36")) r = r.times(FDs.repMult(x))
+		var r = Decimal.pow(3, FDs_save[x].bgt - 1)
+			.max(1)
+			.times(FDs.repMult(x))
+
+		if (hasAch("ng3p31")) r = r.times(3)
 		return r
 	},
 	repMult(t) {
 		//Fluctuant Replicantis
-		var x = (getReplEff().max(1).log10() / 5e5 + 1) / Math.pow(t, 2)
-		if (x <= 1) return 1
-		return Math.pow(10, Math.pow(Math.log10(x), 0.75))
+		var x = getReplEff().max(1).log10() / 2e5 / Math.pow(4, t)
+		if (x < 1) return 1
+		return Decimal.pow(3, Math.pow(Math.log10(x), 0.75))
 	},
 
 	dimProd(x) {

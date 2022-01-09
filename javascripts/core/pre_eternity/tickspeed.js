@@ -286,7 +286,7 @@ function getTickspeedBeforePostMults() {
 
 	if (player.infinityUpgradesRespecced != undefined) {
 		var log = 3 - tick.log10()
-		if (log > 25) tick = Decimal.pow(10, 3 - Math.sqrt(log) * 5)
+		if (log > 25) tick = pow10(3 - Math.sqrt(log) * 5)
 	}
 	if (tmp.ngC) tick = softcap(tick.pow(-1), "ts_ngC").pow(-1)
 	return tick
@@ -315,7 +315,7 @@ function getTickspeedText(ts) {
 
 	let precise = Math.max(Math.min(Math.ceil(9 - Math.log10(2 - exp)), 3), 0)
 	if (precise == 0) return shortenCosts(Decimal.div(1000, ts)) + "/s"
-	return Math.min(ts.m * Math.pow(10, precise - 1), Math.pow(10, precise) - 1).toFixed(0) + ' / ' + shortenCosts(Decimal.pow(10, 2 - exp))
+	return Math.min(ts.m * Math.pow(10, precise - 1), Math.pow(10, precise) - 1).toFixed(0) + ' / ' + shortenCosts(pow10(2 - exp))
 }
 
 function updateTickspeed() {

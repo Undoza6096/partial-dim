@@ -403,7 +403,7 @@ function formatValue(notation, value, places, placesUnder1000, noInf) {
 		}
 		places = Math.min(places, 8 - Math.floor(Math.log10(power)))
 		if (places >= 0) {
-			matissa = (matissa * Decimal.pow(10, power % 3)).toFixed(places)
+			matissa = (matissa * pow10(power % 3)).toFixed(places)
 			if (matissa >= 1e3) {
 				power += 3
 				places = Math.min(places, 8 - Math.floor(Math.log10(power)))
@@ -656,7 +656,7 @@ let iroha_special = 'いろはにほへとちりぬるをわかよたれそつ�
 
 function iroha (n, depth) {
   if (!break_infinity_js) if (n instanceof Decimal) n = n.toString()
-  n = new Decimal_BI(n);
+  n = E_BI(n);
   if (isNaN(n.e)) {
     return '今';
   }
@@ -793,7 +793,7 @@ shortenCosts = function (money) {
 };
 
 shortenPreInfCosts = function (money) {
-    if (money.exponent<0) return Math.round(money.mantissa) + " / " + formatValue(player.options.notation, Decimal.pow(10, -money.exponent), 0, 0)
+    if (money.exponent<0) return Math.round(money.mantissa) + " / " + formatValue(player.options.notation, pow10(-money.exponent), 0, 0)
 	return formatValue(player.options.notation, money, (money.mantissa>1&&money.exponent>308)?2:0, 0);
 };
 

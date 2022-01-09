@@ -82,7 +82,7 @@ var mTs = {
 			let comps = ECComps("eterc14")
 			let base = tmp.dtMode ? 1.8 : tmp.exMode ? 1.6 : 1.5
 			if (!tmp.bgMode) base = Math.max(1.5 + comps / 25, base)
-			return Decimal.pow(10, (comps ? 1.2e6 : 250000) * Math.pow(base, Math.max(comps - 1, 0)))
+			return pow10((comps ? 1.2e6 : 250000) * Math.pow(base, Math.max(comps - 1, 0)))
 		}
 	},
 	ecReqNumsStored: {},
@@ -180,7 +180,7 @@ var mTs = {
 			x /= Math.pow(100, pow)
 
 			return {
-				eff: Decimal.pow(10, x),
+				eff: pow10(x),
 				exp: pow
 			}
 		},

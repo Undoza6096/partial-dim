@@ -24,7 +24,7 @@ function getD21Bonus() {
 
 function getD22Bonus() {
 	let l = player.meta.antimatter.max(1).log10()
-	return Decimal.pow(10, Math.max(Math.sqrt(Math.max(l - 120, 0)) - 10, 0) / 1.5)
+	return pow10(Math.max(Math.sqrt(Math.max(l - 120, 0)) - 10, 0) / 1.5)
 }
 
 function distribEx() {

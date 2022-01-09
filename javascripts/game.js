@@ -949,9 +949,9 @@ function doNGMinusThreeNewPlayer(){
 	player.infchallengeTimes.push(600*60*24*31)
 	player.infchallengeTimes.push(600*60*24*31)
 	player.overXGalaxiesTickspeedBoost=10
-	player.replicanti.chanceCost = Decimal.pow(10, 150)
-	player.replicanti.intervalCost = Decimal.pow(10, 140)
-	player.replicanti.galCost = Decimal.pow(10, 170)
+	player.replicanti.chanceCost = pow10(150)
+	player.replicanti.intervalCost = pow10(140)
+	player.replicanti.galCost = pow10(170)
 }
 
 function doNGEXPNewPlayer(){
@@ -2145,7 +2145,7 @@ function onNotationChange() {
 		updateBreakEternity()
 		onNotationChangeNeutrinos()
 		updateBosonicStuffCosts()
-		if (!player.ghostify.ghostlyPhotons.unl) el("gphUnl").textContent = "To unlock Ghostly Photons, you need to get "+shortenCosts(Decimal.pow(10,6e9))+" antimatter while your universe is Big Ripped first."
+		if (!player.ghostify.ghostlyPhotons.unl) el("gphUnl").textContent = "To unlock Ghostly Photons, you need to get "+shortenCosts(pow10(6e9))+" antimatter while your universe is Big Ripped first."
 		else if (!player.ghostify.wzb.unl) updateBLUnlockDisplay()
 		else updateBosonUnlockDisplay()
 	}
@@ -3576,8 +3576,8 @@ function doNGP3UnlockStuff(){
 	var inEasierModeCheck = !inEasierMode()
 	if (player.eternityPoints.gte("1e1200") && qu_save.bigRip.active && !qu_save.breakEternity.unlocked) doBreakEternityUnlockStuff()
 	if (tmp.quActive) {
-		if (!player.ghostify.reached && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(Decimal.pow(10, QCs.getGoalMA(undefined, true)))) doGhostifyUnlockStuff()
-		if (!player.ghostify.ghostlyPhotons.unl && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(Decimal.pow(10, 6e9))) doPhotonsUnlockStuff()
+		if (!player.ghostify.reached && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(pow10(QCs.getGoalMA(undefined, true)))) doGhostifyUnlockStuff()
+		if (!player.ghostify.ghostlyPhotons.unl && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(pow10(6e9))) doPhotonsUnlockStuff()
 		if (!player.ghostify.wzb.unl && canUnlockBosonicLab()) doBosonsUnlockStuff()
 	}
 }
@@ -3829,7 +3829,7 @@ function infinityRespeccedDMUpdating(diff){
 function changingDecimalSystemUpdating(){
 	el("decimalModeBtn").style.visibility = "hidden"
 	if (break_infinity_js) {
-		player.totalmoney = Decimal.pow(10, 9e15 - 1)
+		player.totalmoney = pow10(9e15 - 1)
 		player.money = player.totalmoney
 		clearInterval(gameLoopIntervalId)
 		alert("You have reached the limit of break_infinity.js. In order for the game to continue functioning, the game will switch the library to logarithmica_numerus.js, requiring a game reload, but will have a higher limit. You cannot change libraries for this save again in the future.")
@@ -4210,7 +4210,7 @@ function IPMultBuyUpdating() {
 		if (dif > 0) {
 			player.infMult = player.infMult.times(Decimal.pow(getIPMultPower(), dif))
 			player.infMultCost = player.infMultCost.times(Decimal.pow(ipMultCostIncrease, dif))
-			if (player.infinityPoints.lte(Decimal.pow(10, 1e9))) {
+			if (player.infinityPoints.lte(pow10(1e9))) {
 				if (pH.did("ghostify")) {
 					if (player.ghostify.milestones < 11) player.infinityPoints = player.infinityPoints.minus(player.infMultCost.dividedBy(aarMod.newGameExpVersion?4:10).min(player.infinityPoints))
 				}
@@ -4530,7 +4530,7 @@ function newIDDisplayUpdating() {
 
 function d8SacDisplay() {
 	let desc = tmp.ngC ? "Boost all Dimensions" : "Boost the 8th Dimension"
-	if (calcTotalSacrificeBoost().lte(Decimal.pow(10, 1e9))) {
+	if (calcTotalSacrificeBoost().lte(pow10(1e9))) {
 		el("sacrifice").setAttribute('ach-tooltip', desc + " by " + formatValue(player.options.notation, calcSacrificeBoost(), 2, 2) + "x");
 		el("sacrifice").textContent = "Dimensional Sacrifice (" + formatValue(player.options.notation, calcSacrificeBoost(), 2, 2) + "x)"
 	} else {
@@ -4568,7 +4568,7 @@ function IPonCrunchPassiveGain(diff){
 }
 
 function EPonEternityPassiveGain(diff){
-	if (moreEMsUnlocked() && getEternitied() >= tmp.ngp3_em[5]) {
+	if ((moreEMsUnlocked() && getEternitied() >= tmp.ngp3_em[5]) || hasAch("ng3pr15")) {
 		player.eternityPoints = player.eternityPoints.plus(gainedEternityPoints().times(diff / 100))
 		el("eternityPoints2").innerHTML = "You have <span class=\"EPAmount2\">"+shortenDimensions(player.eternityPoints)+"</span> Eternity points."
 	}
@@ -5477,7 +5477,7 @@ function updateAdvOpts(toggle) {
 	el("retry").style.display = on ? "" : "none"
 	el("autoApply").style.display = on ? "" : "none"
 	el("toggleLogRateChange").style.display = on ? "" : "none"
-	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, Decimal.pow(10, 9e15)) || !on ? "hidden" : "visible"
+	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, pow10(9e15)) || !on ? "hidden" : "visible"
 	for (var i = 1; i <= 8; i++) el("advTheme" + i).style.display = on ? "" : "none"
 	pH.reset()
 }

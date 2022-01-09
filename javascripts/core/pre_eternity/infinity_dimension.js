@@ -18,7 +18,7 @@ function maxAllID() {
 		if (player.infDimensionsUnlocked[t - 1] && player.infinityPoints.gte(cost)) {
 			let costMult = getIDCostMult(t)
 			let toBuy
-			if (player.infinityPoints.lt(Decimal.pow(10, 1e10))) {
+			if (player.infinityPoints.lt(pow10(1e10))) {
 				toBuy = Math.max(Math.floor(player.infinityPoints.div(9 - t).div(cost).times(costMult - 1).add(1).log(costMult)), 1)
 				let toSpend = Decimal.pow(costMult, toBuy).sub(1).div(costMult-1).times(cost).round()
 				if (toSpend.gt(player.infinityPoints)) player.infinityPoints = E(0)
@@ -109,7 +109,7 @@ function getInfDimPathIDMult(tier){
 	if (hasTimeStudy(72) && tier == 4) mult = mult.times(tmp.sacPow.pow(0.04).max(1).min("1e30000"))
 	if (hasTimeStudy(82)) mult = mult.times(Decimal.pow(1.0000109, Math.pow(getTotalDBs(), 2)).min(player.meta == undefined ? 1 / 0 : '1e80000'))
 	if (hasTimeStudy(92)) mult = mult.times(Decimal.pow(2, 600 / Math.max(player.bestEternity, 20)))
-	if (hasTimeStudy(162)) mult = mult.times(Decimal.pow(10, (inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1)))
+	if (hasTimeStudy(162)) mult = mult.times(pow10((inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1)))
 	return mult
 }
 
@@ -246,7 +246,7 @@ function buyManyInfinityDimension(tier, auto) {
   	if (player.infinityPoints.lt(cost)) return false
   	if (!player.infDimensionsUnlocked[tier - 1]) return false
 	if (player.eterc8ids == 0) return false
-	if (player.infinityPoints.lt(Decimal.pow(10, 1e10))) player.infinityPoints = player.infinityPoints.minus(cost)
+	if (player.infinityPoints.lt(pow10(1e10))) player.infinityPoints = player.infinityPoints.minus(cost)
 	dim.amount = dim.amount.plus(10);
 	dim.cost = Decimal.round(dim.cost.times(getIDCostMult(tier)))
 	dim.power = dim.power.times(getInfBuy10Mult(tier))
@@ -273,7 +273,7 @@ function buyMaxInfDims(tier, auto) {
 	let costMult = getIDCostMult(tier)
 	let toBuy = Math.floor(player.infinityPoints.div(cost).log10() / Math.log10(costMult))
 	dim.cost = dim.cost.times(Decimal.pow(costMult, toBuy-1))
-	if (player.infinityPoints.lt(Decimal.pow(10, 1e10))) player.infinityPoints = player.infinityPoints.minus(getIDCost(tier).min(player.infinityPoints))
+	if (player.infinityPoints.lt(pow10(1e10))) player.infinityPoints = player.infinityPoints.minus(getIDCost(tier).min(player.infinityPoints))
 	dim.cost = dim.cost.times(costMult)
 	dim.amount = dim.amount.plus(10 * toBuy);
 	dim.power = dim.power.times(Decimal.pow(getInfBuy10Mult(tier), toBuy))
@@ -294,7 +294,7 @@ function getInfinityPowerEffect() {
 		if (log > 10) log = Math.pow(log * 200 - 1e3, 1/3)
 		if (!onPostBreak() && log > Math.log10(Number.MAX_VALUE)) return E(Number.MAX_VALUE)
 	}
-	return Decimal.pow(10, log)
+	return pow10(log)
 }
 
 function getInfinityPowerEffectExp() {

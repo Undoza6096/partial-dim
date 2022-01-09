@@ -122,7 +122,7 @@ function bosonicTick(diff) {
 			lData.wnb = lData.wnb.sub(lData.wnb.min(apDiff).times(tmp.wzb.zbs))
 		}
 	} else lData.dP = lData.dP.add(diff.times(getAntipreonProduction()))
-	lData.zNeReq=Decimal.pow(10, Math.sqrt(Math.max(Math.pow(lData.zNeReq.log10(),2) - diff / 100, 0)))
+	lData.zNeReq=pow10(Math.sqrt(Math.max(Math.pow(lData.zNeReq.log10(),2) - diff / 100, 0)))
 	
 	//Bosonic Extractor
 	if (data.usedEnchants.includes(12)) {
@@ -171,7 +171,7 @@ function getBosonicAntiMatterProduction(){
 
 function getBosonicAMProduction() {
 	let exp = player.money.max(1).log10() / 15e15 - 3
-	let ret = Decimal.pow(10, exp).times(tmp.wzb.wbp)
+	let ret = pow10(exp).times(tmp.wzb.wbp)
 
 	if (hasAch("ng3p113")) ret = ret.times(Math.log10(getReplEff().max(1e10).log10()))
 	return ret
@@ -536,7 +536,7 @@ var bEn = {
 	effectDescs: {
 		12(x) {
 			x = x.times(getBosonicFinalSpeed())
-			if (x.lt(1) && x.gt(0)) return x.m.toFixed(2) + "/" + shortenCosts(Decimal.pow(10, -x.e)) + " seconds"
+			if (x.lt(1) && x.gt(0)) return x.m.toFixed(2) + "/" + shortenCosts(pow10(-x.e)) + " seconds"
 			return shorten(x) + "/second"
 		},
 		14(x) {
@@ -892,8 +892,8 @@ var bu = {
 			if (ghlog > 308) ghlog = Math.sqrt(ghlog * 308)
 
 			return {
-				dt: player.dilation.dilatedTime.gt("1e50000") ? 1 : Decimal.pow(10, 2 * gLog + 3 * gLog / (gLog / 20 + 1)),
-				gh: tmp.eterUnl ? Decimal.pow(10, ghlog) : E(1)
+				dt: player.dilation.dilatedTime.gt("1e50000") ? 1 : pow10(2 * gLog + 3 * gLog / (gLog / 20 + 1)),
+				gh: tmp.eterUnl ? pow10(ghlog) : E(1)
 			}
 		},
 		23() {
@@ -1022,7 +1022,7 @@ var bu = {
 //Bosonic Overdrive
 function getBosonicBatteryLoss() {
 	if (player.ghostify.bl.odSpeed == 1) return E(0)
-	return Decimal.pow(10, player.ghostify.bl.odSpeed * 2 - 3)
+	return pow10(player.ghostify.bl.odSpeed * 2 - 3)
 }
 
 function changeOverdriveSpeed() {

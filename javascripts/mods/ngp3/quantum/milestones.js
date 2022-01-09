@@ -41,7 +41,7 @@ let qMs = {
 			},
 			nextAt(x) {
 				if (x > 20) x = Math.pow(10, x / 20) * 2
-				x = Decimal.pow(10, (x - 1) * 3 + 90)
+				x = pow10((x - 1) * 3 + 90)
 				return x
 			}
 		},
@@ -100,6 +100,7 @@ let qMs = {
 			if (data.points >= qMs[i].req || evalData(qMs[i].forceGot)) data.amt++
 		}
 
+		if (hasAch("ng3p14")) data.metaSpeed /= 3
 		if (qMs.tmp.amt >= 12) data.metaSpeed *= Math.pow(0.9, Math.pow(qMs.tmp.amt - 12 + 1, 1 + Math.max(qMs.tmp.amt - 15, 0) / 15))
 	},
 	updateDisplay() {
@@ -130,7 +131,7 @@ let qMs = {
 
 		el('dilationmode').style.display = qMs.tmp.amt >= 4 ? "block" : "none"
 		el('rebuyupgauto').style.display = qMs.tmp.amt >= 11 || pH.did("fluctuate") ? "" : "none"
-		el('metaboostauto').style.display = qMs.tmp.amt >= 14 ? "" : "none"
+		el('metaboostauto').style.display = qMs.tmp.amt >= 14 || pH.did("fluctuate") ? "" : "none"
 		el("autoBuyerQuantum").style.display = qMs.tmp.amt >= 17 ? "block" : "none"
 		el('toggleautoquantummode').style.display = qMs.tmp.amt >= 17 ? "" : "none"
 		el('rebuyupgmax').style.display = qMs.tmp.amt < 20 ? "" : "none"
@@ -283,6 +284,7 @@ let qMs = {
 	},
 	19: {
 		req: 22,
+		best: true,
 		eff: () => "Meta-Dimension Boosts no longer reset Meta Dimensions",
 		effGot: () => "Meta-Dimension Boosts no longer reset Meta Dimensions anymore."
 	},

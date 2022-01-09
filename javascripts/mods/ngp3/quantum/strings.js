@@ -44,7 +44,7 @@ let str = {
 				eff: (x) => 4 + x,
 				effDisp: (x) => "Able to vibrate last " + x + " positions.",
 
-				req: (x) => Decimal.pow(10, 3.75 + x * x / 4),
+				req: (x) => pow10(3.75 + x * x / 4),
 				res: () => qu_save.bestEnergy,
 				resDisp: "Quantum Energy"
 			},

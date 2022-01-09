@@ -15,7 +15,7 @@ function doNGMatLeast4TDChanges(tier, ret){
 	//Tickspeed multiplier boost
 	let x = (inNGM(5)) ? (hasPU(11) ? puMults[22] : E(1)) : player.postC3Reward
 	let exp = ([5, 3, 2, 1.5, 1, .5, 1/3, 0])[tier - 1]
-	if (x.gt(1e10)) x = Decimal.pow(10, Math.sqrt(x.log10() * 5 + 50))
+	if (x.gt(1e10)) x = pow10(Math.sqrt(x.log10() * 5 + 50))
 	if (hasGalUpg(25)) exp *= galMults.u25()
 	if (player.pSac!=undefined) exp /= 2
 	if (inNC(16)) exp /= 2
@@ -78,8 +78,8 @@ function updateInfiniteTimeTemp() {
 	}
 
 	var x = (3 - getTickspeed().log10()) * 5e-6
-	if (tmp.ngp3) x = softcap(Decimal.pow(10, x), "it").log10()
-	tmp.it = Decimal.pow(10, x)
+	if (tmp.ngp3) x = softcap(pow10(x), "it").log10()
+	tmp.it = pow10(x)
 }
 
 function getTimeDimensionPower(tier) {
@@ -311,7 +311,7 @@ function timeDimCost(tier, bought) {
 	if (cost.log10() >= superScaleStartLog) {
 		// rather than fixed cost scaling as before, quadratic cost scaling
 		// to avoid exponential growth
-		cost = cost.times(Decimal.pow(10, Math.pow((cost.log10() - superScaleStartLog) / 1e3, 2) * 1e3))
+		cost = cost.times(pow10(Math.pow((cost.log10() - superScaleStartLog) / 1e3, 2) * 1e3))
 	}
 
 	return cost
@@ -374,7 +374,7 @@ function buyMaxTimeDimension(tier, bulk) {
 	} else {
 		let data = doBulkSpent(player.eternityPoints, (x) => timeDimCost(tier, x), dim.bought)
 
-		if (player.eternityPoints.lt(Decimal.pow(10, 1e10))) player.eternityPoints = data.res
+		if (player.eternityPoints.lt(pow10(1e10))) player.eternityPoints = data.res
 		toBuy = data.toBuy
 	}
 

@@ -374,8 +374,8 @@ function setR16Tooltip() {
 	//ACHIEVEMENT ROW 16
 	memories.setAttribute('ach-tooltip', "Reach " + shorten(Decimal.pow(Number.MAX_VALUE, 2)) + " meta-antimatter without buying 5th - 8th Meta Dimensions. Reward: Even Meta Dimensions boost odd Meta Dimensions.")
 	morals.setAttribute('ach-tooltip', "Reach " + shortenCosts(1e85) + " TT in any Quantum Challenge. Reward: Start with first 10 Mastery Studies in completed QCs and Paired Challenges.")
-	intergal.setAttribute('ach-tooltip', "Get " + getFullExpansion(3e7) + " Eighth Dimensions without " + (tmp.dtMode ? "" : "max ") + "Replicated Galaxies. Reward: Starting at " + shortenCosts(Decimal.pow(10, 1750)) + " MA, meta-antimatter greatly boosts itself.")
-	seriously.setAttribute('ach-tooltip', "Get " + shortenCosts(Decimal.pow(10, 2e7)) + " Eternity Points with at least 5 excluded Positronic Boosts. Reward: Charging Positronic Boosts requires less, and you can buy Mastery Studies in a row above the latest bought row.")
+	intergal.setAttribute('ach-tooltip', "Get " + getFullExpansion(3e7) + " Eighth Dimensions without " + (tmp.dtMode ? "" : "max ") + "Replicated Galaxies. Reward: Starting at " + shortenCosts(pow10(1750)) + " MA, meta-antimatter greatly boosts itself.")
+	seriously.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(2e7)) + " Eternity Points with at least 5 excluded Positronic Boosts. Reward: Charging Positronic Boosts requires less, and you can buy Mastery Studies in a row above the latest bought row.")
 }
 
 function setR16p5Tooltip() {
@@ -390,8 +390,8 @@ function setR16p5Tooltip() {
 	let rid = el("Get rid of you by yourself...") 
 
 	mayhem.setAttribute('ach-tooltip', "Max out Mastery Studies in QC1. Reward: You keep Mastery Studies except in QC1 and QC7.")
-	cantGet.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, Math.PI * 1e11)) + " antimatter in Eternity Challenge 11. Reward: You gain 3x more Quarks, and can reduce the gluon gains by 50%.")
-	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(Decimal.pow(10, 1600)) + " MA in any QC without vibrations.")
+	cantGet.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(Math.PI * 1e11)) + " antimatter in Eternity Challenge 11. Reward: You gain 5x more Dilated Time, Time Theorems, and Quarks, and can reduce the gluon gains by 50%.")
+	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1600)) + " MA in any QC without vibrations.")
 }
 
 function setR17Tooltip() {
@@ -406,8 +406,8 @@ function setR17Tooltip() {
 	//ng3p38/////
 
 	//ACHIEVEMENT ROW 17
-	max.setAttribute('ach-tooltip', "Reach " + shortenCosts(1e15) + " Metastable Energy in 1-day Fluctuate run. Reward: Replicantis boost Fluctuant Dimensions.")
-	noDil.setAttribute('ach-tooltip', "Reach " + "[TBD]" /*shortenCosts(Decimal.pow(10, 1/0))*/ + " replicanti without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
+	max.setAttribute('ach-tooltip', "Reach " + shortenCosts(1e15) + " Metastable Energy in 3-hour Fluctuate run.")
+	noDil.setAttribute('ach-tooltip', "Reach " + "[TBD]" /*shortenCosts(pow10(1/0))*/ + " replicanti without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
 }
 
 function setR18Tooltip() {
@@ -422,13 +422,13 @@ function setR18Tooltip() {
 	let dying = el("Are you currently dying?")
 
 	//ACHIEVEMENT ROW 18
-	notrelative.setAttribute('ach-tooltip', "Get " + shorten(Decimal.pow(10, 411))+" dilated time without gaining tachyon particles. Reward: You gain more DT based on the amount of Nanorewards.")
-	error404.setAttribute('ach-tooltip', "Get " + shorten(Decimal.pow(10, 1.6e12))+" antimatter while having only the 1st Dimensions of each type of Dimension and at least 2 normal galaxies.")
+	notrelative.setAttribute('ach-tooltip', "Get " + shorten(pow10(411))+" dilated time without gaining tachyon particles. Reward: You gain more DT based on the amount of Nanorewards.")
+	error404.setAttribute('ach-tooltip', "Get " + shorten(pow10(1.6e12))+" antimatter while having only the 1st Dimensions of each type of Dimension and at least 2 normal galaxies.")
 	ie.setAttribute('ach-tooltip', "???")
 	wasted.setAttribute('ach-tooltip', "Get " + shorten(1.1e7) + " TT without having TT generation, keeping your previous TT, and respeccing studies. Reward: While you have less than 1 hour worth of TT production, you gain 10x as much TT.")
 	protonsDecay.setAttribute('ach-tooltip', "Unlock Tree of Decay. Reward: You keep the two thirds power of your preons upon quantum when outside of a Quantum Challenge.")
-	stop.setAttribute('ach-tooltip', "Get the replicanti reset requirement to " + shorten(Decimal.pow(10, 1.25e7)) + ". Reward: Getting a normal replicant manually doesn't reset your replicanti and can be automated.")
-	dying.setAttribute('ach-tooltip', "Reach " + shorten(Decimal.pow(10, 2.75e5)) + " IP while dilated, in PC6+8, and without having time studies. Reward: Branches are faster based on your Meta-Dimension Boosts.")
+	stop.setAttribute('ach-tooltip', "Get the replicanti reset requirement to " + shorten(pow10(1.25e7)) + ". Reward: Getting a normal replicant manually doesn't reset your replicanti and can be automated.")
+	dying.setAttribute('ach-tooltip', "Reach " + shorten(pow10(2.75e5)) + " IP while dilated, in PC6+8, and without having time studies. Reward: Branches are faster based on your Meta-Dimension Boosts.")
 }
 
 function setR19Tooltip() {
@@ -443,10 +443,10 @@ function setR19Tooltip() {
 	let soLife = el("And so your life?")
 
 	//ACHIEVEMENT ROW 19
-	gofast.setAttribute('ach-tooltip', "Get " + shorten(Decimal.pow(10, 1185)) + " EP first, and then square your EP by disabling dilation while Big Ripped. Reward: Space shards multiply quark gain.")
-	immunity.setAttribute('ach-tooltip', "Get " + shorten(Decimal.pow(10, 8e7)) + " antimatter with one normal galaxy while in Eternity Challenge 7 and big ripped. Reward: Infinite Time is 3% stronger.")
+	gofast.setAttribute('ach-tooltip', "Get " + shorten(pow10(1185)) + " EP first, and then square your EP by disabling dilation while Big Ripped. Reward: Space shards multiply quark gain.")
+	immunity.setAttribute('ach-tooltip', "Get " + shorten(pow10(8e7)) + " antimatter with one normal galaxy while in Eternity Challenge 7 and big ripped. Reward: Infinite Time is 3% stronger.")
 	notSmart.setAttribute('ach-tooltip', "Get " + shorten(1e215) + " Time Shards without having Time Study 11 while Big Ripped. Reward: Meta Dimensions get a multiplier based on time shards.")
-	soLife.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 3.5e5)) + " IP in Big Rip while dilated, with no EP multiplier upgrades and time studies. Reward: Square the Ghost Particle gain, with a hardcap at " + shortenCosts(1e10) + "x, and the hardcap is further lowered if you have more than " + shortenCosts(1e60) + " Ghost Particles.")
+	soLife.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(3.5e5)) + " IP in Big Rip while dilated, with no EP multiplier upgrades and time studies. Reward: Square the Ghost Particle gain, with a hardcap at " + shortenCosts(1e10) + "x, and the hardcap is further lowered if you have more than " + shortenCosts(1e60) + " Ghost Particles.")
 }
 
 function setR20Tooltip() {
@@ -469,9 +469,9 @@ function setR20Tooltip() {
 
 	//ACHIEVEMENT ROW 20
 	finite.setAttribute('ach-tooltip', "Get " + shortenCosts(1e33) + " Space Shards without Breaking Eternity within this Ghostify. Reward: Outside of Big Rips, Tree Upgrades are 10% stronger. In Big Rips, 8th Time Dimensions gain an small exponent boost based on your current Ghostify time.")
-	really.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 5000)) + " matter in Big Rip.")
-	willenough.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 1/0)) + " replicanti." + (willenoughReward != "" ? " Reward: " + willenoughReward + "." : ""))
-	pls.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 9.4e5)) + " IP in Big Rip while dilated, with no EP multiplier upgrades, time studies, and Break Eternity within this Ghostify. Reward: Each time you become a ghost, you gain " + shortenDimensions(2e3) + " galaxies worth of generated neutrinos, multiplied by your best-ever galaxy amount across all Big Rips.")
+	really.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(5000)) + " matter in Big Rip.")
+	willenough.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(1/0)) + " replicanti." + (willenoughReward != "" ? " Reward: " + willenoughReward + "." : ""))
+	pls.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(9.4e5)) + " IP in Big Rip while dilated, with no EP multiplier upgrades, time studies, and Break Eternity within this Ghostify. Reward: Each time you become a ghost, you gain " + shortenDimensions(2e3) + " galaxies worth of generated neutrinos, multiplied by your best-ever galaxy amount across all Big Rips.")
 }
 
 function setBMTooltip() {
@@ -498,11 +498,11 @@ function setR21Tooltip() {
 	let arent = el("Aren't you already dead?")
 
 	//ACHIEVEMENT ROW 21
-	uc.setAttribute('ach-tooltip', "Become a ghost with at least "+shortenCosts(Decimal.pow(10, 2.2e5))+" EP without starting Eternity Challenge 10 while Big Ripped. Reward: Meta-Dimension Boosts no longer reset Meta Dimensions.")
+	uc.setAttribute('ach-tooltip', "Become a ghost with at least "+shortenCosts(pow10(2.2e5))+" EP without starting Eternity Challenge 10 while Big Ripped. Reward: Meta-Dimension Boosts no longer reset Meta Dimensions.")
 	mi.setAttribute('ach-tooltip', "Get " + shorten(1/0) + " infinities. Reward: You gain banked infinites and eternities when going Quantum or Big Ripping the universe.")
 	wd.setAttribute('ach-tooltip', "???")
 	radioDecay.setAttribute('ach-tooltip', "Get 10 total Radioactive Decays. Reward: You get 1 galaxy worth of generated neutrinos per second.")
-	arent.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 1.8e6)) + " IP while dilated and Big Ripped and without having studies, EP mult upgrades, Tree Upgrades, and Break Eternity within this Ghostify. Reward: ???")
+	arent.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(1.8e6)) + " IP while dilated and Big Ripped and without having studies, EP mult upgrades, Tree Upgrades, and Break Eternity within this Ghostify. Reward: ???")
 }
 
 function setR22Tooltip() {
@@ -518,9 +518,9 @@ function setR22Tooltip() {
 
 	//ACHIEVEMENT ROW 22
 	ee.setAttribute('ach-tooltip', "Get " + shorten(1/0) + " eternities. Reward: Boost quark gain by 10 per Light Empowerment squared.")
-	oc.setAttribute('ach-tooltip', "Become a ghost with at least " + shortenCosts(Decimal.pow(10, 3.75e5)) + " EP while Big Ripped with the Anti-Dilation modifier.")
-	btco.setAttribute('ach-tooltip', "Complete Paired Challenge 1 after getting " + shortenCosts(Decimal.pow(10, 1.65e9)) + " antimatter in Quantum Challenges 6 and 8. Reward: Ghostifies only makes you lose 25% of your radiocative decays.")
-	tdc.setAttribute('ach-tooltip', "Complete Eternity Challenge 11 with " + shortenCosts(Decimal.pow(10, 15500)) + " IP in a Paired Challenge with the Quantum Challenges 6 and 8 combination and the Anti-Dilation modifier. Reward: Remove the quadratic cost scaling and the level softcap of fifth Tree of Decay upgrade and make it based on best meta-antimatter over Ghostifies, instead of over quantums.")
+	oc.setAttribute('ach-tooltip', "Become a ghost with at least " + shortenCosts(pow10(3.75e5)) + " EP while Big Ripped with the Anti-Dilation modifier.")
+	btco.setAttribute('ach-tooltip', "Complete Paired Challenge 1 after getting " + shortenCosts(pow10(1.65e9)) + " antimatter in Quantum Challenges 6 and 8. Reward: Ghostifies only makes you lose 25% of your radiocative decays.")
+	tdc.setAttribute('ach-tooltip', "Complete Eternity Challenge 11 with " + shortenCosts(pow10(15500)) + " IP in a Paired Challenge with the Quantum Challenges 6 and 8 combination and the Anti-Dilation modifier. Reward: Remove the quadratic cost scaling and the level softcap of fifth Tree of Decay upgrade and make it based on best meta-antimatter over Ghostifies, instead of over quantums.")
 	isnotenough.setAttribute('ach-tooltip', "Complete a Paired Challenge with Quantum Challenges 6 and 8 combinations. Reward: Remove the hardcap reduction of 'And so your life?'.")
 }
 
@@ -536,9 +536,9 @@ function setR23Tooltip() {
 	let metae18 = el("Meta-Quintillion")
 
 	//ACHIEVEMENT ROW 23
-	aretheseanother.setAttribute('ach-tooltip', "Reach " + shortenCosts(Decimal.pow(10, 4e4)) + " Quarks. Reward: Gain 500x more Quarks and Ghost Particles and always gain 1% of your Eternity Points upon Eternity per second.")
+	aretheseanother.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(4e4)) + " Quarks. Reward: Gain 500x more Quarks and Ghost Particles and always gain 1% of your Eternity Points upon Eternity per second.")
 	ghostliest.setAttribute('ach-tooltip', "Get " + shorten(Math.pow(Number.MAX_VALUE, 1/4)) + " Ghostifies. Reward: Ghostifies boost the gain of Ghost Particles at a reduced rate.")
-	metae18.setAttribute('ach-tooltip', "Get " + shortenCosts(Decimal.pow(10, 1e18)) + " antimatter. Reward: Distant Antimatter Galaxies scaling is 10% weaker and start with W Bosons and Z Bosons based on Higgs Bosons.")
+	metae18.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1e18)) + " antimatter. Reward: Distant Antimatter Galaxies scaling is 10% weaker and start with W Bosons and Z Bosons based on Higgs Bosons.")
 }
 
 function setR24Tooltip() {
@@ -553,9 +553,9 @@ function setR24Tooltip() {
 	//ng3p108/////
 
 	//ACHIEVEMENT ROW 24
-	einstein.setAttribute('ach-tooltip', "Get " + shortenMoney(Decimal.pow(10, 5e3)) + " Ghost Particles. Reward: You passively generate Ghost Particles while in Big Rip, Light Empowerments reset nothing, and Auto-Extractor and Auto-Enchanter Ghosts are 10x faster.")
+	einstein.setAttribute('ach-tooltip', "Get " + shortenMoney(pow10(5e3)) + " Ghost Particles. Reward: You passively generate Ghost Particles while in Big Rip, Light Empowerments reset nothing, and Auto-Extractor and Auto-Enchanter Ghosts are 10x faster.")
 	x.setAttribute('ach-tooltip', 'Get 242.4 PC ranking. Reward: Start with ' + shortenCosts(1e25) + ' Space Shards and Eternal Matter.')
-	how.setAttribute('ach-tooltip', 'Reach ' + shortenCosts(Decimal.pow(10, Math.sqrt(2) * 1e12)) + ' antimatter in Big Rips.')
+	how.setAttribute('ach-tooltip', 'Reach ' + shortenCosts(pow10(Math.sqrt(2) * 1e12)) + ' antimatter in Big Rips.')
 }
 
 function setR25Tooltip() {
@@ -596,8 +596,8 @@ function setNGP3AchievementTooltip() {
 	setR15Tooltip()
 	setR16Tooltip()
 	setR16p5Tooltip()
-	/*setR17Tooltip()
-	setR18Tooltip()
+	setR17Tooltip()
+	/*setR18Tooltip()
 	setR19Tooltip()
 	setR20Tooltip()
 	setR21Tooltip()

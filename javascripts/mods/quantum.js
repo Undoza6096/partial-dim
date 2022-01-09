@@ -76,19 +76,19 @@ function quarkGain(base) {
 	let ma = getQuantumReqSource().max(1)
 	let maReq = getQuantumReq()
 
-	if (!tmp.ngp3) return Decimal.pow(10, ma.log(10) / Math.log10(Number.MAX_VALUE) - 1).floor()
+	if (!tmp.ngp3) return pow10(ma.log(10) / Math.log10(Number.MAX_VALUE) - 1).floor()
 
 	let log = Math.max(ma.div(maReq).log(2) * 5 / 8192, 0)
 	log = Math.pow(log + 1, 3) - 1
 	if (enB.active("pos", 11)) log += enB_tmp.eff.pos11.gain.log10()
 	
-	let r = Decimal.pow(10, log)
+	let r = pow10(log)
 	if (!base) {
 		r = r.pow(getAQGainExp(r))
-		if (hasAch("ng3pr16")) r = r.times(3)
+		if (hasAch("ng3pr16")) r = r.times(5)
 		if (fluc.unl()) {
 			r = Decimal.pow(r.log10(), 10).add(1)
-			r = r.div(Math.min(r.add(1).log10() / 10 + 1, 3))
+			r = r.times(Math.max(2 / (r.add(1).log10() / 10 + 1), 1))
 		}
 	}
 	return r
@@ -155,7 +155,7 @@ function doQuantumProgress() {
 	var name = ""
 
 	if (!first && quarkGain().gte(Number.MAX_VALUE)) {
-		var fluctuate = Decimal.pow(10, Math.pow(10, 13.5))
+		var fluctuate = pow10(Math.pow(10, 13.5))
 		percentage = player.money.log(fluctuate)
 		name = "Percentage until Fluctuate (" + shortenCosts(fluctuate) + " antimatter)"
 		className = "quantumProgress"
@@ -447,8 +447,8 @@ function handleDispOnQuantum(bigRip, prestige) {
 	let keepECs = qMs.tmp.amt >= 2
 	if (!keepECs && el("eternitychallenges").style.display == "block") showChallengesTab('normalchallenges')
 
-	let keepDil = player.dilation.studies.includes(1)
-	if (!keepDil && el("dilation").style.display == "block") showEternityTab("timestudies", el("eternitystore").style.display=="block")
+	let keepDil = hasDilationStudy(1)
+	if (!keepDil && el("dilation").style.display == "block") showEternityTab("timestudies", el("eternitystore").style.display == "block")
 
 	let keepMDs = keepDil && qMs.tmp.amt >= 6
 	if (!keepMDs && el("metadimensions").style.display == "block") showDimTab("antimatterdimensions")

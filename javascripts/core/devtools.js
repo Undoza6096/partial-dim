@@ -209,19 +209,19 @@ dev.giveAllPCs = function() {
 }
 
 dev.addGHP = function(n){
-	player.ghostify.ghostParticles = player.ghostify.ghostParticles.add(Decimal.pow(10,n))
+	player.ghostify.ghostParticles = player.ghostify.ghostParticles.add(pow10(n))
 }
 
 dev.setNeut = function(n){
-	player.ghostify.neutrinos.electron = Decimal.pow(10,n)
-	player.ghostify.neutrinos.mu = Decimal.pow(10,n)
-	player.ghostify.neutrinos.tau = Decimal.pow(10,n)
+	player.ghostify.neutrinos.electron = pow10(n)
+	player.ghostify.neutrinos.mu = pow10(n)
+	player.ghostify.neutrinos.tau = pow10(n)
 }
 
 dev.addNeut = function(n){
-	player.ghostify.neutrinos.electron = player.ghostify.neutrinos.electron.add(Decimal.pow(10,n))
-	player.ghostify.neutrinos.mu = player.ghostify.neutrinos.mu.add(Decimal.pow(10,n))
-	player.ghostify.neutrinos.tau = player.ghostify.neutrinos.tau.add(Decimal.pow(10,n))
+	player.ghostify.neutrinos.electron = player.ghostify.neutrinos.electron.add(pow10(n))
+	player.ghostify.neutrinos.mu = player.ghostify.neutrinos.mu.add(pow10(n))
+	player.ghostify.neutrinos.tau = player.ghostify.neutrinos.tau.add(pow10(n))
 }
 
 dev.giveNeutrinos = function(n){

@@ -257,7 +257,7 @@ let CONDENSED = {
 		rep: {
 			cost() {
 				let c = ngC.save.repl
-				let cost = Decimal.pow(10, 2 + Math.pow(2, c))
+				let cost = pow10(2 + Math.pow(2, c))
 				return cost
 			},
 			update() {

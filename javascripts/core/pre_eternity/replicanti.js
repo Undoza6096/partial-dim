@@ -164,7 +164,7 @@ function replicantiIntervalCost(interval) {
 		expCost = x.div(1e3).log(0.9) * 10 + 140
 	}
 
-	let r = Decimal.pow(10, expCost)
+	let r = pow10(expCost)
 	if (PCs.milestoneDone(12)) r = r.div(getRepCostDivisor().pow(QCs_tmp.qc1.dilaterEff))
 	return r
 }
@@ -207,7 +207,7 @@ function getRGCost(offset = 0, costChange) {
 				else for (var g = Math.max(gal, scaleStart - 1, gal + offset - 512); g < gal + offset && isFinite(increase); g++) increase += 5 * Math.floor(Math.pow(1.2, g - scaleStart + 6))
 			}
 		}
-		ret = ret.times(Decimal.pow(10, increase))
+		ret = ret.times(pow10(increase))
 	}
 
 	let div = getRepCostDivisor()
@@ -348,7 +348,7 @@ function getReplicantiIntervalMult() {
 		var pos2_log = enB_tmp.eff.pos2.mult.log10()
 		if (pos2_log > 1e5) pos2_log = Math.pow(pos2_log / 1e5, 3/4) * 1e5
 		if (PCs.milestoneDone(32)) pos2_log *= tmp.rep.str //Replicante Tunneling + Clovers
-		interval = interval.div(Decimal.pow(10, pos2_log))
+		interval = interval.div(pow10(pos2_log))
 	}
 	if (tmp.ngC && ngC.tmp) interval = interval.div(ngC.tmp.rep.eff1)
 	return interval
@@ -592,7 +592,8 @@ function useContinuousRep() {
 }
 
 function handleReplTabs() {
-	let major = QCs_tmp.qc1 !== undefined && pH.shown("quantum")
+	let layer = pH.did("fluctuate") ? "fluctuate" : QCs_tmp.qc1 !== undefined ? "quantum" : ""
+	let major = pH.shown(layer)
 
 	if (major != (tmp.repMajor || false)) {
 		el("replicantitabbtn").style.display = major || player.infinityUpgradesRespecced ? "none" : ""

@@ -43,7 +43,7 @@ function gainedInfinityPoints(next) {
 	let div = getIPGainDiv()
 	let uIPM = player.dilation.upgrades.includes("ngp3c5") && tmp.ngC
 
-	if (player.infinityUpgradesRespecced == undefined) var ret = Decimal.pow(10, player.money.e / div - 0.75).times(uIPM ? 1 : getIPMult())
+	if (player.infinityUpgradesRespecced == undefined) var ret = pow10(player.money.e / div - 0.75).times(uIPM ? 1 : getIPMult())
 	else var ret = player.money.div(Number.MAX_VALUE).pow(2 * (1 - Math.log10(2)) / Decimal.log10(Number.MAX_VALUE)).times(uIPM ? 1 : getIPMult())
 	if (hasTS(41)) ret = ret.times(Decimal.pow(tsMults[41](), player.galaxies + player.replicanti.galaxies))
 	if (hasTS(51)) ret = ret.times(tsMults[51]())

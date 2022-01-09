@@ -76,7 +76,7 @@ function getMaxTDCost() {
 	let x = Decimal.pow(Number.MAX_VALUE, 10)
 
 	if (player.currentChallenge == "postcngm3_1") x = E(1e60)
-	else if (player.currentChallenge != "") x = Decimal.pow(10, 1000)
+	else if (player.currentChallenge != "") x = pow10(1000)
 
 	if (player.infinityUpgrades.includes("postinfi53")) x = x.pow(1 + tmp.cp / 3)
 

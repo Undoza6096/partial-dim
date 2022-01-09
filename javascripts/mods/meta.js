@@ -173,7 +173,7 @@ function metaBoost() {
 	if (qMs.tmp.amt >= 25) return
 
 	player.meta.antimatter = getMetaAntimatterStart()
-	if (qMs.tmp.amt < 19) clearMetaDimensions()
+	if (!qMs.isObtained(19)) clearMetaDimensions()
 }
 
 
@@ -246,7 +246,7 @@ function buyMaxMetaDimension(tier, bulk) {
 	tempMA = tempMA.sub(Decimal.pow(mult, add).sub(1).div(mult - 1).times(cost).min(tempMA))
 	bought += add * 10
 
-	if (player.meta.antimatter.lte(Decimal.pow(10, 1e12))) player.meta.antimatter = tempMA
+	if (player.meta.antimatter.lte(pow10(1e12))) player.meta.antimatter = tempMA
 	player.meta[tier].amount = player.meta[tier].amount.plus(bought)
 	player.meta[tier].bought += bought
 	player.meta[tier].cost = getMetaCost(tier, player.meta[tier].bought / 10)

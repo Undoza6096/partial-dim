@@ -32,7 +32,7 @@ function updateQuantumWorth(mode) {
 }
 
 function getQuantumEff(x) {
-	if (fluc.unl()) return Decimal.pow(10, Decimal.div(x, 10).pow(0.1))
+	if (fluc.unl()) return pow10(Decimal.div(x, 10).pow(0.1))
 	return x
 }
 
@@ -207,7 +207,7 @@ function updateColorCharge(update) {
 
 	//Color Charge
 	var charge = colorPowers[sorted[0]]
-	if (quantumWorth.lte(Decimal.pow(10, 1e15))) charge = Decimal.div(
+	if (quantumWorth.lte(pow10(1e15))) charge = Decimal.div(
 			Decimal.sub(usedQuarks[sorted[0]], usedQuarks[sorted[1]]),
 			Decimal.add(usedQuarks[sorted[0]], 1)
 		).times(charge)
@@ -218,7 +218,7 @@ function updateColorCharge(update) {
 	if (enB.active("glu", 12)) {
 		colorCharge.sub = {
 			color: sorted[1],
-			charge: colorPowers[sorted[1]].times(quantumWorth.lte(Decimal.pow(10, 1e15)) ?
+			charge: colorPowers[sorted[1]].times(quantumWorth.lte(pow10(1e15)) ?
 				Decimal.div(
 					Decimal.sub(usedQuarks[sorted[1]], usedQuarks[sorted[2]]),
 					Decimal.add(usedQuarks[sorted[1]], 1)
@@ -468,6 +468,7 @@ function getGluonEffBuff(x) {
 }
 
 function getGluonEffNerf(x, color) {
+	if (hasAch("ng3pr15")) return 0
 	if (!QCs.isntCatched()) return 0
 
 	let mult = 1
@@ -664,23 +665,34 @@ var enB = {
 			var amt = this.target(undefined, true)
 			if (pos.on()) amt = amt.add(enB.pos.target())
 
+			//MULTIPLIER
 			if (hasAch("ng3pr14")) amt = amt.times(1.1)
 			if (str.unl() && str_tmp.effs) amt = amt.times(str_tmp.effs.a1)
 
+			//EXPONENT
+			if (fluc.unl() && FDs_tmp) amt = amt.pow(FDs_tmp.eff_qe)
 			if (PCs.unl() && amt.gt(PCs_tmp.eff1_start)) amt = amt.div(PCs_tmp.eff1_start).pow(this.boosterExp()).times(PCs_tmp.eff1_start)
 
 			return amt
 		},
 		boosterExp(amt, display) {
-			amt = amt || this.target(undefined, true)
+			if (!PCs.unl()) return 1
+			if (!display) {
+				amt = amt || this.target(undefined, true)
+				if (amt.lt(PCs_tmp.eff1_start)) return 1
+			}
+			if (qu_superbalanced()) return 3
+
 			var exp = 1
 			if (hasAch("ng3p35")) exp = 1.02
-			if (PCs.unl() && (display || amt.gte(PCs_tmp.eff1_start))) {
-				exp *= PCs_tmp.eff1_base
-				if (pH.did("fluctuate")) exp *= FDs_tmp.eff_qe
-				if (qu_superbalanced()) exp = 3
-			}
+			exp *= PCs_tmp.eff1_base
+
 			return Math.min(exp, 3)
+		},
+		displayBoosterExp() {
+			var exp = this.boosterExp()
+			if (fluc.unl() && FDs_tmp) exp *= FDs_tmp.eff_qe
+			return exp
 		},
 		gluonEff(x) {
 			let l = getQuantumLogEff(x)
@@ -987,10 +999,9 @@ var enB = {
 			var lvl = this.lvl(x)
 			var eff = evalData(this.chargeEffs[lvl])
 
-			if (fluc.unl() && fluc_tmp.temp.pos) {
-				var scaling = PCs.milestoneDone(42) ? Math.sqrt(1 - (PCs_save.lvl - 1) / 28) : 1
-				eff = Math.pow(eff, 1 - scaling) * Math.pow(PCs.milestoneDone(42) ? 8 : 6, scaling)
-			}
+			var scaling = PCs.milestoneDone(42) ? Math.sqrt(1 - (PCs_save.lvl - 1) / 28) : 1
+			if (fluc.unl() && fluc_tmp.temp.pos) scaling *= fluc_tmp.temp.pos
+			if (scaling < 1) eff = Math.pow(eff, 1 - scaling) * Math.pow(PCs.milestoneDone(42) ? 8 : 6, scaling)
 
 			if (str.unl() && str_tmp.effs) eff += str_tmp.effs.b1
 			if (hasAch("ng3pr13")) eff += 0.5
@@ -1364,7 +1375,7 @@ var enB = {
 			el("enB_" + type + i + "_name").textContent = shiftDown ? (data[i].title || "Unknown title.") : (data.name + " Boost #" + i)
 			el("enB_" + type + i + "_type").innerHTML = "(" + wordizeList(list, false, " - ", false) + ")" + (data[i].activeDispReq ? "<br>Requirement: " + data[i].activeDispReq() : "")
 
-			if (enB_tmp.eff[type + i] !== undefined) getEl("enB_" + type + i + "_eff").innerHTML = data[i].disp(enB_tmp.eff[type + i])
+			if (enB_tmp.eff[type + i] !== undefined) el("enB_" + type + i + "_eff").innerHTML = data[i].disp(enB_tmp.eff[type + i])
 		}
 	}
 }
@@ -1460,9 +1471,10 @@ function updateGluonsTab() {
 		el("entangle_" + glu).innerHTML = "<b style='font-size: 12px'>Entangle " + glu.toUpperCase() + "</b>" +
 			(glu == typeUsed ? "<br>(" + shortenDimensions(tmp.glB.enGlu) + " power)<br>(+" + shorten(getQEGluonsPortion() * tmp.qe.mult / tmp.qe.div) + " quantum energy, " + shorten(enB.glu.gluonEff(tmp.glB.enGlu)) + "x stronger boosts)" : "")
 	}
-
 	enB.updateOnTick("glu")
-	el("enB_eff").textContent = "Quantum Power: " + shorten(enB_tmp.eb) + (enB.glu.boosterExp() > 1 ? " (^" + shorten(enB.glu.boosterExp()) + ")" : "")
+
+	var exp = enB.glu.displayBoosterExp()
+	el("enB_eff").textContent = "Quantum Power: " + shorten(enB_tmp.eb) + (exp > 1 ? " (^" + shorten(exp) + ")" : "")
 }
 
 //Display: On load

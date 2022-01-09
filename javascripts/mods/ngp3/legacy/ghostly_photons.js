@@ -27,13 +27,13 @@ function getDMProduction() {
 function getGHRProduction() {
 	let log = player.ghostify.ghostlyPhotons.amount.sqrt().div(2).log10()
 	if (player.ghostify.neutrinos.boosts >= 11) log += tmp.nb[11].log10()
-	return Decimal.pow(10, log).times(getFinalPhotonicFlow())
+	return pow10(log).times(getFinalPhotonicFlow())
 }
 
 function getGHRCap() {
 	let log = player.ghostify.ghostlyPhotons.darkMatter.pow(0.4).times(1e3).log10()
 	if (player.ghostify.neutrinos.boosts >= 11) log += tmp.nb[11].log10()
-	return Decimal.pow(10, log)
+	return pow10(log)
 }
 
 function getLightThreshold(l) {

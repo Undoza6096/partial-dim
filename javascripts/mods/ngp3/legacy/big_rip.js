@@ -18,8 +18,8 @@ function toggleBigRipConf() {
 function unstoreTT() {
 	if (qu_save.bigRip.storedTS===undefined) return
 	player.timestudy.theorem = qu_save.bigRip.storedTS.tt
-	player.timestudy.amcost = Decimal.pow(10, 2e4 * (qu_save.bigRip.storedTS.boughtA + 1))
-	player.timestudy.ipcost = Decimal.pow(10, 100 * qu_save.bigRip.storedTS.boughtI)
+	player.timestudy.amcost = pow10(2e4 * (qu_save.bigRip.storedTS.boughtA + 1))
+	player.timestudy.ipcost = pow10(100 * qu_save.bigRip.storedTS.boughtI)
 	player.timestudy.epcost = Decimal.pow(2, qu_save.bigRip.storedTS.boughtE)
 	var newTS = []
 	var newMS = []
@@ -66,7 +66,7 @@ function getSpaceShardsGain() {
 		log4log = (log4log - Math.pow(2, capped) - start + 2) / Math.pow(2, capped) + capped + start - 1
 		log = Math.pow(4, log4log)
 	}
-	ret = Decimal.pow(10, log)
+	ret = pow10(log)
 	*/
 
 	if (isNaN(ret.e)) return E(0)
@@ -179,7 +179,7 @@ function getEMGain() {
 
 	if (!tmp.be) log /= 2
 
-	return Decimal.pow(10, log).floor()
+	return pow10(log).floor()
 }
 
 var breakUpgCosts = [1, 1e3, 2e6, 2e11, 8e17, 1e45, null, 1e290, E("1e350"), E("1e375"), E("1e2140"), E("1e2800"), E("1e3850")]

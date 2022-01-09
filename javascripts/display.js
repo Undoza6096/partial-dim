@@ -249,11 +249,11 @@ function scienceNumberDisplay(){
 function infinityRespecedInfinityDisplay(){
 	if (setUnlocks.length > player.setsUnlocked) el("nextset").textContent = "Next set unlocks at " + formatValue(player.options.notation, setUnlocks[player.setsUnlocked], 2, 0, true) + "."
 	el("infi1pow").textContent = getFullExpansion(player.infinityUpgradesRespecced[1] * 10)
-	el("infi1cost").textContent = shortenCosts(Decimal.pow(10, player.infinityUpgradesRespecced[1]))
-	el("infi1").className = player.infinityPoints.lt(Decimal.pow(10, player.infinityUpgradesRespecced[1])) ? "infinistorebtnlocked" : "infinimultbtn"
+	el("infi1cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[1]))
+	el("infi1").className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[1])) ? "infinistorebtnlocked" : "infinimultbtn"
 	el("infi3pow").textContent = formatValue(player.options.notation, getLimit(), 2, 0, true)
-	el("infi3cost").textContent = shortenCosts(Decimal.pow(10, player.infinityUpgradesRespecced[3]))
-	el("infi3").className = player.infinityPoints.lt(Decimal.pow(10, player.infinityUpgradesRespecced[3])) ? "infinistorebtnlocked" : "infinimultbtn"
+	el("infi3cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[3]))
+	el("infi3").className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[3])) ? "infinistorebtnlocked" : "infinimultbtn"
 }
 
 function infinityUpgradesDisplay(){
@@ -273,14 +273,14 @@ function infinityUpgradesDisplay(){
 	el("infi22desc").innerHTML = "Second and Seventh Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
 	el("infi23desc").innerHTML = "Fourth and Fifth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
 	el("infi31desc").innerHTML = "Normal Dimensions gain a multiplier based on time spent in this Infinity" + (tmp.ngC ? " and total antimatter" : "") + "<br>Currently: " + shorten(infUpg13Pow()) + "x"
-	var infi32middle = player.infinityPoints.lt(Decimal.pow(10, 1e10)) ? " <br> Currently: " + formatValue(player.options.notation, getUnspentBonus(), 2, 2) + "x" : ""
+	var infi32middle = player.infinityPoints.lt(pow10(1e10)) ? " <br> Currently: " + formatValue(player.options.notation, getUnspentBonus(), 2, 2) + "x" : ""
 	el("infi32desc").innerHTML = "1st Dimension gets a multiplier based on unspent IP " + infi32middle
 }
 
 function preBreakUpgradeDisplay(){
 	if (canBuyIPMult()) el("infiMult").className = "infinimultbtn"
 	else el("infiMult").className = "infinistorebtnlocked"
-	var infiMultEnding = player.infinityPoints.lt(Decimal.pow(10, 1e10)) ? "<br>Currently: " + shorten(getIPMult()) + "x<br>Cost: " + shortenCosts(player.infMultCost) + " IP" : ""
+	var infiMultEnding = player.infinityPoints.lt(pow10(1e10)) ? "<br>Currently: " + shorten(getIPMult()) + "x<br>Cost: " + shortenCosts(player.infMultCost) + " IP" : ""
 	el("infiMult").innerHTML = "You get " + (Math.round(getIPMultPower() * 100) / 100) + "x more IP." + infiMultEnding
 	el("nextset").textContent = ""
 	if (player.infinityUpgradesRespecced != undefined) {
@@ -297,7 +297,7 @@ function preBreakUpgradeDisplay(){
 
 		if (inNGM(2)) el("infi33desc").innerHTML = "Dimension Boosts are stronger based on Infinity Points<br>Currently: " + (1.2 + 0.05 * player.infinityPoints.max(1).log(10)).toFixed(2) + "x"
 
-		var infi34Middle = player.infinityPoints.lt(Decimal.pow(10, 1e10)) ? "<br>Currently: " + shortenDimensions(getIPMult()) + " every " + timeDisplay(player.bestInfinityTime * 10) : ""
+		var infi34Middle = player.infinityPoints.lt(pow10(1e10)) ? "<br>Currently: " + shortenDimensions(getIPMult()) + " every " + timeDisplay(player.bestInfinityTime * 10) : ""
 		el("infi34desc").innerHTML = "Generate IP based on your fastest Infinity " + infi34Middle
 	}
 	el("lockedset1").style.display = "none"
@@ -305,8 +305,8 @@ function preBreakUpgradeDisplay(){
 		el("lockedset1").style.display = ""
 		for (let u = 4; u < 7; u++) {
 			el("infi" + u + "pow").textContent = u == 5 ? getInfUpgPow(5).toFixed(2) : getFullExpansion(getInfUpgPow(u))
-			el("infi" + u + "cost").textContent = shortenCosts(Decimal.pow(10, player.infinityUpgradesRespecced[u] + powAdds[u]))
-			el("infi" + u).className = player.infinityPoints.lt(Decimal.pow(10, player.infinityUpgradesRespecced[u] + powAdds[u])) ? "infinistorebtnlocked" : "infinimultbtn"
+			el("infi" + u + "cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[u] + powAdds[u]))
+			el("infi" + u).className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[u] + powAdds[u])) ? "infinistorebtnlocked" : "infinimultbtn"
 		}	
 	}
 }
@@ -373,7 +373,7 @@ function lifetimeTimeDisplay(years){
 
 function infoScaleDisplay(){
 	if (aarMod.hideRepresentation) el("infoScale").textContent=""
-	else if (player.money.gt(Decimal.pow(10, 3 * 86400 * 365.2425 * 79.3 / 10))) {
+	else if (player.money.gt(pow10(3 * 86400 * 365.2425 * 79.3 / 10))) {
 		var years = player.money.log10() / 3 / 86400 / 365.2425
 		var thisYear = new Date().getFullYear() || 2020
 		if (years >= 1e13){
@@ -646,7 +646,7 @@ function replicantiDisplay() {
 		let limit = getReplicantiLimit(true)
 		let time = hasDilationUpg(6)
 		let dil = hasAch("r137") && tmp.ngp3_boost
-		let fluc = hasAch("ng3p36")
+		let fluc = pH.did("fluctuate")
 		el("replicantiamount").textContent = shortenDimensions(player.replicanti.amount) + (limit.lt(1/0) ? (" / ") + shortenDimensions(limit) : "")
 		el("replicantieff").textContent = shiftDown ? "Effective Replicantis: " + shorten(getReplEff()) : ""
 		el("replicantimult").textContent = (fluc ? "~" : "") + shorten(fluc ? FDs.repMult(1) : dil ? getReplDilBonus() : time ? tmp.rm.pow(0.1) :getIDReplMult()) + "x"
@@ -670,7 +670,7 @@ function repApproxDisplay() {
 	//ESTIMATE
 	el("replicantiapprox").innerHTML = 
 		hasTS(192) ? 
-			"Replicanti increases by " + (tmp.rep.est < Math.log10(2) ? "x2.00 per " + timeDisplayShort(Math.log10(2) / tmp.rep.est * 10) : (tmp.rep.est.gte(1e4) ? shorten(tmp.rep.est) + " OoMs" : "x" + shorten(Decimal.pow(10, tmp.rep.est.toNumber()))) + " per second") + ".<br>" +
+			"Replicanti increases by " + (tmp.rep.est < Math.log10(2) ? "x2.00 per " + timeDisplayShort(Math.log10(2) / tmp.rep.est * 10) : (tmp.rep.est.gte(1e4) ? shorten(tmp.rep.est) + " OoMs" : "x" + shorten(pow10(tmp.rep.est.toNumber()))) + " per second") + ".<br>" +
 			"Replicate interval slows down by " + tmp.rep.speeds.inc.toFixed(3) + "x per " + getFullExpansion(Math.floor(tmp.rep.speeds.exp)) + " OoMs.<br>" +
 			(shiftDown && hasDilationUpg("ngpp2") ? "(2x slower per " + getFullExpansion(Math.floor(getRepSlowdownBase2(tmp.rep.speeds.exp))) + " OoMs)" : "") :
 		"Approximately "+ timeDisplay(Math.max((Math.log(Number.MAX_VALUE) - tmp.rep.ln) / tmp.rep.est.toNumber(), 0) * 10 * tmp.ec12Mult) + " until " + shorten(Number.MAX_VALUE) + " Replicantis."
@@ -680,7 +680,7 @@ function repApproxDisplay() {
 function repChanceDisplay() {
 	//CHANCE
 	let chance = tmp.rep.chance
-	let chanceDisplayEnding = (isChanceAffordable() && player.infinityPoints.lt(Decimal.pow(10, 1e10)) ? "<br>+1% Cost: " + shortenCosts(getRepChanceCost()) + " IP" : "")
+	let chanceDisplayEnding = (isChanceAffordable() && player.infinityPoints.lt(pow10(1e10)) ? "<br>+1% Cost: " + shortenCosts(getRepChanceCost()) + " IP" : "")
 	el("replicantichance").innerHTML = "Replicate " + (tmp.rep.freq ? "amount: " + shorten(tmp.rep.freq) + "x" : "chance: " + formatPercentage(chance, 0) + "%") + chanceDisplayEnding
 	el("replicantichance").className = (player.infinityPoints.gte(getRepChanceCost()) && isChanceAffordable()) ? "storebtn" : "unavailablebtn"
 }
@@ -690,7 +690,7 @@ function repIntervalDisplay() {
 	let baseInt = player.replicanti.interval
 	let interval = Decimal.div(tmp.rep.interval, 1e3).times(10)
 	el("replicantiinterval").innerHTML = "Interval: " + timeDisplayShort(interval, true, 3) +
-		(isIntervalAffordable() && player.infinityPoints.lt(Decimal.pow(10, 1e10)) ?
+		(isIntervalAffordable() && player.infinityPoints.lt(pow10(1e10)) ?
 			"<br> -> " + timeDisplayShort(interval.times(getReplicantiBaseInterval(baseInt, 1).div(getReplicantiBaseInterval(baseInt))), true, 3) + 
 			" Cost: " + shortenCosts(replicantiIntervalCost(baseInt)) + " IP"
 		: "")
@@ -703,7 +703,7 @@ function repGalDisplay() {
 	let replGalOver = getMaxRG() - replGal
 	let replGalScale = replGal >= (tmp.ngC ? 250 : 400) ? 2 : replGal >= 100 ? 1 : 0
 	let replGalName = (replGalScale ? getGalaxyScaleName(replGalScale) : "Max ") + "Replicated Galaxies"
-	let replGalCostPortion = player.infinityPoints.lt(Decimal.pow(10, 1e10)) && player.replicanti.galCost.lt(1/0) ? "<br>+1 Cost: " + shortenCosts(getRGCost()) + " IP" : ""
+	let replGalCostPortion = player.infinityPoints.lt(pow10(1e10)) && player.replicanti.galCost.lt(1/0) ? "<br>+1 Cost: " + shortenCosts(getRGCost()) + " IP" : ""
 	el("replicantimax").innerHTML = replGalName + ": " + getFullExpansion(replGal) + (replGalOver > 0 ? "+" + getFullExpansion(replGalOver) : "") + replGalCostPortion
 	el("replicantireset").innerHTML = (
 		hasAch("ngpp16") ? "Get "
@@ -737,7 +737,7 @@ function initialTimeStudyDisplay(){
 	el("73desc").textContent = "Currently: " + shortenMoney(tmp.sacPow.pow(0.005).max(1).min("1e1300")) + "x"
 	el("82desc").textContent = "Currently: " + shortenMoney(Decimal.pow(1.0000109, Decimal.pow(getTotalDBs(), 2)).min(player.meta==undefined?1/0:'1e80000')) + "x"
 	el("83desc").textContent = "Currently: " + shorten(tsMults[83]().pow(dbExp)) + "x"
-	el("91desc").textContent = "Currently: " + shortenMoney(Decimal.pow(10, Math.min(player.thisEternity, 18000)/60)) + "x"
+	el("91desc").textContent = "Currently: " + shortenMoney(pow10(Math.min(player.thisEternity, 18000)/60)) + "x"
 	el("92desc").textContent = "Currently: " + shortenMoney(Decimal.pow(2, 600/Math.max(player.bestEternity, 20))) + "x"
 	el("93desc").textContent = "Currently: " +  shortenMoney(Decimal.pow(player.totalTickGained, 0.25).max(1)) + "x"
 	el("121desc").textContent = "Currently: " + (tmp.ngp3_boost && hasAch("ngpp11") ? 50 : (253 - averageEp.dividedBy(player.epmult).dividedBy(10).min(248).max(3))/5).toFixed(1) + "x"
@@ -746,8 +746,8 @@ function initialTimeStudyDisplay(){
 	el("142desc").textContent = "You gain " + shortenCosts(1e25) + "x more IP"
 	el("143desc").textContent = "Currently: " + shortenMoney(Decimal.pow(15, Math.log(player.thisInfinityTime)*Math.pow(player.thisInfinityTime, 0.125))) + "x"
 	el("151desc").textContent = shortenCosts(1e4) + "x multiplier on all Time Dimensions"
-	el("161desc").textContent = shortenCosts(Decimal.pow(10, (inNGM(2) ? 6660 : 616) *  ( aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all normal dimensions"
-	el("162desc").textContent = shortenCosts(Decimal.pow(10, (inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all Infinity dimensions"
+	el("161desc").textContent = shortenCosts(pow10((inNGM(2) ? 6660 : 616) *  ( aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all normal dimensions"
+	el("162desc").textContent = shortenCosts(pow10((inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all Infinity dimensions"
 	el("192desc").textContent = aarMod.ngp3c ? "The Replicanti limit is multiplied by your Time Shards." : "You can get beyond " + shortenMoney(Number.MAX_VALUE) + " replicantis, but the interval is increased the more you have"
 	el("193desc").textContent = "Currently: " + shortenMoney(Decimal.pow(1.03, Decimal.min(1e7, Decimal.div(getEternitied(), tmp.ngC ? 1e6 : 1))).min("1e13000")) + "x"
 	el("212desc").textContent = "Currently: " + ((tsMults[212]() - 1) * 100).toFixed(2) + "%"
@@ -1052,7 +1052,7 @@ function doFeatureProgress() {
 	} else if (str.unl()) {
 		res = player.money
 		resFormat = shortenCosts
-		reqNum = Decimal.pow(10, Math.pow(10, 13.5))
+		reqNum = pow10(Math.pow(10, 13.5))
 		req = shortenCosts(reqNum) + " antimatter"
 		percentage = res.log(reqNum)
 		feature = "Fluctuate"
@@ -1137,9 +1137,9 @@ var googolMilestones = [
 ]
 
 function doGoogologicalProgress() {
-	var am = new Decimal(player.totalmoney)
+	var am = E(player.totalmoney)
 	var req = googolMilestones[tmp.googol][1]
-	while (googolMilestones.length - 1 >= tmp.googol && am.gte(Decimal.pow(10, req))) {
+	while (googolMilestones.length - 1 >= tmp.googol && am.gte(pow10(req))) {
 		tmp.googol++
 		req = googolMilestones[tmp.googol][1]
 	}

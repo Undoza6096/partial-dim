@@ -243,7 +243,7 @@ function getECGoal(x) {
 	if (x == "eterc13" && completions >= 3) exp += Math.pow(completions, 4) * 5e5
 	if (x == "eterc14" && completions >= 1) exp *= Math.pow(1.5, completions / 2)
 
-	return Decimal.pow(10, exp)
+	return pow10(exp)
 }
 
 function updateEternityChallenges() {
@@ -348,7 +348,7 @@ function getECReward(x) {
 		if (!aarMod.newGameExpVersion) return r.plus(1).min("1e400")
 		if (r.lt("1e400")) return r.plus(1)
 		let log = Math.sqrt(r.log10() * 400)
-		return Decimal.pow(10, Math.min(50000, log))	
+		return pow10(Math.min(50000, log))	
 	}
 	if (x == 10) {
 		let inf = getInfinitied()

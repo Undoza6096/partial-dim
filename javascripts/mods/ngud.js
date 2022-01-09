@@ -128,7 +128,7 @@ function updateBlackhole() {
 	el("blackholePowPerSec").innerHTML = "You are getting " + shortenMoney(getBlackholeDimensionProduction(1)) + " black hole power per second.";
 	el("DilMultAmount").innerHTML = formatValue(player.options.notation, getBlackholePowerEffect(), 2, 2)
 	el("InfAndReplMultAmount").innerHTML = formatValue(player.options.notation, getBlackholePowerEffect().pow(1/3), 2, 2)
-	el("blackholeDil").innerHTML = "Feed the black hole with dilated time<br>Cost: "+shortenCosts(Decimal.pow(10, player.blackhole.upgrades.dilatedTime+(aarMod.nguspV?18:20)))+" dilated time";
+	el("blackholeDil").innerHTML = "Feed the black hole with dilated time<br>Cost: "+shortenCosts(pow10(player.blackhole.upgrades.dilatedTime+(aarMod.nguspV?18:20)))+" dilated time";
 	el("blackholeInf").innerHTML = "Feed the black hole with banked infinities<br>Cost: "+formatValue(player.options.notation, Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round(), 1, 1)+" banked infinities";
 	el("blackholeRepl").innerHTML = "Feed the black hole with replicanti<br>Cost: "+shortenCosts(E("1e20000").times(Decimal.pow("1e1000", player.blackhole.upgrades.replicanti)))+" replicanti";
 	el("blackholeDil").className = canFeedBlackHole(1) ? 'eternityupbtn' : 'eternityupbtnlocked';
@@ -163,33 +163,33 @@ function drawBlackhole(ts) {
 
 function canFeedBlackHole (i) {
 	if (i == 1) {
-		return Decimal.pow(10, player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20)).lte(player.dilation.dilatedTime)
+		return pow10(player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20)).lte(player.dilation.dilatedTime)
 	} else if (i == 2) {
 		return Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round().lte(player.infinitiedBank)
 	} else if (i == 3) {
-		return Decimal.pow(10, 1e3 * player.blackhole.upgrades.replicanti + 2e4).lte(player.replicanti.amount)
+		return pow10(1e3 * player.blackhole.upgrades.replicanti + 2e4).lte(player.replicanti.amount)
 	}
 }
 
 function feedBlackHole(i, bulk) {
 	if (!canFeedBlackHole(i)) return
 	if (i == 1) {
-		let cost = Decimal.pow(10, player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20))
+		let cost = pow10(player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20))
 		if (bulk) {
 			let toBuy = Math.floor(player.dilation.dilatedTime.div(cost).times(9).plus(1).log10())
-			let toSpend = Decimal.pow(10, toBuy).sub(1).div(9).times(cost)
+			let toSpend = pow10(toBuy).sub(1).div(9).times(cost)
 			player.dilation.dilatedTime = player.dilation.dilatedTime.minus(player.dilation.dilatedTime.min(toSpend))
 			player.blackhole.upgrades.dilatedTime += toBuy
 			player.blackhole.upgrades.total += toBuy
 		} else {
-			player.dilation.dilatedTime = player.dilation.dilatedTime.minus(Decimal.pow(10, player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20)))
+			player.dilation.dilatedTime = player.dilation.dilatedTime.minus(pow10(player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20)))
 			player.blackhole.upgrades.dilatedTime++
 		}
 	} else if (i == 2) {
 		let cost = Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round()
 		if (bulk) {
 			let toBuy = Math.floor(Decimal.div(player.infinitiedBank, cost).plus(1).log(2))
-			let toSpend = Decimal.pow(10, 1e3 * toBuy - 1).times(cost).round()
+			let toSpend = pow10(1e3 * toBuy - 1).times(cost).round()
 			player.infinitiedBank = c_sub(player.infinitiedBank, c_min(player.infinitiedBank, toBuy))
 			player.blackhole.upgrades.bankedInfinities += toBuy
 			player.blackhole.upgrades.total += toBuy
@@ -198,10 +198,10 @@ function feedBlackHole(i, bulk) {
 			player.blackhole.upgrades.bankedInfinities++
 		}
 	} else if (i == 3) {
-		let cost = Decimal.pow(10, 1e3 * player.blackhole.upgrades.replicanti + 2e4)
+		let cost = pow10(1e3 * player.blackhole.upgrades.replicanti + 2e4)
 		if (bulk) {
 			let toBuy = Math.floor(getReplEff().div(cost).log10() / 1e3 + 1)
-			let toSpend = Decimal.pow(10, 1e3 * toBuy - 1).times(cost)
+			let toSpend = pow10(1e3 * toBuy - 1).times(cost)
 			player.replicanti.amount = player.replicanti.amount.minus(player.replicanti.amount.min(toSpend)).max(1)
 			player.blackhole.upgrades.replicanti += toBuy
 			player.blackhole.upgrades.total += toBuy

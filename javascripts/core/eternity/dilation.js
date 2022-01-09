@@ -118,6 +118,7 @@ function getTPMult() {
 	if (tmp.ngp3) {
 		if (hasAch("ngpp13")) ret = ret.times(2)
 		if (hasAch("ng3p11")) ret = ret.times(Math.min(Math.max(Math.log10(player.eternityPoints.max(1).log10()) / 2, 1), 2.5))
+		if (hasAch("ng3pr16")) ret = ret.times(5)
 		if (hasMTS(264)) ret = ret.times(doubleMSMult(5)) //Mastery Studies
 		if (tmp.quActive) ret = ret.times(colorBoosts.b) //Color Powers
 	}
@@ -186,7 +187,7 @@ function getReqForTPGain() {
 
 	let log = tp.div(getTPMult()).pow(1 / getTPExp()).times(getAMEffToTP())
 	if (log.gt(player.totalmoney.log10())) return 0
-	return Decimal.pow(10, log.toNumber()).max("1e400")
+	return pow10(log.toNumber()).max("1e400")
 }
 
 function getReqForTPGainDisp() {
@@ -257,7 +258,7 @@ function dilates(x, m) {
 	if (a) {
 		if (m != "tick") x = x.max(1)
 		else if (player.galacticSacrifice == undefined) x = x.times(1e3)
-		if (x.gt(10)) x = Decimal.pow(10, Math.pow(x.log10(), e))
+		if (x.gt(10)) x = pow10(Math.pow(x.log10(), e))
 		if (m == "tick" && player.galacticSacrifice == undefined) x = x.div(1e3)
 		if (m == "tick" && x.lt(1)) x = Decimal.div(1, x)
 	}
@@ -439,7 +440,7 @@ function getRebuyableDilUpgCost(id, lvl) {
 
 	if (aarMod.nguspV) {
 		if (id >= 4) cost = cost.times(1e7)
-		if (id >= 3 && cost.gte(1e25)) cost = Decimal.pow(10, Math.pow(cost.log10() / 2.5 - 5, 2))
+		if (id >= 3 && cost.gte(1e25)) cost = pow10(Math.pow(cost.log10() / 2.5 - 5, 2))
 	} else if (id >= 3) {
 		if (id == 4 && tmp.ngp3) cost = cost.div(Math.pow(Math.max(10 - lvl, 1), 2))
 		if (player.meta != undefined && lvl >= costGroup[2]) {
@@ -525,7 +526,10 @@ function getTTGenPart(x) {
 	if (tmp.ngpX < 2) {
 		if (player.achievements.includes("r137") && player.dilation.active) x = x.times(2)
 	}
-	if (tmp.ngp3) x = softcap(x, "tt")
+	if (tmp.ngp3) {
+		x = softcap(x, "tt")
+		if (hasAch("ng3pr16")) x = x.times(5)
+	}
 	return x
 }
 

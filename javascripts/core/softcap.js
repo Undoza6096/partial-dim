@@ -34,7 +34,7 @@ var softcap_data = {
 		name: "effective Replicantis",
 		1: {
 			func: "pow",
-			start: Decimal.pow(10, 2e7),
+			start: pow10(2e7),
 			pow: 0.5
 		},
 	},
@@ -42,7 +42,7 @@ var softcap_data = {
 		name: "Eternity Upgrade 2",
 		1: {
 			func: "dilate",
-			start: Decimal.pow(10, 1e9),
+			start: pow10(1e9),
 			base: 10,
 			mul: (x) => Math.log10(x.log10() / 1e9 + 10),
 			pow: 3/5
@@ -103,7 +103,7 @@ var softcap_data = {
 		name: "base Infinite Time reward",
 		1: {
 			func: "dilate",
-			start: Decimal.pow(10, 90000),
+			start: pow10(90000),
 			base: 10,
 			pow: 0.5
 		}

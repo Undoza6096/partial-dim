@@ -168,16 +168,16 @@ function fillAll() {
 //v1.99872
 function maxAllDilUpgs() {
 	let dt = player.dilation.dilatedTime
-	let dtSub = dt.lte(Decimal.pow(10, 1e12))
+	let dtSub = dt.lte(pow10(1e12))
 	let update
 	for (var i = 0; i < MAX_DIL_UPG_PRIORITIES.length; i++) {
 		var num = MAX_DIL_UPG_PRIORITIES[i]
 		if (isDilUpgUnlocked(id)) {
 			if (num == 1) {	
-				var cost = Decimal.pow(10, player.dilation.rebuyables[1] + 5)
+				var cost = pow10(player.dilation.rebuyables[1] + 5)
 				if (dt.gte(cost)) {
 					var toBuy = Math.floor(dt.div(cost).times(9).add(1).log10())
-					var toSpend = Decimal.pow(10, toBuy).sub(1).div(9).times(cost)
+					var toSpend = pow10(toBuy).sub(1).div(9).times(cost)
 					if (dtSub) dt = dt.sub(dt.min(cost))
 					player.dilation.rebuyables[1] += toBuy
 					update = true
@@ -185,7 +185,7 @@ function maxAllDilUpgs() {
 			} else if (num == 2) {
 				if (canBuyGalaxyThresholdUpg()) {
 					if (tmp.ngp3) {
-						var cost = Decimal.pow(10, player.dilation.rebuyables[2] * 2 + 6)
+						var cost = pow10(player.dilation.rebuyables[2] * 2 + 6)
 						if (dt.gte(cost)) {
 							var toBuy = Math.floor(dt.div(cost).times(99).add(1).log(100))
 							var toSpend = Decimal.pow(100,toBuy).sub(1).div(99).times(cost)
@@ -1049,7 +1049,7 @@ var ngp3Welcomes = {
 		0.61: "<b class='lime'>Strings, again!</b> Yes, I decided to rework Strings for better balancing and less confusion. This also removes Nerfed modifier and reworks Entangled Boosters and Perks.",
 		0.611: "<b class='lime'>PC8 combinations!</b> Due to a severe bug for QC8, I am releasing an extra update, which PC8 combinations are slightly easier! (+ some String-era buffs)",
 		0.62: () => "<b class='green'>Mostly Paired Challenges + Strings!</b> Yep. This update reworks the gameplay of Paired Challenges and Strings. Any suggestion is welcomed in Discord, and I will implement yours if accepted.",
-		0.7: () => "<b class='green flucEne'>A new layer: Fluctuate!</b> Welcome to the new era of NG+3! Can you reach " + shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter to get there?"
+		0.7: () => "<b class='green flucEne'>A new layer: Fluctuate!</b> Welcome to the new era of NG+3! Can you reach " + shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter to get there?"
 	},
 	verbs: {
 		0.61: "reworks",
@@ -1057,11 +1057,11 @@ var ngp3Welcomes = {
 		0.62: "rebalances",
 	},
 	goals: {
-		0.5: () => getFullExpansion(8) + " PC combinations + " + shortenCosts(Decimal.pow(10, 1e13)) + " antimatter",
-		0.6: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
-		0.61: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
-		0.611: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
-		0.62: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
+		0.5: () => getFullExpansion(8) + " PC combinations + " + shortenCosts(pow10(1e13)) + " antimatter",
+		0.6: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
+		0.61: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
+		0.611: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
+		0.62: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
 		0.7: () => "<b class='flucEne'>" + getFullExpansion(12) + " Fluctuant Energy</b>",
 	}
 }
@@ -1102,7 +1102,7 @@ function endGoalAfterStrings(x, slog = 0) {
 		let dExp = dMult * Math.pow(tBase, tExp)
 		let r = dExp
 		if (slog < 2) r = Math.pow(10, r)
-		if (slog < 1) r = Decimal.pow(10, r)
+		if (slog < 1) r = pow10(r)
 		return r
 	}
 }

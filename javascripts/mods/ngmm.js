@@ -522,7 +522,7 @@ el("postinfi63").onclick = function() {
 
 function getNewB60Mult(){
 	let gal = player.galaxies-95
-	return Decimal.pow(10, (120 * gal)).max(1)
+	return pow10((120 * gal)).max(1)
 }
 
 function getB60Mult() {
@@ -550,11 +550,11 @@ let galMults = {
 			var exp = (inNGM(4) && hasGalUpg(41)) ? 2 * e : 1
 			var l = 0
 			if (player.infinityUpgrades.includes("postinfi61")) l = Math.log10(getInfinitied() + 1)
-			if (l > 2) return Decimal.pow(10, l * Math.min(l, 6) * Math.min(l, 4))
+			if (l > 2) return pow10(l * Math.min(l, 6) * Math.min(l, 4))
 			var p = inNGM(5) ? 1 : 2
-			return Decimal.pow(10, p + Math.min(4, getInfinitied())).pow(exp)
+			return pow10(p + Math.min(4, getInfinitied())).pow(exp)
 		}
-		if (tmp.ec > 53) return Decimal.pow(10, 2e4)
+		if (tmp.ec > 53) return pow10(2e4)
 		let x = getG11Infinities()
 		let z = getG11Divider()
 		
@@ -568,7 +568,7 @@ let galMults = {
 		//softcap y
 		if (y > 1000) y = Math.sqrt(1000 * y)
 		if (y > 1e4) y = Math.pow(1e8 * y,1/3)
-		return Decimal.pow(10, Math.min(y, 2e4));
+		return pow10(Math.min(y, 2e4));
 	},
 	u31: function() {
 		let x = 1.1 + player.extraDimPowerIncrease * 0.02
@@ -578,7 +578,7 @@ let galMults = {
 	u51: function() {
 		let x = player.galacticSacrifice.galaxyPoints.log10() / 1e3
 		if (x > 200) x = Math.sqrt(x * 200)
-		return Decimal.pow(10, x)
+		return pow10(x)
 	},
 	u12: function() {
 		var r = 2 * Math.pow(1 + player.galacticSacrifice.time / 600, 0.5)
@@ -611,7 +611,7 @@ let galMults = {
 		if (x.gt(1)){
 			y = x.log10()
 			if (y > 1e7) y = Math.pow(Math.log10(y) + 3, 7)
-			x = Decimal.pow(10, y)
+			x = pow10(y)
 		}
 		return x.pow(exp).add(1)
 	},
@@ -621,7 +621,7 @@ let galMults = {
 		if (x.gt(1)){
 			y = x.log10()
 			if (y > 5e5) y = Math.sqrt(5e5*y)
-			x = Decimal.pow(10, y)
+			x = pow10(y)
 		}
 		return x.plus(1).pow(exp)
 	},
@@ -644,7 +644,7 @@ let galMults = {
 		return player.galacticSacrifice.galaxyPoints.pow(0.25).div(20).max(0.2)
 	},
 	u15: function() {
-		return Decimal.pow(10, getInfinitied() + 2).max(1).min(1e6).pow(hasGalUpg(16) ? 2 : 1)
+		return pow10(getInfinitied() + 2).max(1).min(1e6).pow(hasGalUpg(16) ? 2 : 1)
 	},
 	u25: function() {
 		let r = Math.max(player.galacticSacrifice.galaxyPoints.log10() - 2, 1)
@@ -760,7 +760,7 @@ function getDil72Mult() {
 function getNewB60Mult(){
 	let gal = player.galaxies - 95
 	if (gal < 0) gal = 0
-	return Decimal.pow(10, 120 * gal)
+	return pow10(120 * gal)
 }
 
 function calcG13Exp(){
