@@ -2103,6 +2103,7 @@ function setupNGP31Versions() {
 	}
 	if (aarMod.ngp3Build < 20220105 && Decimal.log10(player.money) >= 2e13) rollback = 1e20
 	if (aarMod.ngp3Build < 20220106 && Decimal.log10(player.money) >= 6e13) rollback = 1e190
+	if (aarMod.ngp3Build < 20220109) ff.reset()
 
 	welcomeUpdates = []
 	if (aarMod.ngp3Build) {

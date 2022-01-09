@@ -125,7 +125,6 @@ var pos = {
 			pc_base: QCs.done(5) ? 1 / 100 : 1 / 125,
 			pc_exp: qu_superbalanced() ? 4 : 2
 		}
-		if (ff.unl()) data.mults.pc_exp *= ff_tmp.eff.f5
 		if (PCs.milestoneDone(51)) data.mults.pc_base *= 1.2
 
 		if (!data.sac) data.sac = {}

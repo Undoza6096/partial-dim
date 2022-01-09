@@ -147,7 +147,6 @@ var QCs = {
 				var x = 0
 				if (QCs.perkActive(1)) x += QCs_tmp.perks[1]
 				if (str.unl() && str_tmp.effs) x += str_tmp.effs.b3
-				if (ff.unl()) x += ff_tmp.eff.f7
 				return x
 			},
 			total: () => QCs_save.qc1.boosts + QCs.data[1].extra(),

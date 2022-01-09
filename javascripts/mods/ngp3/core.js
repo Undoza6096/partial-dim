@@ -1037,7 +1037,6 @@ function getAQGainExp(x) {
 function getReplStealth() {
 	var x = 1
 	if (enB.active("glu", 5)) x *= enB_tmp.eff.glu5.int
-	if (ff.unl()) x *= ff_tmp.eff.f2
 	if (futureBoost("quantum_tunneling") && dev.boosts.tmp[5]) x *= dev.boosts.tmp[5]
 	return x
 }
