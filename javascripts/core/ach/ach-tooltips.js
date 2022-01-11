@@ -391,7 +391,7 @@ function setR16p5Tooltip() {
 
 	mayhem.setAttribute('ach-tooltip', "Max out Mastery Studies in QC1. Reward: You keep Mastery Studies except in QC1 and QC7.")
 	cantGet.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(Math.PI * 1e11)) + " antimatter in Eternity Challenge 11. Reward: You gain 5x more Dilated Time, Time Theorems, and Quarks, and can reduce the gluon gains by 50%.")
-	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1600)) + " MA in any QC without vibrations.")
+	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1600)) + " MA in any QC without vibrations. Reward: +0.5 extra Vibration Energy.")
 }
 
 function setR17Tooltip() {
@@ -407,7 +407,7 @@ function setR17Tooltip() {
 
 	//ACHIEVEMENT ROW 17
 	max.setAttribute('ach-tooltip', "Reach " + shortenCosts(1e15) + " Metastable Energy in 3-hour Fluctuate run.")
-	noDil.setAttribute('ach-tooltip', "Reach " + "[TBD]" /*shortenCosts(pow10(1/0))*/ + " replicanti without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
+	noDil.setAttribute('ach-tooltip', "Get a Replicanti Compressor without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
 }
 
 function setR18Tooltip() {

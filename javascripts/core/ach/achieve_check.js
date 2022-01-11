@@ -301,7 +301,7 @@ function preHiggsNGp3AchieveCheck() {
 		}
 	}
 	if (FDs_save.meta.gte(1e15) && fluc_save.time <= 86400) giveAchievement("MAXIMUM OVERCHARGE")
-	if (player.replicanti.amount.log10() >= 1/0 && player.dilation.tachyonParticles.eq(0)) giveAchievement("No dilation means no production.")
+	if (QCs_save.qc1.boosts > 0 && player.dilation.tachyonParticles.eq(0)) giveAchievement("No dilation means no production.")
 	if (player.infinityPoints.gte(Decimal.pow(Number.MAX_VALUE, 1000)) && ableToGetRid5) giveAchievement("I don't want you to live anymore.")
 
 	return //WILL MOVE FOR UPCOMING UPDATES
