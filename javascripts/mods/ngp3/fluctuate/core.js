@@ -245,11 +245,13 @@ let FDs = {
 		FDs_save[x].amt = FDs_save[x].amt.add(1)
 	},
 	maxAll() {
-		for (var i = 1; i <= 8; i++) FDs.max(i, FDs.unspent() / (9 - i))
+		for (var i = 1; i <= 8; i++) FDs.max(i, Math.max(FDs.unspent() / (9 - i), FDs.cost(i)))
 	},
 	max(x, ds) {
-		if (!ds) ds = this.unspent()
+		let us = this.unspent()
+		if (!ds) ds = us
 		ds = Math.round(ds)
+		if (us < ds) return
 
 		let cost = this.cost(x)
 		let spent = 0
