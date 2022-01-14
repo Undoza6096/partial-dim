@@ -523,6 +523,7 @@ googolNewsArray = [
 ["You have at least Googolgandingan (10^10^14) antimatter!", () => player.money.e >= 1e14, "g16"],
 ["You have at least Femtillion (10^(3*10^15+3)) antimatter!", () => player.money.e >= 3e15+3, "g17"],
 ["You have at least Attillion (10^(3*10^18+3)) antimatter!", () => player.money.e >= 3e18+3, "g18"],
+["You have at least Guppyplex (10^10^20) antimatter!", () => player.money.e >= 1e20, "g21"],
 ["You have at least Zeptillion (10^(3*10^21+3)) antimatter! o_O;", () => player.money.e >= 3e21+3, "g19"],
 ];}
 

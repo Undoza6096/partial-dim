@@ -1133,6 +1133,7 @@ var googolMilestones = [
 	["Googolgandingan (10^10^14)", 1e14],
 	["Femtillion (10^(3*10^15+3))", 3e15+3],
 	["Attillion (10^(3*10^18+3))", 3e18+3],
+	["Guppyplex (10^10^20)", 1e20],
 	["Zeptillion (10^(3*10^21+3))", 3e21+3],
 ]
 
