@@ -1130,6 +1130,7 @@ var googolMilestones = [
 	["Trialogue (10^10^10)", 1e10],
 	["Googolthrong (10^10^11)", 1e11],
 	["Picillion (10^(3*10^12+3))", 3e12+3],
+	["3^^4", Math.log10(3) * Math.pow(3, 27)],
 	["Googolgandingan (10^10^14)", 1e14],
 	["Femtillion (10^(3*10^15+3))", 3e15+3],
 	["Attillion (10^(3*10^18+3))", 3e18+3],

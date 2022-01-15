@@ -520,6 +520,7 @@ googolNewsArray = [
 ["You have at least Trialogue (10^10^10) antimatter!", () => player.money.e >= 1e10, "g13"],
 ["You have at least Googolthrong (10^10^11) antimatter!", () => player.money.e >= 1e11, "g14"],
 ["You have at least Picillion (10^(3*10^12+3)) antimatter!", () => player.money.e >= 3e12+3, "g15"],
+["You have at least 3^^4 antimatter!", () => player.money.gte(Decimal.pow(3, Math.pow(3, 27))), "g22"],
 ["You have at least Googolgandingan (10^10^14) antimatter!", () => player.money.e >= 1e14, "g16"],
 ["You have at least Femtillion (10^(3*10^15+3)) antimatter!", () => player.money.e >= 3e15+3, "g17"],
 ["You have at least Attillion (10^(3*10^18+3)) antimatter!", () => player.money.e >= 3e18+3, "g18"],
