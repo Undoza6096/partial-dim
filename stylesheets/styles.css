@@ -1533,7 +1533,7 @@ button {
     border-radius: 7px;
 }
 
-#studyTreeCanvas, #studyTreeCanvas2, #dilationCanvas, #blackHoleCanvas, #quarkCanvas, #ff_canvas {
+#studyTreeCanvas, #studyTreeCanvas2, #dilationCanvas, #blackHoleCanvas, #quarkCanvas {
     top: 0;
     left: 0;
     position: absolute;
@@ -2590,24 +2590,17 @@ td.grey {
 }
 
 .ff_btn {
-	position: relative;
-	width: 108px;
-	height: 108px;
-	font-size: 8px;
-	margin: 0px;
-	vertical-align: top;
-}
-.ff_btn.storebtn {
 	border-radius: 8px;
 	background: #3f1f00;
 	box-shadow: inset 0px 0px 36px #ffdfdf, inset 0px 0px 36px #ffbfdf;
 	text-shadow: 0px 0px 6px #ff003f;
 	animation: ff 4s infinite
 }
-.ff_btn.storebtn:hover {
+.ff_btn:hover {
 	background: #ffcfbf;
+	cursor: pointer
 }
-.ff_btn.storebtn b {
+.ff_btn b {
 	color: #ff3f00;
 	font-size: 15px
 }

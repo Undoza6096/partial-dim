@@ -59,11 +59,11 @@ let str = {
 			},
 			3: {
 				title: "Quantum Manifold",
-				eff: (x) => x * 2,
+				eff: (x) => Math.round(x * 1.5),
 				effDisp: (x) => "Protect first " + x + " positions.",
 				hidden: () => !fluc.unl(),
 
-				req: (x) => Math.floor(x * 1.8 + 1),
+				req: (x) => Math.floor(x * 2 + 1),
 				res: () => fluc_save.energy,
 				resDisp: "Fluctuant Energy"
 			}
@@ -169,7 +169,7 @@ let str = {
 
 		let ve = str.veUnspent()
 		el("str_ve").textContent = shorten(ve)
-		el("str_ve_based").textContent = shiftDown ? "(based on Quantum Energy, Replicanti Energy, and PC level)" : ""
+		el("str_ve_based").textContent = shiftDown ? "(based on Quantum Energy, Replicanti Energy, and PC level" + (fluc.unl() ? " + Fluctuant Energy" : "") + ")" : ""
 
 		for (var i = 1; i <= 18; i++) {
 			var alt = str.altitude(i)

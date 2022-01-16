@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/14/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(1/15/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5009,9 +5009,9 @@
 				<div class="str_boosts" id="str_boosts"></div>
 				<br><br>
 				<table class="table" align="center" style="margin: auto"><tr>
-					<td><button class="str_upg" id="str_upg_1_btn" style="width: 240px; height: 160px" onclick="str.buyUpg(1)"><b id="str_upg_1_title" style="font-size: 15px"></b><span id="str_upg_1_eff"></span><br><span id="str_upg_1_cost"></span></button></td>
-					<td><button class="str_upg" id="str_upg_2_btn" style="width: 240px; height: 160px" onclick="str.buyUpg(2)"><b id="str_upg_2_title" style="font-size: 15px"></b><span id="str_upg_2_eff"></span><br><span id="str_upg_2_cost"></span></button></td>
-					<td><button class="str_upg" id="str_upg_3_btn" style="width: 240px; height: 160px" onclick="str.buyUpg(3)"><b id="str_upg_3_title" style="font-size: 15px"></b><span id="str_upg_3_eff"></span><br><span id="str_upg_3_cost"></span></button></td>
+					<td><button class="str_upg" id="str_upg_1_btn" style="width: 180px; height: 120px" onclick="str.buyUpg(1)"><b id="str_upg_1_title" style="font-size: 15px"></b><span id="str_upg_1_eff"></span><br><span id="str_upg_1_cost"></span></button></td>
+					<td><button class="str_upg" id="str_upg_2_btn" style="width: 180px; height: 120px" onclick="str.buyUpg(2)"><b id="str_upg_2_title" style="font-size: 15px"></b><span id="str_upg_2_eff"></span><br><span id="str_upg_2_cost"></span></button></td>
+					<td><button class="str_upg" id="str_upg_3_btn" style="width: 180px; height: 120px" onclick="str.buyUpg(3)"><b id="str_upg_3_title" style="font-size: 15px"></b><span id="str_upg_3_eff"></span><br><span id="str_upg_3_cost"></span></button></td>
 				</tr></table>
 			</div>
 		</div>
@@ -5026,65 +5026,68 @@
 		<table class="table" align="center" style="margin: auto">
 			<tr>
 				<td><button class="secondarytabbtn" onclick="fluc.showTab('ffTab')">Fluctuant Field</button></td>
-				<td><button class="secondarytabbtn" onclick="fluc.showTab('unknownTab')">???</button></td>
+				<td><button class="secondarytabbtn" onclick="fluc.showTab('qfTab')">Quantum Field</button></td>
 				<!--<td><button class="secondarytabbtn">Particle Decay</button></td>-->
 				<!--<td><button class="secondarytabbtn">Spatial Decay</button></td>-->
 			</tr>
 		</table>
 		<div class="flucTab" id="ffTab">
-			<span style="font-size: 20px">You have associated <span class="flucEne">0</span> Fluctuant Energy to this field.</span>
+			<br>
+			<span style="font-size: 20px">You have associated <span class="flucEne">0 / 1</span> Fluctuant Energy to this field.</span>
+			<br><br>
+			<b class="warning" style="font-size: 15px">WARNING: Arcs and Perks affect every String Power, and performs a Quantum reset!</b>
 			<table align="center" style="margin: auto">
 				<tr>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">Gen.</button>
+						<button class="storebtn" style="width: 90px; height: 90px">Mode: Link / Erase</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P1</button>
+						<button class="ff_btn" style="width: 90px; height: 90px">Position 1<br>(Next: 1 FE)</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P2</button>
+						<button class="ff_btn" style="width: 90px; height: 90px">Position 2<br>(Next: 1 FE)</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P3</button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Locked<br>(6 FE)</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P4</button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Locked<br>(8 FE)</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P5</button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Locked<br>(10 FE)</button>
 					</td>
 					<td>
-						<button class="storebtn" style="width: 60px; height: 60px">P6</button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Locked<br>(12 FE)</button>
 					</td>
 				</tr><tr>
 					<td style="text-align: center">
 						Perks
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="ff_btn" style="width: 90px; height: 90px">Altitude<br>(increases the altitudes)</button>
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Power<br>(multiplies the power gain)</button>
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Freebie<br>(decreases power requirement)</button>
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Synthesize<br>(increases strength by altitudes)</button>
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Upgrade I<br>(unlock a new power)</button>
 					</td>
 					<td>
-						<button class="unavailablebtn" style="width: 60px; height: 60px"></button>
+						<button class="unavailablebtn" style="width: 90px; height: 90px">Upgrade II<br>(unlock a new power)</button>
 					</td>
 				</tr>
 			</table>
 			<br><br>
 			<div class="footer"></div>
 		</div>
-		<div class="flucTab" id="unknownTab">
-			<span id="unknown_unl">You need 11 Fluctuant Energy in order to unlock ???.</span>
+		<div class="flucTab" id="qfTab">
+			<span id="unknown_unl">You need 11 Fluctuant Energy in order to unlock Quantum Field.</span>
 			<span id="the_end">
 				Congratulations! You have reached the end for now... Check the Discord to see when this mechanic is ready!<br>
 				<!-- Note: It is going to be a 12x12 square field, made of 3x4 sections with lines length of 4, with 1-2 off. -->
