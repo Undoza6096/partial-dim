@@ -2600,9 +2600,15 @@ td.grey {
 	background: #ffcfbf;
 	cursor: pointer
 }
-.ff_btn b {
-	color: #ff3f00;
+#ff_table button {
+	width: 108px;
+	height: 108px
+}
+#ff_table button b {
 	font-size: 15px
+}
+#ff_table .ff_btn b {
+	color: #ff3f00
 }
 @keyframes ff {
 	0% {
