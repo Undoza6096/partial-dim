@@ -1982,7 +1982,7 @@ function onLoad(noOffline) {
 	el("maxTimeDimensions").style.display = removeMaxTD ? "none" : ""
 
 	el("ghostifyAnimBtn").style.display=pH.did("ghostify")?"inline-block":"none"
-	notifyId=qMs.tmp.amt
+	notifyId=Math.max(qMs.tmp.amt, qMs.tmp.best)
 	notifyId2=player.masterystudies===undefined?0:player.ghostify.milestones
 	showHideFooter()
 	el("newsbtn").textContent=(player.options.newsHidden?"Show":"Hide")+" news ticker"

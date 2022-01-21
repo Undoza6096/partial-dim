@@ -3496,7 +3496,7 @@ function updateNGpp16Reward(){
 }
 
 function notifyQuantumMilestones(){
-	var amt = fluc.unl() ? 27 : Math.min(qMs.tmp.amt, 27)
+	var amt = Math.min(Math.max(qMs.tmp.amt, qMs.tmp.best), 27)
 	if (typeof notifyId == "undefined") notifyId = amt
 	if (amt > notifyId) {
 		notifyId = amt

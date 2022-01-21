@@ -96,8 +96,11 @@ let qMs = {
 		qu_save.bestMP = Math.max(qu_save.bestMP || 0, data.points)
 
 		//Milestones
+		data.best = 0
 		for (var i = 1; i <= qMs.max; i++) {
-			if (data.points >= qMs[i].req || evalData(qMs[i].forceGot)) data.amt++
+			var got = evalData(qMs[i].forceGot) || data.points >= qMs[i].req
+			if (data.points >= qMs[i].req) data.amt++
+			if (got) data.best = Math.max(data.best, i)
 		}
 
 		if (hasAch("ng3p14")) data.metaSpeed /= 3
