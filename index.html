@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/19/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(1/21/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5047,44 +5047,44 @@
 						<button class="storebtn" id="ff_mode" onclick="ff.switchMode()">Mode: Link</button>
 					</td>
 					<td>
-						<button class="ff_btn" id="ff_arc_1" onclick="ff.choose(1, 'arc')"><b>Position 1</b><br>(Next: 1 FE)</button>
+						<button class="ff_btn" id="ff_arc_1" onclick="ff.choose(1, 'arc')"><b id="ff_arc_1_title"></b><br><span id="ff_arc_1_cost"></span></button>
 					</td>
 					<td>
-						<button class="ff_btn" id="ff_arc_2" onclick="ff.choose(2, 'arc')"><b>Position 2</b><br>(Next: 1 FE)</button>
+						<button class="ff_btn" id="ff_arc_2" onclick="ff.choose(2, 'arc')"><b id="ff_arc_2_title"></b><br><span id="ff_arc_2_cost"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_arc_3" onclick="ff.choose(3, 'arc')"><b>Locked</b><br>(6 FE)</button>
+						<button class="ff_btn" id="ff_arc_3" onclick="ff.choose(3, 'arc')"><b id="ff_arc_3_title"></b><br><span id="ff_arc_3_cost"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_arc_4" onclick="ff.choose(4, 'arc')"><b>Locked</b><br>(8 FE)</button>
+						<button class="ff_btn" id="ff_arc_4" onclick="ff.choose(4, 'arc')"><b id="ff_arc_4_title"></b><br><span id="ff_arc_4_cost"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_arc_5" onclick="ff.choose(5, 'arc')"><b>Locked</b><br>(10 FE)</button>
+						<button class="ff_btn" id="ff_arc_5" onclick="ff.choose(5, 'arc')"><b id="ff_arc_5_title"></b><br><span id="ff_arc_5_cost"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_arc_6" onclick="ff.choose(6, 'arc')"><b>Locked</b><br>(12 FE)</button>
+						<button class="ff_btn" id="ff_arc_6" onclick="ff.choose(6, 'arc')"><b id="ff_arc_6_title"></b><br><span id="ff_arc_6_cost"></span></button>
 					</td>
 				</tr><tr>
 					<td style="text-align: center; font-size: 24px">
 						<b>Perks</b>
 					</td>
 					<td>
-						<button class="ff_btn" id="ff_perk_1" onclick="ff.choose(1, 'perk')"><b>Altitude</b><br>(increases the altitudes)</button>
+						<button id="ff_perk_1" onclick="ff.choose(1, 'perk')"><b id="ff_perk_1_name"></b><br><span id="ff_perk_1_desc"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_perk_2" onclick="ff.choose(2, 'perk')"><b>Power</b><br>(multiplies the power gain)</button>
+						<button id="ff_perk_2" onclick="ff.choose(2, 'perk')"><b id="ff_perk_2_name"></b><br><span id="ff_perk_2_desc"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_perk_3" onclick="ff.choose(3, 'perk')"><b>Freebie</b><br>(decreases power requirement)</button>
+						<button id="ff_perk_3" onclick="ff.choose(3, 'perk')"><b id="ff_perk_3_name"></b><br><span id="ff_perk_3_desc"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_perk_4" onclick="ff.choose(4, 'perk')"><b>Synthesize</b><br>(increases strength by altitudes)</button>
+						<button id="ff_perk_4" onclick="ff.choose(4, 'perk')"><b id="ff_perk_4_name"></b><br><span id="ff_perk_4_desc"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_perk_5" onclick="ff.choose(5, 'perk')"><b>Upgrade</b><br>(unlock a new power)</button>
+						<button id="ff_perk_5" onclick="ff.choose(5, 'perk')"><b id="ff_perk_5_name"></b><br><span id="ff_perk_5_desc"></span></button>
 					</td>
 					<td>
-						<button class="unavailablebtn" id="ff_perk_6" onclick="ff.choose(6, 'perk')"><b>Share</b><br>(shares altitudes to next power)</button>
+						<button id="ff_perk_6" onclick="ff.choose(6, 'perk')"><b id="ff_perk_6_name"></b><br><span id="ff_perk_6_desc"></span></button>
 					</td>
 				</tr>
 			</table>

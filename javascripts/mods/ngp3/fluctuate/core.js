@@ -146,6 +146,9 @@ let fluc = {
 		el("fluc_boost_pc").textContent = "Fluctuate Boost [Temp]: +^" + fluc_tmp.temp.pc.toFixed(2) + " to PC goal reduction sum"
 		el("fluc_boost_str").style.display = fluc.unl() ? "" : "none"
 		el("fluc_boost_str").textContent = "Fluctuate Boost [Temp]: " + formatPercentage(1 / fluc_tmp.temp.str) + "% to negative changes"
+
+		//Also temp?
+		if (fluc.unl()) ff.updateDisplays()
 	},
 	updateTab() {
 		el("fluc_req").textContent = shorten(fluc.req())
