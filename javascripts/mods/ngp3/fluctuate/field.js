@@ -70,8 +70,16 @@ let ff = {
 	},
 	updateTmp() {
 		ff_tmp = {
-			unl: ff_tmp.unl
+			unl: ff_tmp.unl,
+			used: []
 		}
+
+		if (!ff_tmp.unl) return
+		for (var i = 1; i <= 6; i++) {
+			var pk = ff_save.perks && ff_save.perks[i]
+			if (pk) ff_tmp.used.push(pk)
+		}
+
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
@@ -94,15 +102,22 @@ let ff = {
 		}
 	},
 
+	perkActive(x) {
+		return ff_tmp.used.includes(x)
+	},
+
 	choose(x, mode) {
 		if (mode == "perk") {
 			var newV = (ff_save.perks[x] || 0) + 1
+			while (ff_tmp.used.includes(newV)) newV++
+
 			var name = ff.data.all[newV]
 			if (newV == ff.data.all.length || fluc_save.energy < ff.data[name].req) newV = 0
 			ff_save.perks[x] = newV
 
 			el("ff_perk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
 			el("ff_perk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
+			ff.updateTmp()
 		}
 	},
 	switchMode(update) {

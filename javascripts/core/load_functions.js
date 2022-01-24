@@ -2103,7 +2103,7 @@ function setupNGP31Versions() {
 		PCs.updateTmp()
 	}
 	if (aarMod.ngp3Build < 20220106 && Decimal.log10(player.money) >= 6e13) rollback = 1e190
-	if (aarMod.ngp3Build < 20220119) ff.reset()
+	if (aarMod.ngp3Build < 20220122) ff.reset()
 
 	welcomeUpdates = []
 	if (aarMod.ngp3Build) {
@@ -2119,7 +2119,7 @@ function setupNGP31Versions() {
 	}
 	aarMod.ngp3r = 0.7
 	aarMod.ngp3Alpha = beta
-	aarMod.ngp3Build = 20220119
+	aarMod.ngp3Build = 20220122
 
 	if (tmp.ngp3_boost && !player.timestudy.auto) player.timestudy.auto = {}
 	if (rollback) {
