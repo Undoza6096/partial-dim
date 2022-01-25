@@ -87,6 +87,10 @@ let ff = {
 	},
 
 	updateTab() {
+		for (var i = 1; i <= 6; i++) {
+			var pk = ff_save.perks[i]
+			el("ff_perk_"+i+"_pow").textContent = pk && shiftDown ? "(" + shorten(0) + " power)" : ""
+		}
 	},
 	updateDisplays() {
 		for (var i = 1; i <= 6; i++) {
@@ -96,7 +100,7 @@ let ff = {
 			el("ff_arc_"+i+"_cost").textContent = unl ? "(Cost: 1 FE)" : "(requires " + ff.data.reqs[i] + " FE)"
 
 			var pk = ff_save.perks[i]
-			el("ff_perk_"+i).className = unl ? "ff_btn" : "unavailablebtn"
+			el("ff_perk_"+i).className = (unl ? "ff_btn" : "unavailablebtn") + " ff_perk"
 			el("ff_perk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
 			el("ff_perk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
 		}
@@ -106,6 +110,13 @@ let ff = {
 		return ff_tmp.used.includes(x)
 	},
 
+	respec() {
+		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
+		ff_save.perks = {}
+		ff_save.arc = {}
+		ff.updateTmp()
+		restartQuantum()
+	},
 	choose(x, mode) {
 		if (mode == "perk") {
 			var newV = (ff_save.perks[x] || 0) + 1
@@ -118,6 +129,14 @@ let ff = {
 			el("ff_perk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
 			el("ff_perk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
 			ff.updateTmp()
+			restartQuantum()
+		}
+		if (mode == "arc" && ff_save.mode == 1) {
+			if (!ff_save.arc[x]) return
+			if (!confirm("This will perform a Quantum reset and remove an arc from this position. Are you sure?")) return
+			delete ff_save.arc[x]
+			ff.updateTmp()
+			restartQuantum()
 		}
 	},
 	switchMode(update) {

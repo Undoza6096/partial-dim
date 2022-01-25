@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/22/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(1/24/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5037,11 +5037,34 @@
 			<br><br>
 			<b class="warning" style="font-size: 15px">WARNING: Arcs and Perks affect every String Power, and performs a Quantum reset!</b>
 			<br>
+			<button class="storebtn" onclick="ff.respec()">Respec</button>
 			<button class="storebtn" onclick="ff.exportPreset()">Export</button>
 			<button class="storebtn" onclick="ff.importPreset()">Import</button>
 			<br>
 			<span id="ff_perk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
 			<table id="ff_table" align="center" style="margin: auto">
+				<tr>
+					<td>
+					</td>
+					<td>
+						0 FE used
+					</td>
+					<td>
+						0 FE used
+					</td>
+					<td>
+						0 FE used
+					</td>
+					<td>
+						0 FE used
+					</td>
+					<td>
+						0 FE used
+					</td>
+					<td>
+						0 FE used
+					</td>
+				</tr>
 				<tr>
 					<td>
 						<button class="storebtn" id="ff_mode" onclick="ff.switchMode()" style="font-size: 18px">Mode: Link</button>
@@ -5069,22 +5092,22 @@
 						<b>Perks</b>
 					</td>
 					<td>
-						<button id="ff_perk_1" onclick="ff.choose(1, 'perk')"><b id="ff_perk_1_name"></b><br><span id="ff_perk_1_desc"></span></button>
+						<button id="ff_perk_1" onclick="ff.choose(1, 'perk')"><b id="ff_perk_1_name"></b><br><span id="ff_perk_1_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 					<td>
-						<button id="ff_perk_2" onclick="ff.choose(2, 'perk')"><b id="ff_perk_2_name"></b><br><span id="ff_perk_2_desc"></span></button>
+						<button id="ff_perk_2" onclick="ff.choose(2, 'perk')"><b id="ff_perk_2_name"></b><br><span id="ff_perk_2_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 					<td>
-						<button id="ff_perk_3" onclick="ff.choose(3, 'perk')"><b id="ff_perk_3_name"></b><br><span id="ff_perk_3_desc"></span></button>
+						<button id="ff_perk_3" onclick="ff.choose(3, 'perk')"><b id="ff_perk_3_name"></b><br><span id="ff_perk_3_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 					<td>
-						<button id="ff_perk_4" onclick="ff.choose(4, 'perk')"><b id="ff_perk_4_name"></b><br><span id="ff_perk_4_desc"></span></button>
+						<button id="ff_perk_4" onclick="ff.choose(4, 'perk')"><b id="ff_perk_4_name"></b><br><span id="ff_perk_4_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 					<td>
-						<button id="ff_perk_5" onclick="ff.choose(5, 'perk')"><b id="ff_perk_5_name"></b><br><span id="ff_perk_5_desc"></span></button>
+						<button id="ff_perk_5" onclick="ff.choose(5, 'perk')"><b id="ff_perk_5_name"></b><br><span id="ff_perk_5_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 					<td>
-						<button id="ff_perk_6" onclick="ff.choose(6, 'perk')"><b id="ff_perk_6_name"></b><br><span id="ff_perk_6_desc"></span></button>
+						<button id="ff_perk_6" onclick="ff.choose(6, 'perk')"><b id="ff_perk_6_name"></b><br><span id="ff_perk_6_desc"></span><br><span id="ff_perk_1_pow"></span></button>
 					</td>
 				</tr>
 			</table>

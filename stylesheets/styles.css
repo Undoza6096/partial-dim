@@ -2610,6 +2610,10 @@ td.grey {
 #ff_table .ff_btn b {
 	color: #ff3f00
 }
+.ff_perk {
+	width: 90px !important;
+	height: 90px !important
+}
 @keyframes ff {
 	0% {
 		border-color: #bf009f;
