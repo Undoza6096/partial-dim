@@ -84,12 +84,17 @@ let ff = {
 	},
 	updateTmpOnTick() {
 		if (!ff_tmp.unl) return
+
+		ff_tmp.pows = {}
+		for (var i = 1; i <= 6; i++) {
+			ff_tmp.pows[i] = 0
+		}
 	},
 
 	updateTab() {
 		for (var i = 1; i <= 6; i++) {
 			var pk = ff_save.perks[i]
-			el("ff_perk_"+i+"_pow").textContent = pk && shiftDown ? "(" + shorten(0) + " power)" : ""
+			el("ff_perk_"+i+"_pow").innerHTML = pk && shiftDown ? "<br>(" + shorten(ff_tmp.pows[i]) + " power)" : ""
 		}
 	},
 	updateDisplays() {
@@ -107,7 +112,7 @@ let ff = {
 	},
 
 	perkActive(x) {
-		return ff_tmp.used.includes(x)
+		return ff_tmp.used.includes(x) && ff_tmp.pows[x] !== undefined
 	},
 
 	respec() {
