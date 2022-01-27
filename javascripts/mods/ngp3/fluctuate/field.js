@@ -71,6 +71,7 @@ let ff = {
 	updateTmp() {
 		ff_tmp = {
 			unl: ff_tmp.unl,
+			choose: ff_tmp.choose,
 			used: []
 		}
 
@@ -98,16 +99,21 @@ let ff = {
 		}
 	},
 	updateDisplays() {
+		var choose = ff_tmp.choose
 		for (var i = 1; i <= 6; i++) {
 			var unl = fluc_save.energy >= ff.data.reqs[i]
+			el("ff_arc_"+i).style.visibility = !choose || unl ? "visible" : "hidden"
 			el("ff_arc_"+i).className = unl ? "ff_btn" : "unavailablebtn"
-			el("ff_arc_"+i+"_title").textContent = unl ? "Position " + i : "Locked"
-			el("ff_arc_"+i+"_cost").textContent = unl ? "(Cost: 1 FE)" : "(requires " + ff.data.reqs[i] + " FE)"
+			el("ff_arc_"+i+"_title").textContent = unl ? (choose ? "Inactive" : "Position " + i) : "Locked"
+			el("ff_arc_"+i+"_cost").textContent = unl ? (choose && choose != i ? "" : "(Cost: 1 FE)") : "(requires " + ff.data.reqs[i] + " FE)"
 
 			var pk = ff_save.perks[i]
+			el("ff_perk_"+i).style.display = unl && (!choose || choose == i) ? "" : "none"
 			el("ff_perk_"+i).className = (unl ? "ff_btn" : "unavailablebtn") + " ff_perk"
 			el("ff_perk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
 			el("ff_perk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
+
+			el("ff_eng_"+i).style.display = unl ? "" : "none"
 		}
 	},
 
@@ -136,6 +142,13 @@ let ff = {
 			ff.updateTmp()
 			restartQuantum()
 		}
+		if (mode == "arc" && ff_save.mode == 0) {
+			if (ff_tmp.choose) {
+				if (ff_tmp.choose != x) return
+				ff_tmp.choose = 0
+			} else ff_tmp.choose = x
+			ff.updateDisplays()
+		}
 		if (mode == "arc" && ff_save.mode == 1) {
 			if (!ff_save.arc[x]) return
 			if (!confirm("This will perform a Quantum reset and remove an arc from this position. Are you sure?")) return
@@ -148,6 +161,11 @@ let ff = {
 		if (!tmp.ngp3) return
 		if (!update) ff_save.mode = (ff_save.mode + 1) % 2
 		getEl("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
+
+		if (ff_save.mode == 1 && ff_tmp.choose > 0) {
+			ff_tmp.choose = 0
+			ff.updateDisplays()
+		}
 	}
 }
 let ff_tmp = {}
