@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/26/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(1/27/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5033,7 +5033,7 @@
 		</table>
 		<div class="flucTab" id="ffTab">
 			<br>
-			<span style="font-size: 20px">You have associated <span class="flucEne">0 / 1</span> Fluctuant Energy to this field.</span>
+			<span style="font-size: 20px">You have associated <span id="ff_spent" class="flucEne"></span> Fluctuant Energy to this field.</span>
 			<br><br>
 			<b class="warning" style="font-size: 15px">WARNING: Arcs and Perks affect every String Power, and performs a Quantum reset!</b>
 			<br>
@@ -5087,7 +5087,7 @@
 					<td>
 						<button class="ff_btn" id="ff_arc_6" onclick="ff.choose(6, 'arc')"><b id="ff_arc_6_title"></b><br><span id="ff_arc_6_cost"></span></button>
 					</td>
-				</tr><tr>
+				</tr><tr id="ff_perk_row">
 					<td style="text-align: center; font-size: 24px">
 						<b>Perks</b>
 					</td>
