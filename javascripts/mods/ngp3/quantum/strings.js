@@ -59,11 +59,19 @@ let str = {
 			},
 			3: {
 				title: "Quantum Manifold",
-				eff: (x) => Math.round(x * 1.5),
-				effDisp: (x) => "Protect first " + x + " positions.",
+				eff(x) {
+					return {
+						lvl: x,
+						pos: Math.round(x / 1.5),
+						req: Math.max(Math.log10(x), 0)
+					}
+				},
+				effDisp: (x) => "Protect first " + x.pos + " position" + (x.pos == 1 ? "" : "s") +
+					(x.lvl >= 2 ? " + " + shorten(x.req) + " lower power requirement" : "")
+					+ ".",
 				hidden: () => !fluc.unl(),
 
-				req: (x) => Math.floor(x * 2 + 1),
+				req: (x) => Math.floor(x + 1),
 				res: () => fluc_save.energy,
 				resDisp: "Fluctuant Energy"
 			}
@@ -160,8 +168,8 @@ let str = {
 		//Boosts
 		data.effs = {}
 		for (var i = 1; i <= 3; i++) {
-			data.effs["a" + i] = str.data.effs["a" + i].eff(Math.max(data.powers[i] * data.str - str.data.effs["a" + i].req, 0))
-			data.effs["b" + i] = str.data.effs["b" + i].eff(Math.max(data.powers[i] * data.str - str.data.effs["b" + i].req, 0))
+			data.effs["a" + i] = str.data.effs["a" + i].eff(Math.max(data.powers[i] * data.str - str.req("a", i), 0))
+			data.effs["b" + i] = str.data.effs["b" + i].eff(Math.max(data.powers[i] * data.str - str.req("b", i), 0))
 		}
 	},
 	updateDispOnTick() {
@@ -179,9 +187,13 @@ let str = {
 
 		for (var p = 1; p <= 3; p++) {
 			var pow = str_tmp.powers[p]
+			var powTotal = pow * str_tmp.str
 			el("str_" + p + "_power").textContent = str.data.names[p-1] + ": " + (pow < 0 ? "-" : "") + shorten(Math.abs(pow) * str_tmp.str)
-			el("str_a" + p + "_boost").textContent = str.data.effs["a" + p].disp(str_tmp.effs["a" + p])
-			el("str_b" + p + "_boost").textContent = str.data.effs["b" + p].disp(str_tmp.effs["b" + p])
+
+			var a_req = str.req("a", p)
+			var b_req = str.req("b", p)
+			el("str_a" + p + "_boost").textContent = powTotal >= a_req ? str.data.effs["a" + p].disp(str_tmp.effs["a" + p]) : "(requires " + shorten(a_req) + " power)"
+			el("str_b" + p + "_boost").textContent = powTotal >= b_req ? str.data.effs["b" + p].disp(str_tmp.effs["b" + p]) : "(requires " + shorten(b_req) + " power)"
 		}
 		el("str_strength").textContent = shiftDown ? "Manifold Surgery: " + shorten(str_tmp.str) + "x strength to String boosts" : ""
 		el("str_strength_based").textContent = shiftDown ? "(based on total Vibration Energy)" : ""
@@ -220,7 +232,7 @@ let str = {
 		r *= Math.log10(QCs_save.qc5.add(1).log10() / 5 + 1) + 1
 		r *= Math.pow(Math.max(r / 2, 2), Math.max(PCs_save.lvl / 8 - 1, 0))
 		if (hasAch("ng3p34")) r *= 1.2
-		if (hasAch("ng3pr18")) r += 0.5
+		if (hasAch("ng3pr18")) r += fluc_tmp.temp.str
 		return r
 	},
 	veUnspent() {
@@ -240,7 +252,7 @@ let str = {
 			last - str.upgEff(1) < x
 	},
 	protect(x, vib) {
-		return x <= Math.floor(vib * 1.5 + 3) || vib <= str.upgEff(2) || x <= str.upgEff(3)
+		return x <= Math.floor(vib * 1.5 + 3) || vib <= str.upgEff(2) || x <= str.upgEff(3).pos
 	},
 	vibrate(x) {
 		var vibrated = str_save.vibrated
@@ -296,6 +308,13 @@ let str = {
 		let r = str_tmp.powers[Math.ceil(x / 6)]
 		if (r < 0) r *= 1.5
 		r *= str_tmp.str / 4
+		return r
+	},
+
+	//Powers
+	req(t, x) {
+		var r = str.data.effs[t + x].req
+		r -= str.upgEff(3).pow || 0
 		return r
 	},
 

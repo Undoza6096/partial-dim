@@ -121,7 +121,7 @@ let fluc = {
 		fluc_tmp.temp = {
 			pos: fluc_save.energy / 3 + 1,
 			pc: fluc_save.energy / 10,
-			str: 1 + fluc_save.energy / 10,
+			str: Math.log2(fluc_save.energy + 1) / 2,
 		}
 		ff.updateTmp()
 	},
@@ -145,7 +145,7 @@ let fluc = {
 		el("fluc_boost_pc").style.display = fluc.unl() ? "" : "none"
 		el("fluc_boost_pc").textContent = "Fluctuate Boost [Temp]: +^" + fluc_tmp.temp.pc.toFixed(2) + " to PC goal reduction sum"
 		el("fluc_boost_str").style.display = fluc.unl() ? "" : "none"
-		el("fluc_boost_str").textContent = "Fluctuate Boost [Temp]: " + formatPercentage(1 / fluc_tmp.temp.str) + "% to negative changes"
+		el("fluc_boost_str").textContent = "Fluctuate Boost: +" + shorten(fluc_tmp.temp.str) + " extra Vibration Energy"
 
 		//Also temp?
 		if (fluc.unl()) ff.updateDisplays()
