@@ -52,6 +52,10 @@ let ff = {
 		if (!tmp.ngp3) return
 
 		var data = ff_save || this.setup()
+		if (!data.perks) {
+			data = this.setup()
+			ff_save = data
+		}
 		if (!data.mode) data.mode = 0
 
 		this.switchMode(true)
