@@ -88,15 +88,25 @@ let ff = {
 			if (ff_save.arcs && ff_save.arcs[i]) ff_tmp.spent += ff.arcCost(i)
 		}
 
+		ff_tmp.active = {}
+		for (var i = 1; i <= 6; i++) {
+			if (ff_save.arcs && ff_save.arcs[i] && ff_save.perks[i]) {
+				var pk = ff_save.perks[i]
+				var r = ff_save.arcs[i]
+				for (var j = r[0]; j <= r[1]; j++) {
+					if (!ff_tmp.active[j]) ff_tmp.active[j] = []
+					ff_tmp.active[j].push(ff.data.all[pk])
+				}
+			}
+		}
+
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
 		if (!ff_tmp.unl) return
 
 		ff_tmp.pows = {}
-		for (var i = 1; i <= 6; i++) {
-			ff_tmp.pows[i] = 0
-		}
+		for (var i = 1; i <= 6; i++) ff_tmp.pows[i] = ff_save.arcs[i] ? (ff_save.arcs[i][1] - ff_save.arcs[i][0] + 1) : 0
 	},
 
 	updateTab() {
@@ -111,7 +121,10 @@ let ff = {
 		for (var i = 1; i <= 6; i++) {
 			var unl = fluc_save.energy >= ff.data.reqs[i]
 			el("ff_arc_"+i).style.visibility = !choose || unl ? "visible" : "hidden"
-			el("ff_arc_"+i).className = unl ? "ff_btn" : "unavailablebtn"
+			el("ff_arc_"+i).className = !unl ? "unavailablebtn" :
+				!choose ? "ff_btn" :
+				c == i ? "ff_btn" :
+				ff.canArc(choose, i) ? "storebtn" : "unavailablebtn"
 			el("ff_arc_"+i+"_title").textContent = unl ? (choose ? "Inactive" : "Position " + i) : "Locked"
 			el("ff_arc_"+i+"_cost").textContent = unl ? (choose && choose != i ? "" : ff_save.arcs[i] ? "Click to link more" : "(Cost: " + this.arcCost(x, true) + " FE)") : "(requires " + ff.data.reqs[i] + " FE)"
 
@@ -137,6 +150,14 @@ let ff = {
 		if (next) x++
 		return Math.round(x * x / 2)
 	},
+	canArc(x, p) {
+		if (fluc_save.energy < ff.data.reqs[p]) return
+		if (ff.unspent() < ff.arcCost(x, true)) return
+
+		var a = ff_save.arcs[x]
+		if (p < a[0]) return p == a[0] - 1
+		return p == a[1] + 1
+	},
 	arcCost(x, next) {
 		return this.cost(ff_save.arcs[x] && ff_save.arcs[x][0], ff_save.arcs[x] && ff_save.arcs[x][1], next)
 	},
@@ -148,7 +169,7 @@ let ff = {
 		if (fluc_save.energy == 1 && str_save.energy < 1) return
 		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
 		ff_save.perks = {}
-		ff_save.arc = {}
+		ff_save.arcs = {}
 		ff.updateTmp()
 		restartQuantum()
 	},
@@ -172,13 +193,23 @@ let ff = {
 			restartQuantum()
 		}
 		if (mode == "arc" && ff_save.mode == 0) {
-			if (ff_save.arcs[x]) {
-				if (ff_tmp.choose) {
-					if (ff_tmp.choose != x) return
+			var a = ff_save.arcs[x]
+			var c = ff_tmp.choose
+			if (c) {
+				if (c != x) {
+					if (!ff.canArc(c, x)) return
+					a = ff_save.arcs[c]
+					if (x < a[0]) a[0] = x
+					else a[1] = x
+					ff.updateTmp()
+				} else {
 					ff_tmp.choose = 0
-				} else ff_tmp.choose = x
+				}
 				ff.updateDisplays()
-			} else if (ff.unspent() >= ff.arcCost(x, true)) {
+			} else if (a) {
+				ff_tmp.choose = x
+				ff.updateDisplays()
+			} else if (!c && ff.unspent() >= ff.arcCost(x, true)) {
 				ff_save.arcs[x] = [x, x]
 				ff.updateTmp()
 				ff.updateDisplays()
