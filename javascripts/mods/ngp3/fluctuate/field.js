@@ -76,15 +76,22 @@ let ff = {
 		ff_tmp = {
 			unl: ff_tmp.unl,
 			choose: ff_tmp.choose,
-			used: []
+			used: [],
+			pos: {}
 		}
 
 		if (!ff_tmp.unl) return
+		ff_tmp.pkUnl = 0
+		for (var i = 1; i < ff.data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) ff_tmp.pkUnl++
+
 		ff_tmp.spent = 0
 		for (var i = 1; i <= 6; i++) {
 			var pk = ff_save.perks && ff_save.perks[i]
-			if (pk) ff_tmp.used.push(pk)
-			
+			if (pk) {
+				ff_tmp.used.push(pk)
+				ff_tmp.pos[pk] = i
+			}
+
 			if (ff_save.arcs && ff_save.arcs[i]) ff_tmp.spent += ff.arcCost(i)
 		}
 
@@ -106,7 +113,7 @@ let ff = {
 		if (!ff_tmp.unl) return
 
 		ff_tmp.pows = {}
-		for (var i = 1; i <= 6; i++) ff_tmp.pows[i] = ff_save.arcs[i] ? (ff_save.arcs[i][1] - ff_save.arcs[i][0] + 1) : 0
+		for (var i = 1; i <= 6; i++) ff_tmp.pows[i] = ff_save.arcs[i] ? ff.arcPower(i) : 0
 	},
 
 	updateTab() {
@@ -116,50 +123,69 @@ let ff = {
 		}
 	},
 	updateDisplays() {
-		var choose = ff_tmp.choose
+		var c = ff_tmp.choose
 		var pkUnl = false
 		for (var i = 1; i <= 6; i++) {
-			var unl = fluc_save.energy >= ff.data.reqs[i]
-			el("ff_arc_"+i).style.visibility = !choose || unl ? "visible" : "hidden"
-			el("ff_arc_"+i).className = !unl ? "unavailablebtn" :
-				!choose ? "ff_btn" :
-				c == i ? "ff_btn" :
-				ff.canArc(choose, i) ? "storebtn" : "unavailablebtn"
-			el("ff_arc_"+i+"_title").textContent = unl ? (choose ? "Inactive" : "Position " + i) : "Locked"
-			el("ff_arc_"+i+"_cost").textContent = unl ? (choose && choose != i ? "" : ff_save.arcs[i] ? "Click to link more" : "(Cost: " + this.arcCost(x, true) + " FE)") : "(requires " + ff.data.reqs[i] + " FE)"
+			var a = ff_save.arcs[i]
+			var aUnl = fluc_save.energy >= ff.data.reqs[i]
+			el("ff_arc_"+i).style.visibility = !c || aUnl ? "visible" : "hidden"
+			if (!c || aUnl) {
+				if (ff_save.arcs[c]) console.log(ff_save.arcs[c][0], i, ff_save.arcs[c][1])
+				el("ff_arc_"+i).className = !aUnl ? "unavailablebtn" :
+					c ? (c == i ? "ff_btn" : ff.canArc(c, i) ? "storebtn" : ff_save.arcs[c][0] <= i && ff_save.arcs[c][1] >= i ? "chosenbtn" : "unavailablebtn") :
+					(a ? "storebtn" : ff.canArc(i) ? "ff_btn" : "unavailablebtn")
+				el("ff_arc_"+i+"_title").textContent = aUnl ? "Position " + i : "Locked"
+				el("ff_arc_"+i+"_cost").textContent = c ? (c == i ? "Click to exit" : "Cost: " + shorten(ff.arcCost(c, true) - ff.arcCost(c)) + " FE") :
+					(a ? "Click to arc" : aUnl ? "(Cost: " + getFullExpansion(this.arcCost(x, true)) + " FE)" : "(requires " + getFullExpansion(ff.data.reqs[i]) + " FE)")
+			}
 
 			var pk = ff_save.perks[i]
-			if (ff_save.arcs[i]) pkUnl = true
-			el("ff_perk_"+i).style.display = ff_save.arcs[i] && (!choose || choose == i) ? "" : "none"
-			el("ff_perk_"+i).className = (unl ? "ff_btn" : "unavailablebtn") + " ff_perk"
-			el("ff_perk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
-			el("ff_perk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
-
-			el("ff_eng_"+i).style.display = unl ? "" : "none"
+			var pkUnl = a !== undefined && (!c || c == i)
+			el("ff_perk_"+i).style.display = pkUnl ? "" : "none"
+			el("ff_eng_"+i).innerHTML = pkUnl ? (
+				shorten(ff.arcCost(i)) + (c ? " / " + shorten(ff.unspent() + ff.arcCost(c)) : "") + " FE used<br>" +
+				shorten(ff.arcPower(i)) + " Power"
+			) : ""
+			if (pkUnl) {
+				el("ff_perk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
+				el("ff_perk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
+			}
 		}
+		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
-		el("ff_perk_row").style.display = pkUnl ? "" : "none"
-		el("ff_spent").textContent = getFullExpansion(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
+		var nxt = ff.data[ff.data.all[ff_tmp.pkUnl + 1]]
+		el("ff_perk_next").style.display = nxt ? "" : "none"
+		el("ff_perk_next").textContent = nxt && (nxt.title + " perk unlocks at " + getFullExpansion(nxt.req) + " Fluctuant Energy.")
 	},
 
 	unspent() {
 		return fluc_save.energy - ff_tmp.spent
 	},
 	cost(a, b, next) {
-		var x = a ? (a - b + 1) : 0
-		if (next) x++
-		return Math.round(x * x / 2)
+		var l = a ? b - a : 0
+		if (next) l++
+		return Math.pow(2, (l - 1) / 1.7)
 	},
 	canArc(x, p) {
 		if (fluc_save.energy < ff.data.reqs[p]) return
 		if (ff.unspent() < ff.arcCost(x, true)) return
 
 		var a = ff_save.arcs[x]
+		if (!a) return true
 		if (p < a[0]) return p == a[0] - 1
 		return p == a[1] + 1
 	},
 	arcCost(x, next) {
 		return this.cost(ff_save.arcs[x] && ff_save.arcs[x][0], ff_save.arcs[x] && ff_save.arcs[x][1], next)
+	},
+	arcPower(x) {
+		var a = ff_save.arcs[x]
+		if (!a) return 0
+
+		var x = 0
+		var exp = 2
+		for (var i = a[0]; i <= a[1]; i++) x += Math.pow(0, exp)
+		return Math.pow(x, 1 / exp)
 	},
 	perkActive(x) {
 		return ff_tmp.used.includes(x) && ff_tmp.pows[x] !== undefined
@@ -169,7 +195,7 @@ let ff = {
 		if (fluc_save.energy == 1 && str_save.energy < 1) return
 		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
 		ff_save.perks = {}
-		ff_save.arcs = {}
+		ff_save.arcs[i] = {}
 		ff.updateTmp()
 		restartQuantum()
 	},
@@ -202,18 +228,15 @@ let ff = {
 					if (x < a[0]) a[0] = x
 					else a[1] = x
 					ff.updateTmp()
-				} else {
-					ff_tmp.choose = 0
-				}
-				ff.updateDisplays()
+				} else ff_tmp.choose = 0
 			} else if (a) {
 				ff_tmp.choose = x
-				ff.updateDisplays()
-			} else if (!c && ff.unspent() >= ff.arcCost(x, true)) {
+				ff.updateTmp()
+			} else if (ff.unspent() >= ff.arcCost(x, true)) {
 				ff_save.arcs[x] = [x, x]
 				ff.updateTmp()
-				ff.updateDisplays()
 			}
+			ff.updateDisplays()
 		}
 		if (mode == "arc" && ff_save.mode == 1) {
 			if (!ff_save.arcs[x]) return

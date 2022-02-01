@@ -17,6 +17,11 @@ let str = {
 				eff: (x) => x,
 				disp: (x) => "+" + shorten(x) + "x charge multiplier"
 			},
+			c1: {
+				req: 10,
+				eff: (x) => x,
+				disp: (x) => "???"
+			},
 			a2: {
 				req: 1.1,
 				eff: (x) => Math.sqrt(x / 3 + 1),
@@ -27,6 +32,11 @@ let str = {
 				eff: (x) => Math.log10(x / 4 + 1) + 1,
 				disp: (x) => "-" + formatPercentage(x-1) + "% to PC completion scaling"
 			},
+			c2: {
+				req: 10,
+				eff: (x) => x,
+				disp: (x) => "???"
+			},
 			a3: {
 				req: 2,
 				eff: (x) => Math.min(Math.log10(x / 10 + 1) * 1.5 + 1, 10 / 3),
@@ -36,6 +46,11 @@ let str = {
 				req: 4,
 				eff: (x) => x,
 				disp: (x) => "+" + shorten(x) + " extra Replicanti Compressors"
+			},
+			c3: {
+				req: 10,
+				eff: (x) => x,
+				disp: (x) => "???"
 			}
 		},
 		upgs: {
@@ -170,6 +185,7 @@ let str = {
 		for (var i = 1; i <= 3; i++) {
 			data.effs["a" + i] = str.data.effs["a" + i].eff(Math.max(data.powers[i] * data.str - str.req("a", i), 0))
 			data.effs["b" + i] = str.data.effs["b" + i].eff(Math.max(data.powers[i] * data.str - str.req("b", i), 0))
+			data.effs["c" + i] = str.data.effs["c" + i].eff(Math.max(data.powers[i] * data.str - str.req("c", i), 0))
 		}
 	},
 	updateDispOnTick() {
@@ -194,6 +210,13 @@ let str = {
 			var b_req = str.req("b", p)
 			el("str_a" + p + "_boost").textContent = powTotal >= a_req ? str.data.effs["a" + p].disp(str_tmp.effs["a" + p]) : "(requires " + shorten(a_req) + " power)"
 			el("str_b" + p + "_boost").textContent = powTotal >= b_req ? str.data.effs["b" + p].disp(str_tmp.effs["b" + p]) : "(requires " + shorten(b_req) + " power)"
+
+			var c_unl = fluc.unl()
+			el("str_c" + p + "_boost").style.display = c_unl ? "" : "none"
+			if (c_unl) {
+				var c_req = str.req("c", p)
+				el("str_c" + p + "_boost").textContent = powTotal >= c_req ? str.data.effs["c" + p].disp(str_tmp.effs["c" + p]) : "(requires " + shorten(c_req) + " power)"
+			}
 		}
 		el("str_strength").textContent = shiftDown ? "Manifold Surgery: " + shorten(str_tmp.str) + "x strength to String boosts" : ""
 		el("str_strength_based").textContent = shiftDown ? "(based on total Vibration Energy)" : ""
@@ -291,6 +314,7 @@ let str = {
 			var d = Math.abs(p)
 			var y = p + x
 			var add = 0.17 - 0.13 * d + 0.25 * ((d + 1) % 2)
+			if (ff.perkActive(1)) add += ff_tmp.pows[ff_tmp.pos[1]] * 0.15
 			if (fluc.unl() && fluc_tmp.temp && add < 0) add /= fluc_tmp.temp
 			str_tmp.alt[y] = (str_tmp.alt[y] || 0) + add
 		}
@@ -301,6 +325,7 @@ let str = {
 	altitude(x, next) {
 		if (this.disabled()) return
 		let r = str_tmp.alt[x] || 0
+		//if (ff.perkActive(6) && x > 6) r += str_tmp.alt[x - 6] * ff_tmp.pows[ff_tmp.pos[6]]
 		return Math.max(Math.min(r, 1), -1)
 	},
 	eff(x) {
