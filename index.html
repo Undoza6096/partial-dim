@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(1/31/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(2/1/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5046,61 +5046,54 @@
 			<button class="storebtn" onclick="ff.exportPreset()">Export</button>
 			<button class="storebtn" onclick="ff.importPreset()">Import</button>
 			<br>
-			<span id="ff_perk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
+			<span id="ff_pk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
 			<table id="ff_table" align="center" style="margin: auto">
 				<tr>
-					<td></td>
-					<td id="ff_eng_1"></td>
-					<td id="ff_eng_2"></td>
-					<td id="ff_eng_3"></td>
-					<td id="ff_eng_4"></td>
-					<td id="ff_eng_5"></td>
-					<td id="ff_eng_6"></td>
-				</tr>
-				<tr>
+					<td id="ff_arc_1_td"></td>
+					<td id="ff_arc_2_td"></td>
+					<td id="ff_arc_3_td"></td>
+					<td id="ff_arc_4_td"></td>
+					<td id="ff_arc_5_td"></td>
+					<td id="ff_arc_6_td"></td>
+					<td id="ff_arc_7_td"></td>
+					<td id="ff_arc_8_td"></td>
+					<td id="ff_arc_9_td"></td>
+				</tr><tr>
+					<td id="ff_pk_1_td"></td>
+					<td id="ff_pk_2_td"></td>
+					<td id="ff_pk_3_td"></td>
+					<td id="ff_pk_4_td"></td>
+					<td id="ff_pk_5_td"></td>
+					<td id="ff_pk_6_td"></td>
+					<td id="ff_pk_7_td"></td>
+					<td id="ff_pk_8_td"></td>
+					<td id="ff_pk_9_td"></td>
+				</tr><tr>
+					<td colspan=4></td>
 					<td>
 						<button class="storebtn" id="ff_mode" onclick="ff.switchMode()" style="font-size: 18px">Mode: Link</button>
 					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_1" onclick="ff.choose(1, 'arc')"><b id="ff_arc_1_title"></b><br><span id="ff_arc_1_cost"></span></button>
-					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_2" onclick="ff.choose(2, 'arc')"><b id="ff_arc_2_title"></b><br><span id="ff_arc_2_cost"></span></button>
-					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_3" onclick="ff.choose(3, 'arc')"><b id="ff_arc_3_title"></b><br><span id="ff_arc_3_cost"></span></button>
-					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_4" onclick="ff.choose(4, 'arc')"><b id="ff_arc_4_title"></b><br><span id="ff_arc_4_cost"></span></button>
-					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_5" onclick="ff.choose(5, 'arc')"><b id="ff_arc_5_title"></b><br><span id="ff_arc_5_cost"></span></button>
-					</td>
-					<td>
-						<button class="ff_btn" id="ff_arc_6" onclick="ff.choose(6, 'arc')"><b id="ff_arc_6_title"></b><br><span id="ff_arc_6_cost"></span></button>
-					</td>
-				</tr><tr id="ff_perk_row">
-					<td style="text-align: center; font-size: 24px">
-						<b>Perks</b>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_1" onclick="ff.choose(1, 'perk')"><b id="ff_perk_1_name"></b><br><span id="ff_perk_1_desc"></span><span id="ff_perk_1_pow"></span></button>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_2" onclick="ff.choose(2, 'perk')"><b id="ff_perk_2_name"></b><br><span id="ff_perk_2_desc"></span><span id="ff_perk_2_pow"></span></button>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_3" onclick="ff.choose(3, 'perk')"><b id="ff_perk_3_name"></b><br><span id="ff_perk_3_desc"></span><span id="ff_perk_3_pow"></span></button>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_4" onclick="ff.choose(4, 'perk')"><b id="ff_perk_4_name"></b><br><span id="ff_perk_4_desc"></span><span id="ff_perk_4_pow"></span></button>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_5" onclick="ff.choose(5, 'perk')"><b id="ff_perk_5_name"></b><br><span id="ff_perk_5_desc"></span><span id="ff_perk_5_pow"></span></button>
-					</td>
-					<td>
-						<button class="fluctuatebtn ff_perk" id="ff_perk_6" onclick="ff.choose(6, 'perk')"><b id="ff_perk_6_name"></b><br><span id="ff_perk_6_desc"></span><span id="ff_perk_6_pow"></span></button>
-					</td>
+					<td colspan=4></td>
+				</tr><tr>
+					<td id="ff_pk_10_td"></td>
+					<td id="ff_pk_11_td"></td>
+					<td id="ff_pk_12_td"></td>
+					<td id="ff_pk_13_td"></td>
+					<td id="ff_pk_14_td"></td>
+					<td id="ff_pk_15_td"></td>
+					<td id="ff_pk_16_td"></td>
+					<td id="ff_pk_17_td"></td>
+					<td id="ff_pk_18_td"></td>
+				</tr><tr>
+					<td id="ff_arc_10_td"></td>
+					<td id="ff_arc_11_td"></td>
+					<td id="ff_arc_12_td"></td>
+					<td id="ff_arc_13_td"></td>
+					<td id="ff_arc_14_td"></td>
+					<td id="ff_arc_15_td"></td>
+					<td id="ff_arc_16_td"></td>
+					<td id="ff_arc_17_td"></td>
+					<td id="ff_arc_18_td"></td>
 				</tr>
 			</table>
 			<br><br>

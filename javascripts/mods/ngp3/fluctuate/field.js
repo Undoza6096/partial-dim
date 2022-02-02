@@ -40,8 +40,7 @@ let ff = {
 
 	setup() {
 		ff_save = {
-			arcs: {}, //{1: [1, 4], 2: [1, 3]}
-			perks: {}, //{1: "alt", 2: "pow"}
+			data: [], //[[pos, pk, left, right]]
 			mode: 0
 		}
 		fluc_save.ff = ff_save
@@ -52,7 +51,7 @@ let ff = {
 		if (!tmp.ngp3) return
 
 		var data = ff_save || this.setup()
-		if (!data.perks) {
+		if (!data.data) {
 			data = this.setup()
 			ff_save = data
 		}
@@ -63,8 +62,7 @@ let ff = {
 	},
 	reset() {
 		ff_save = {
-			arcs: {}, //{1: [1, 4], 2: [1, 3]}
-			perks: {}, //{1: "alt", 2: "pow"}
+			data: [], //[[pos, pk, left, right]]
 			mode: 0
 		}
 		ff.updateTmp()
@@ -81,51 +79,34 @@ let ff = {
 		}
 
 		if (!ff_tmp.unl) return
+		ff_tmp.posUnl = 0
 		ff_tmp.pkUnl = 0
+		for (var i = 1; i < ff.data.reqs.length; i++) if (fluc_save.energy >= ff.data.reqs[i]) ff_tmp.posUnl++
 		for (var i = 1; i < ff.data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) ff_tmp.pkUnl++
 
 		ff_tmp.spent = 0
-		for (var i = 1; i <= 6; i++) {
-			var pk = ff_save.perks && ff_save.perks[i]
-			if (pk) {
-				ff_tmp.used.push(pk)
-				ff_tmp.pos[pk] = i
-			}
-
-			if (ff_save.arcs && ff_save.arcs[i]) ff_tmp.spent += ff.arcCost(i)
-		}
-
-		ff_tmp.active = {}
-		for (var i = 1; i <= 6; i++) {
-			if (ff_save.arcs && ff_save.arcs[i] && ff_save.perks[i]) {
-				var pk = ff_save.perks[i]
-				var r = ff_save.arcs[i]
-				for (var j = r[0]; j <= r[1]; j++) {
-					if (!ff_tmp.active[j]) ff_tmp.active[j] = []
-					ff_tmp.active[j].push(ff.data.all[pk])
-				}
-			}
-		}
 
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
 		if (!ff_tmp.unl) return
-
-		ff_tmp.pows = {}
-		for (var i = 1; i <= 6; i++) ff_tmp.pows[i] = ff_save.arcs[i] ? ff.arcPower(i) : 0
 	},
 
 	updateTab() {
-		for (var i = 1; i <= 6; i++) {
+		/*for (var i = 1; i <= 6; i++) {
 			var pk = ff_save.perks[i]
-			el("ff_perk_"+i+"_pow").innerHTML = pk && shiftDown ? "<br>(" + shorten(ff_tmp.pows[i]) + " power)" : ""
-		}
+			el("ff_pk_"+i+"_pow").innerHTML = pk && shiftDown ? "<br>(" + shorten(ff_tmp.pows[i]) + " power)" : ""
+		}*/
 	},
 	updateDisplays() {
-		var c = ff_tmp.choose
-		var pkUnl = false
-		for (var i = 1; i <= 6; i++) {
+		for (var i = 1; i <= 18; i++) {
+			el("ff_arc_"+i+"_name").textContent = "Pos. " + Math.floor(i / 3) + ["a", "b", "c"][(i - 1) % 3]
+			el("ff_arc_"+i+"_eng").textContent = shorten(0) + " FE used"
+
+			el("ff_pk_"+i+"_name").textContent = "None"
+			el("ff_pk_"+i+"_desc").textContent = ""
+		}
+		/*for (var i = 1; i <= 6; i++) {
 			var a = ff_save.arcs[i]
 			var aUnl = fluc_save.energy >= ff.data.reqs[i]
 			el("ff_arc_"+i).style.visibility = !c || aUnl ? "visible" : "hidden"
@@ -141,21 +122,27 @@ let ff = {
 
 			var pk = ff_save.perks[i]
 			var pkUnl = a !== undefined && (!c || c == i)
-			el("ff_perk_"+i).style.display = pkUnl ? "" : "none"
+			el("ff_pk_"+i).style.display = pkUnl ? "" : "none"
 			el("ff_eng_"+i).innerHTML = pkUnl ? (
 				shorten(ff.arcCost(i)) + (c ? " / " + shorten(ff.unspent() + ff.arcCost(c)) : "") + " FE used<br>" +
 				shorten(ff.arcPower(i)) + " Power"
 			) : ""
 			if (pkUnl) {
-				el("ff_perk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
-				el("ff_perk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
+				el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
+				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
 			}
-		}
+		}*/
 		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
 		var nxt = ff.data[ff.data.all[ff_tmp.pkUnl + 1]]
-		el("ff_perk_next").style.display = nxt ? "" : "none"
-		el("ff_perk_next").textContent = nxt && (nxt.title + " perk unlocks at " + getFullExpansion(nxt.req) + " Fluctuant Energy.")
+		el("ff_pk_next").style.display = nxt ? "" : "none"
+		el("ff_pk_next").textContent = nxt && (nxt.title + " perk unlocks at " + getFullExpansion(nxt.req) + " Fluctuant Energy.")
+	},
+	setupHTML() {
+		for (var i = 1; i <= 18; i++) {
+			el("ff_arc_"+i+"_td").innerHTML = '<button class="ff_btn" id="ff_arc_'+i+'" onclick="ff.choose('+i+', \'arc\')"><b id="ff_arc_'+i+'_name"></b><br><span id="ff_arc_'+i+'_eng"></span></button>'
+			el("ff_pk_"+i+"_td").innerHTML = '<button class="fluctuatebtn ff_perk" id="ff_pk_'+i+'" onclick="ff.choose('+i+', \'perk\')"><b id="ff_pk_'+i+'_name"></b><br><span id="ff_pk_'+i+'_desc"></span><span id="ff_pk_'+i+'_pow"></span></button>'
+		}
 	},
 
 	unspent() {
@@ -194,8 +181,7 @@ let ff = {
 	respec() {
 		if (fluc_save.energy == 1 && str_save.energy < 1) return
 		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
-		ff_save.perks = {}
-		ff_save.arcs[i] = {}
+		ff_save.data = []
 		ff.updateTmp()
 		restartQuantum()
 	},
@@ -204,8 +190,10 @@ let ff = {
 			alert("You need to get at least 1 Vibration Energy before using this mechanic.")
 			return
 		}
+		alert("Rework incoming...")
+		return
 
-		if (mode == "perk") {
+		/*if (mode == "perk") {
 			var newV = (ff_save.perks[x] || 0) + 1
 			while (ff_tmp.used.includes(newV)) newV++
 
@@ -213,8 +201,8 @@ let ff = {
 			if (newV == ff.data.all.length || fluc_save.energy < ff.data[name].req) newV = 0
 			ff_save.perks[x] = newV
 
-			el("ff_perk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
-			el("ff_perk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
+			el("ff_pk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
+			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
 			ff.updateTmp()
 			restartQuantum()
 		}
@@ -244,7 +232,7 @@ let ff = {
 			delete ff_save.arcs[x]
 			ff.updateTmp()
 			restartQuantum()
-		}
+		}*/
 	},
 	switchMode(update) {
 		if (!tmp.ngp3) return

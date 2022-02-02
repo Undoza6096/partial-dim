@@ -2601,18 +2601,19 @@ td.grey {
 	cursor: pointer
 }
 #ff_table button {
-	width: 108px;
-	height: 108px
+	width: 96px;
+	height: 96px;
+	font-size: 10px
 }
 #ff_table button b {
-	font-size: 15px
+	font-size: 12px
 }
 #ff_table .ff_btn b {
 	color: #ff3f00
 }
 .ff_perk {
-	width: 90px !important;
-	height: 90px !important
+	width: 72px !important;
+	height: 72px !important
 }
 @keyframes ff {
 	0% {

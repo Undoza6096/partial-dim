@@ -300,6 +300,7 @@ function setupHTMLAndData() {
 	setupMasteryStudiesHTML()
 	pos.setupHTML()
 	QCs.setupDiv()
+	ff.setupHTML()
 	setupBraveMilestones()
 	setupBosonicExtraction()
 	setupBosonicUpgrades()
