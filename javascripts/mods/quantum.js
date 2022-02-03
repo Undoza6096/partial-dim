@@ -197,6 +197,7 @@ function quantumReset(force, auto, data, mode, implode = false) {
 	if (!pH.did("quantum")) {
 		exitNGMM()
 		giveAchievement("Sub-atomic")
+		ngp3_feature_notify("qu")
 		pH.onPrestige("quantum")
 		pH.updateDisplay()
 		if (tmp.ngp3) {
@@ -305,7 +306,10 @@ function quantumReset(force, auto, data, mode, implode = false) {
 	}
 
 	// Paired Challenges
-	if (!PCs.unl()) PCs_tmp.unl = PCs.unl(true)
+	if (!PCs.unl()) {
+		PCs_tmp.unl = PCs.unl(true)
+		if (PCs_tmp.unl) ngp3_feature_notify("pc")
+	}
 	if (PCs.unl()) {
 		var pc_pos = PCs_save.in
 		delete PCs_save.in
@@ -329,7 +333,10 @@ function quantumReset(force, auto, data, mode, implode = false) {
 	}
 
 	// Strings
-	if (!str.unl()) str_tmp.unl = str.unl(true)
+	if (!str.unl()) {
+		str_tmp.unl = str.unl(true)
+		if (str_tmp.unl) ngp3_feature_notify("st")
+	}
 	if (str.unl()) {
 		//Positronic Cloud Fix
 		pos_save.swaps = {...pos_tmp.cloud.next}
@@ -394,7 +401,7 @@ function quantumReset(force, auto, data, mode, implode = false) {
 	updateLastTenEternities()
 	updateLastTenQuantums()
 	if (!hasAch("r133")) {
-		var infchalls = Array.from(document.getElementsByClassName('infchallengediv'))
+		var infchalls = Array.from(el_class('infchallengediv'))
 		for (var i = 0; i < infchalls.length; i++) infchalls[i].style.display = "none"
 	}
 	GPminpeak = E(0)
@@ -463,7 +470,7 @@ function handleDispOnQuantum(bigRip, prestige) {
 		if (el("masterystudies").style.display == "block") showEternityTab("timestudies", el("eternitystore").style.display != "block")
 	}
 
-	if (tmp.quActive) {
+	if (tmp.quUnl) {
 		enB.updateUnlock()
 
 		let keepPos = pos.unl()

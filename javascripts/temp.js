@@ -52,10 +52,6 @@ function updateTmp(init) {
 	tmp.mpte = getMPTExp()
 
 	updateInfiniteTimeTemp()
-	if (hasBosonicUpg(41)) {
-		tmp.blu[41] = bu.effects[41]()
-		tmp.it = tmp.it.times(tmp.blu[41].it)
-	}
 
 	if (tmp.ngC) ngC.updateTmp()
 
@@ -186,15 +182,10 @@ function updatePPTITemp() {
 
 function updateNGP3TempStuff(init) {
 	if (pH.did("fluctuate")) fluc.updateTmpOnTick()
-	if (tmp.quActive) {
+	if (tmp.quUnl) {
 		if (qu_save.breakEternity.unlocked) updateBreakEternityUpgradesTemp()
-		if (player.masterystudies.includes("d14")) updateBigRipUpgradesTemp()
-		if (tmp.nrm !== 1 && inBigRip()) {
-			if (!player.dilation.active && qu_save.bigRip.upgrades.includes(14)) tmp.nrm = tmp.nrm.pow(tmp.bru[14])
-			if (tmp.nrm.log10() > 1e9) tmp.nrm = pow10(1e9 * Math.pow(tmp.nrm.log10() / 1e9, 2/3))
-		}
 	}
-	if (tmp.quActive || init) {
+	if (tmp.quUnl || init) {
 		//Quantum
 		str.updateTmpOnTick() //Strings
 		QCs.updateTmpOnTick() //Quantum Challenges
@@ -208,26 +199,22 @@ function updateNGP3TempStuff(init) {
 	if (mTs.unl() || init) {
 		mTs.updateTmp()
 	}
-	tmp.be = tmp.quActive && inBigRip() && qu_save.breakEternity.break
 }
 
 function updateGhostifyTempStuff() {
 	updateBosonicLabTemp()
-	if (tmp.quActive) updatePPTITemp() //preon power threshold increase
+	if (tmp.quUnl) updatePPTITemp() //preon power threshold increase
 	if (pH.did("ghostify") && player.ghostify.ghostlyPhotons.unl) {
 		tmp.phF = getPhotonicFlow()
 
 		var x = getLightEmpowermentBoost()
-		var y = hasBosonicUpg(32)
-		if (tmp.leBoost !== x || tmp.hasBU32 !== y || tmp.updateLights) {
+		if (tmp.leBoost !== x || tmp.updateLights) {
 			tmp.leBoost = x
-			tmp.hasBU32 = y
 			tmp.updateLights = false
 			updateFixedLightTemp()
 		}
 		updateIndigoLightBoostTemp()
 		updateVioletLightBoostTemp()
-		updatePhotonsUnlockedBRUpgrades()
 	}
 	updateNeutrinoBoostsTemp()
 	updateNeutrinoUpgradesTemp()
@@ -266,9 +253,7 @@ function updateBreakEternityUpgrade2Temp(){
 
 function updateBreakEternityUpgrade3Temp(){
 	let ep = player.eternityPoints
-	let nerfUpgs = !tmp.be && hasBosonicUpg(24)
 	let log = ep.div("1e1370").add(1).log10()
-	if (nerfUpgs) log /= 2e6
 	let exp = Math.pow(log, 1/3) * 0.5
 	tmp.beu[3] = pow10(exp)
 }
@@ -298,12 +283,10 @@ function updateBreakEternityUpgrade5Temp(){
 function updateBreakEternityUpgrade6Temp(){
 	let ep = player.eternityPoints
 	let em = qu_save.breakEternity.eternalMatter
-	let nerfUpgs = !tmp.be && hasBosonicUpg(24)
 	let hasU12 = qu_save.breakEternity.upgrades.includes(13)
 
 	let log1 = ep.div("1e4900").add(1).log10()
 	let log2 = em.div(1e45).add(1).log10()
-	if (nerfUpgs) log1 /= 2e6
 
 	let exp = Math.pow(log1, 1/3) / 1.7
 	if (!hasU12) exp += Math.pow(log2, 1/3) * 2
@@ -360,79 +343,6 @@ function updateBreakEternityUpgradesTemp() {
 	if (hasAch("ng3p101")) updateBreakEternityUpgrade12Temp()
 }
 
-function updateBRU1Temp() {
-	tmp.bru[1] = E(1)
-	if (!inBigRip()) return
-
-	let exp = 1
-	if (qu_save.bigRip.upgrades.includes(17)) exp = tmp.bru[17]
-	if (ghostified && player.ghostify.neutrinos.boosts > 7) exp *= tmp.nb[8]
-	exp *= player.infinityPoints.max(1).log10()
-	tmp.bru[1] = pow10(exp) // BRU1
-}
-
-function updateBRU8Temp() {
-	tmp.bru[8] = E(1)
-	if (!inBigRip()) return
-
-	tmp.bru[8] = Decimal.pow(2, getTotalRGs()) // BRU8
-	if (!hasNU(11)) tmp.bru[8] = tmp.bru[8].min(Number.MAX_VALUE)
-}
-
-function updateBRU14Temp() {
-	if (!inBigRip()) {
-		tmp.bru[14] = 1
-		return
-	}
-	let ret = Math.min(qu_save.bigRip.spaceShards.div(3e18).add(1).log10() / 3, 0.4)
-	let val = Math.sqrt(qu_save.bigRip.spaceShards.div(3e15).add(1).log10() * ret + 1)
-	if (val > 12) val = 10 + Math.log10(4 + 8 * val)
-	tmp.bru[14] = val //BRU14
-}
-
-function updateBRU15Temp() {
-	let r = Math.sqrt(player.eternityPoints.add(1).log10()) * 3.55
-	if (r > 1e4) r = Math.sqrt(r * 1e4)
-	if (!qu_save.bigRip.active) r = 0
-	tmp.bru[15] = r
-}
-
-function updateBRU16Temp() {
-	if (!inBigRip()) {
-		tmp.bru[16] = E(1)
-		return
-	}
-	tmp.bru[16] = player.dilation.dilatedTime.div(1e100).pow(0.155).max(1)
-}
-
-function updateBRU17Temp() {
-	tmp.bru[17] = pH.did("ghostify") ? 3 : 2.9
-}
-
-function updateBigRipUpgradesTemp(){
-	updateBRU17Temp()
-	updateBRU1Temp()
-	updateBRU8Temp()
-	updateBRU14Temp()
-	updateBRU15Temp()
-	updateBRU16Temp()
-}
-
-function updatePhotonsUnlockedBRUpgrades(){
-	if (!inBigRip()) {
-		tmp.bru[18] = E(1)
-		tmp.bru[19] = E(1)
-		return
-	}
-	var bigRipUpg18base = 1 + qu_save.bigRip.spaceShards.div(1e140).add(1).log10()
-	var bigRipUpg18exp = Math.max(qu_save.bigRip.spaceShards.div(1e140).add(1).log10() / 10, 1)
-	if (bigRipUpg18base > 10 && tmp.ngp3_exp) bigRipUpg18base *= Math.log10(bigRipUpg18base)
-	tmp.bru[18] = Decimal.pow(bigRipUpg18base, bigRipUpg18exp) // BRU18
-	
-	var bigRipUpg19exp = Math.sqrt(player.timeShards.add(1).log10()) / (tmp.ngp3_exp ? 60 : 80)
-	tmp.bru[19] = pow10(bigRipUpg19exp) // BRU19
-}
-
 function updateBosonicAMDimReturnsTemp() {
 	var data = {}
 	tmp.badm = data
@@ -454,14 +364,6 @@ function updateBosonicEnchantsTemp(){
 		var id = g1 * 10 + g2
 		tmp.bEn.lvl[id] = player.ghostify.bl.enchants[id] || E(0)
 		if (bEn.effects[id] !== undefined) tmp.bEn[id] = getEnchantEffect(id)
-	}
-}
-
-function updateBosonicUpgradesTemp(){
-	tmp.blu = {}
-	for (var r = bu.rows; r >= 1; r--) for (var c = 5; c >= 1; c--) {
-		var id = r * 10 + c
-		if (bu.effects[id] !== undefined) tmp.blu[id] = bu.effects[id]()
 	}
 }
 

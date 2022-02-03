@@ -316,19 +316,7 @@ function preHiggsNGp3AchieveCheck() {
 	if (player.timestudy.theorem >= 1.1e7 && qu_save.wasted) giveAchievement("Studies are wasted")
 	if (player.infinityPoints.gte(pow10(2.75e5)) && ableToGetRid6) giveAchievement("Are you currently dying?")
 	if (player.replicanti.amount.log10() >= 1/0) giveAchievement("Will it be enough?")
-	if (qu_save.bigRip.active) {
-		let ableToGetRid7 = ableToGetRid2 && player.epmult.eq(1)
-		let ableToGetRid8 = ableToGetRid7 && !qu_save.breakEternity.did
-		let ableToGetRid9 = ableToGetRid8
-		let ableToGetRid10 = ableToGetRid9
-		if (player.currentEternityChall == "eterc7" && player.galaxies == 1 && player.money.log10() >= 8e7) giveAchievement("Time Immunity")
-		if (!player.timestudy.studies.includes(11) && player.timeShards.log10() >= 215) giveAchievement("You're not really smart.")
-		if (ableToGetRid7 && player.infinityPoints.log10() >= 3.5e5) giveAchievement("And so your life?")
-		if (qu_save.breakEternity.eternalMatter.gte(9.999999e99)) giveAchievement("This achievement doesn't exist 4")
-		if (ableToGetRid8 && player.infinityPoints.log10() >= 9.4e5) giveAchievement("Please answer me why you are dying.")
-		if (ableToGetRid9 && player.infinityPoints.log10() >= 1.8e6) giveAchievement("Aren't you already dead?")
-		if (player.matter.log10() >= 5000) giveAchievement("Really?")
-	}
+	/* BIG RIPPED TO OBSCURITY. */
 	if (qu_save.bigRip.spaceShards.log10() >= 33 && !qu_save.breakEternity.did) giveAchievement("Finite Time")
 	if (Decimal.gte(getInfinitied(), 1/0)) giveAchievement("Meta-Infinity confirmed?")
 	if (Decimal.gte(getEternitied(), 1/0)) giveAchievement("Everlasting Eternities")

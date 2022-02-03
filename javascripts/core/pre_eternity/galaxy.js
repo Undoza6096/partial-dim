@@ -24,7 +24,7 @@ function galaxyReset(bulk) {
 	}
 	if (!hasAch("r111")) setInitialMoney()
 	if (hasAch("r66")) player.tickspeed = player.tickspeed.times(0.98);
-	if (tmp.quActive && qu_save.bigRip.active) qu_save.bigRip.bestGals = Math.max(qu_save.bigRip.bestGals, player.galaxies)
+	if (tmp.quUnl && qu_save.bigRip.active) qu_save.bigRip.bestGals = Math.max(qu_save.bigRip.bestGals, player.galaxies)
 	if (pH.did("ghostify") && player.ghostify.neutrinos.boosts) gainNeutrinos(bulk, "gen")
 	hideDimensions()
 	tmp.tickUpdate = true;

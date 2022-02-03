@@ -71,6 +71,7 @@ let fluc = {
 
 			//Fluctuant Gain
 			for (var i = fluc_save.last10.length - 1; i > 0; i--) fluc_save.last10[i] = fluc_save.last10[i - 1]
+			var old = fluc_save.energy
 			var gain = fluc.gain()
 			fluc_save.last10[0] = [fluc_save.time, gain]
 			if (fluc_save.best > fluc_save.time) fluc_save.best = fluc_save.time
@@ -80,12 +81,16 @@ let fluc = {
 				fluc_tmp.unl = true
 				ff_tmp.unl = true
 				pH.onPrestige("fluctuate")
+				ngp3_feature_notify("fl")
 			}
 			fluc_save.energy += gain
 			fluc.updateTmp()
 
 			//Fluctuant Field
 			ff.updateTmp()
+
+			//Quantum Field
+			if (old < 11 && fluc_save.energy >= 11) ngp3_feature_notify("qf")
 		}
 		fluc.doReset()
 	},
@@ -156,7 +161,7 @@ let fluc = {
 	},
 	showTab(tabName) {
 		//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-		var tabs = document.getElementsByClassName('flucTab');
+		var tabs = el_class('flucTab');
 		var tab;
 		var oldTab
 		for (var i = 0; i < tabs.length; i++) {

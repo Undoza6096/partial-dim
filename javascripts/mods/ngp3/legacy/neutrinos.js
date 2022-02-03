@@ -211,7 +211,6 @@ let neutrinoBoosts = {
 		eff(nt) {
 			let nb10neutrinos = nt[0].add(1).log10()+nt[1].add(1).log10()+nt[2].add(1).log10()
 			let nb10 = Math.max(nb10neutrinos - 3e3, 0) / 75e4
-			if (hasBosonicUpg(54)) nb10 = Math.pow(nb10neutrinos / 2e5, 2)
 			return nb10
 		},
 		cost: "1e900"
@@ -220,7 +219,6 @@ let neutrinoBoosts = {
 		eff(nt) {
 			let nb11neutrinos = nt[0].add(nt[1]).add(nt[2]).add(1).log10()
 			let exp = Math.sqrt(nb11neutrinos)
-			if (hasBosonicUpg(54)) exp = Math.max(Math.pow(nb11neutrinos, 0.75) / 5, exp)
 
 			return Decimal.pow(1.15, exp)
 		},
@@ -230,7 +228,6 @@ let neutrinoBoosts = {
 		eff(nt) {
 			let nb12neutrinos = nt[0].add(nt[1]).add(nt[2]).add(1).log10()
 			let nb12 = Math.pow(nb12neutrinos / 1e4 + 1, 2)
-			if (hasBosonicUpg(54)) nb12 = Math.pow(nb12, 1.25)
 			return nb12
 		},
 		cost: "1e10000"
@@ -265,7 +262,7 @@ var neutrinoUpgrades = {
 	},
 	14: {
 		eff() {
-			if (!tmp.quActive) return E(1)
+			if (!tmp.quUnl) return E(1)
 			var base = player.ghostify.ghostParticles.add(1).log10()
 			var colorsPortion = Math.pow(qu_save.colorPowers.r + qu_save.colorPowers.g + qu_save.colorPowers.b, 1/3)
 			return Decimal.pow(base, colorsPortion * 0.8 + 1).max(1)

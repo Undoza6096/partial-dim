@@ -631,9 +631,7 @@ function buyingD7Changes() {
 	pos_tmp.unl = true
 	el("positronstabbtn").style.display = ""
 
-	showTab("quantumtab")
-	showQuantumTab("positrons")
-
+	ngp3_feature_notify("po")
 	enB.update("pos")
 	pos.updateTmp()
 }
@@ -642,8 +640,8 @@ function buyingDilStudyForQC() {
 	QCs_tmp.unl = true
 	el("qctabbtn").style.display = ""
 
+	ngp3_feature_notify("qc")
 	qMs.updateDisplay()
-	QCs.tp()
 	QCs.updateTmp()
 	QCs.updateDisp()
 }

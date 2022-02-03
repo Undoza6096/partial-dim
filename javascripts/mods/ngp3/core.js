@@ -12,7 +12,7 @@ function updateNGP3EterUpgs() {
 //v1.5 
 function showQuantumTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('quantumtab');
+	var tabs = el_class('quantumtab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -590,7 +590,7 @@ function updateBraveMilestones() {
 
 function showGhostifyTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('ghostifytab');
+	var tabs = el_class('ghostifytab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -806,7 +806,7 @@ function getGHPMultCostScalingStart() {
 //v2.2
 function showNFTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('nftab');
+	var tabs = el_class('nftab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -824,7 +824,6 @@ function showNFTab(tabName) {
 
 function getGhostifiedGain() {
 	let r = 1
-	if (hasBosonicUpg(15)) r = c_conv(tmp.blu[15].gh)
 	return r
 }
 
@@ -1041,6 +1040,133 @@ function getReplStealth() {
 	return x
 }
 
+//Feature Notifications
+var ngp3Features = {
+	md: {
+		name: "Meta Dimensions",
+		next: "ms",
+		tab() {
+			showTab("dimensions")
+			showDimTab("metadimensions")
+		}
+	},
+	ms: {
+		name: "Mastery Studies",
+		threshold: () => "Get " + shortenCosts(1e100) + " DT upgrade from Time Dilation",
+		next: "qu",
+		tab() {
+			showTab("eternitystore")
+			showEternityTab("masterystudies")
+		}
+	},
+	qu: {
+		name: "Quantum",
+		threshold: () => shorten(getQuantumReq()) + " meta-Antimatter and complete Eternity Challenge 14",
+		next: "po",
+		tab() {
+			showTab("quantumtab")
+		}
+	},
+	po: {
+		name: "Positrons",
+		threshold: () => "Get " + shortenMoney(tmp.exMode ? 5.3 : 3) + " Quantum Energy",
+		next: "qc",
+		tab() {
+			showTab("quantumtab")
+			showQuantumTab("positrons")
+		}
+	},
+	qc: {
+		name: "Quantum Challenges",
+		threshold: () => "Get " + shortenMoney(5) + " Positronic Charge",
+		next: "pc",
+		tab() {
+			QCs.tp()
+		}
+	},
+	pc: {
+		name: "Paired Challenges",
+		threshold: () => "Complete Quantum Challenge 7",
+		next: "st",
+		tab() {
+			showTab("challenges")
+			showChallengesTab("pairedChalls")
+		}
+	},
+	st: {
+		name: "Strings",
+		threshold: () => "Complete" + getFullExpansion(8) + " Paired Challenge combinations",
+		next: "fl",
+		tab() {
+			showTab("quantumtab")
+			showQuantumTab("strings")
+		}
+	},
+	fl: {
+		name: "Fluctuate",
+		threshold: () => "Get " + shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
+		next: "qf",
+		tab() {
+			showTab("flucTab")
+		}
+	},
+	qf: {
+		name: "Quantum Field",
+		threshold: () => "Get " + getFullExpansion(11) + " Fluctuant Energy",
+		tab() {
+			showTab("flucTab")
+			fluc.showTab('qfTab')
+		}
+	},
+}
+
+function ngp3_feature_notify(k) {
+	ngp3Features[k].tab()
+	$.notify("Congratulations! You have unlocked " + ngp3Features[k].name + "!", "success")
+
+	el("ngp3_feature_ani").style.display = ""
+	el("ngp3_feature_ani_4").textContent = ngp3Features[k].name + " is now unlocked!"
+	setTimeout(function() {
+		el("ngp3_feature_ani_1").style.background = "transparent"
+		el("ngp3_feature_ani_2a").style.background = "transparent"
+		el("ngp3_feature_ani_2a").style.left = "0"
+		el("ngp3_feature_ani_2a").style.top = "0"
+		el("ngp3_feature_ani_2a").style.width = "100%"
+		el("ngp3_feature_ani_2a").style.height = "100%"
+		el("ngp3_feature_ani_2b").style.background = "transparent"
+		el("ngp3_feature_ani_2b").style.left = "0"
+		el("ngp3_feature_ani_2b").style.top = "0"
+		el("ngp3_feature_ani_2b").style.width = "100%"
+		el("ngp3_feature_ani_2b").style.height = "100%"
+		el("ngp3_feature_ani_3").style.right = "0"
+	}, 100)
+
+	setTimeout(function() {
+		el("ngp3_feature_ani").style.left = "150%"
+
+		var nxt = ngp3Features[k].next
+		$.notify(nxt ? ngp3Features[nxt].threshold() + " to unlock the next feature: " + ngp3Features[nxt].name + "!" : "Congratulations, you have reached the end-game for now...", "error")
+	}, 5000)
+	setTimeout(function() {
+		el("ngp3_feature_ani").style.display = "none"
+		el("ngp3_feature_ani").style.left = "0%"
+		el("ngp3_feature_ani_1").style.background = "white"
+		el("ngp3_feature_ani_2a").style.background = "#7fff00"
+		el("ngp3_feature_ani_2a").style.left = "50%"
+		el("ngp3_feature_ani_2a").style.top = "50%"
+		el("ngp3_feature_ani_2a").style.width = "0"
+		el("ngp3_feature_ani_2a").style.height = "0"
+		el("ngp3_feature_ani_2b").style.background = "#00ffff"
+		el("ngp3_feature_ani_2b").style.left = "50%"
+		el("ngp3_feature_ani_2b").style.top = "50%"
+		el("ngp3_feature_ani_2b").style.width = "0"
+		el("ngp3_feature_ani_2b").style.height = "0"
+		el("ngp3_feature_ani_3").style.right = "150%"
+	}, 6000)
+	setTimeout(function() {
+	}, 6000)
+}
+
 //Update Messages
 var ngp3Welcomes = {
 	msgs: {
@@ -1087,7 +1213,6 @@ setTimeout(function() {
 	el("plAni").style.animation = ""
 	el("plAniBg").style.display = "none"
 }, 5000)
-*/
 
 function endGoalAfterStrings(x, slog = 0) {
 	let dMult = 13.5
@@ -1106,3 +1231,4 @@ function endGoalAfterStrings(x, slog = 0) {
 		return r
 	}
 }
+*/

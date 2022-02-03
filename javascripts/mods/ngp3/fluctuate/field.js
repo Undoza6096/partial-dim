@@ -5,7 +5,6 @@ let ff = {
 	data: {
 		all: [null, "alt", "pow", "free", "syn", "upg", "share"],
 		modes: ["Arc", "Remove"],
-		reqs: [0, 1, 2, 4, 6, 8, 10],
 		alt: {
 			req: 1,
 			title: "Altitude",
@@ -40,7 +39,9 @@ let ff = {
 
 	setup() {
 		ff_save = {
-			data: [], //[[pos, pk, left, right]]
+			data: [],
+				//[4, 3, [-3, 1, 2]]
+				//[pos, pk, arc data]
 			mode: 0
 		}
 		fluc_save.ff = ff_save
@@ -73,18 +74,29 @@ let ff = {
 	updateTmp() {
 		ff_tmp = {
 			unl: ff_tmp.unl,
-			choose: ff_tmp.choose,
-			used: [],
-			pos: {}
+			choose: ff_tmp.choose
 		}
 
 		if (!ff_tmp.unl) return
-		ff_tmp.posUnl = 0
-		ff_tmp.pkUnl = 0
-		for (var i = 1; i < ff.data.reqs.length; i++) if (fluc_save.energy >= ff.data.reqs[i]) ff_tmp.posUnl++
-		for (var i = 1; i < ff.data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) ff_tmp.pkUnl++
+		var d = ff_tmp
+		var data = ff.data
+		var save = ff_save.data
 
-		ff_tmp.spent = 0
+		d.pkUnl = 0
+		for (var i = 1; i < data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) d.pkUnl++
+
+		d.spent = 0
+		d.linked = []
+		d.shown = []
+		d.used = []
+		d.pos = {}
+		for (var i = 0; i < save.length; i++) {
+			d.spent++
+			d.linked.push(Math.ceil(save[i][0] / 3))
+			d.shown.push(save[i][0])
+			d.used.push(save[i][1])
+			d.pos[save[i][0]] = i
+		}
 
 		ff.updateTmpOnTick()
 	},
@@ -100,11 +112,15 @@ let ff = {
 	},
 	updateDisplays() {
 		for (var i = 1; i <= 18; i++) {
-			el("ff_arc_"+i+"_name").textContent = "Pos. " + Math.floor(i / 3) + ["a", "b", "c"][(i - 1) % 3]
-			el("ff_arc_"+i+"_eng").textContent = shorten(0) + " FE used"
+			var pos = ff_tmp.pos[i]
+			el("ff_arc_"+i).className = pos !== undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn"
+			el("ff_arc_"+i+"_name").textContent = "Pos. " + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
+			el("ff_arc_"+i+"_eng").textContent = shorten(pos !== undefined ? 1 : 0) + " FE used"
 
-			el("ff_pk_"+i+"_name").textContent = "None"
-			el("ff_pk_"+i+"_desc").textContent = ""
+			var pk = pos !== undefined && ff_save.data[pos][1]
+			el("ff_pk_"+i).style.display = ff_tmp.shown.includes(i) ? "" : "none"
+			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
+			el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
 		}
 		/*for (var i = 1; i <= 6; i++) {
 			var a = ff_save.arcs[i]
@@ -116,7 +132,8 @@ let ff = {
 					c ? (c == i ? "ff_btn" : ff.canArc(c, i) ? "storebtn" : ff_save.arcs[c][0] <= i && ff_save.arcs[c][1] >= i ? "chosenbtn" : "unavailablebtn") :
 					(a ? "storebtn" : ff.canArc(i) ? "ff_btn" : "unavailablebtn")
 				el("ff_arc_"+i+"_title").textContent = aUnl ? "Position " + i : "Locked"
-				el("ff_arc_"+i+"_cost").textContent = c ? (c == i ? "Click to exit" : "Cost: " + shorten(ff.arcCost(c, true) - ff.arcCost(c)) + " FE") :
+				el("ff_arc_"+i+"_cost").textContent = c ? (c == i ? "Click to exit" : "Cost: " + 
+				shorten(ff.arcCost(c, true) - ff.arcCost(c)) + " FE") :
 					(a ? "Click to arc" : aUnl ? "(Cost: " + getFullExpansion(this.arcCost(x, true)) + " FE)" : "(requires " + getFullExpansion(ff.data.reqs[i]) + " FE)")
 			}
 
@@ -148,34 +165,55 @@ let ff = {
 	unspent() {
 		return fluc_save.energy - ff_tmp.spent
 	},
-	cost(a, b, next) {
-		var l = a ? b - a : 0
-		if (next) l++
-		return Math.pow(2, (l - 1) / 1.7)
+	cost() {
+		return 1
 	},
-	canArc(x, p) {
-		if (fluc_save.energy < ff.data.reqs[p]) return
+	canArc(x) {
+		if (ff_save.data.length >= ff_tmp.pkUnl) return
 		if (ff.unspent() < ff.arcCost(x, true)) return
+		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
+		return true
+	},
+	arcCost(x) {
+		return 1
+	},
+	calcArc(d) {
+		var a = d[2]
+		var n = 0
+		for (var i = 0; i < a.length; i++) {
+			var j = a[i]
+			if (j > 0) break
+			n -= j
+		}
 
-		var a = ff_save.arcs[x]
-		if (!a) return true
-		if (p < a[0]) return p == a[0] - 1
-		return p == a[1] + 1
+		var s = d[0]
+		var m = 0
+		var r = []
+		var p = 0
+		for (var i = 0; i < a.length; i++) {
+			var j = a[i]
+			var nx = a[i+1]
+			if (j < 0) {
+				r.push(s - n)
+				n += j
+			}
+			if ((!nx || nx > 0) && m == 0) {
+				r.push(s)
+				m = 1
+			}
+			if (j > 0) {
+				p += j
+				r.push(s + p)
+			}
+		}
+		return r
 	},
-	arcCost(x, next) {
-		return this.cost(ff_save.arcs[x] && ff_save.arcs[x][0], ff_save.arcs[x] && ff_save.arcs[x][1], next)
-	},
-	arcPower(x) {
-		var a = ff_save.arcs[x]
-		if (!a) return 0
 
-		var x = 0
-		var exp = 2
-		for (var i = a[0]; i <= a[1]; i++) x += Math.pow(0, exp)
-		return Math.pow(x, 1 / exp)
+	perkPos(x) {
+		return ff_tmp.pos[x]
 	},
-	perkActive(x) {
-		return ff_tmp.used.includes(x) && ff_tmp.pows[x] !== undefined
+	perkShown(x) {
+		return ff_tmp.shown.includes(x)
 	},
 
 	respec() {
@@ -187,11 +225,29 @@ let ff = {
 	},
 	choose(x, mode) {
 		if (fluc_save.energy == 1 && str_save.energy < 1) {
-			alert("You need to get at least 1 Vibration Energy before using this mechanic.")
+			$.notify("You need to get at least 1 Vibration Energy before using this mechanic.", "warn")
 			return
 		}
-		alert("Rework incoming...")
-		return
+
+		if (mode == "arc" && ff_save.mode == 0) {
+			if (!ff.canArc(x)) return
+			ff_save.data.push([x, 0, []])
+			ff.updateTmp()
+			ff.updateDisplays()
+		} else if (mode == "perk") {
+			var data = ff_save.data[ff_tmp.pos[x]]
+			var newV = (data[1] || 0) + 1
+			while (ff_tmp.used.includes(newV)) newV++
+
+			var name = ff.data.all[newV]
+			if (newV == ff.data.all.length || fluc_save.energy < ff.data[name].req) newV = 0
+			data[1] = newV
+
+			el("ff_pk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
+			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
+			ff.updateTmp()
+			restartQuantum()
+		} else $.notify("Rework incoming...", "warn")
 
 		/*if (mode == "perk") {
 			var newV = (ff_save.perks[x] || 0) + 1
@@ -237,7 +293,7 @@ let ff = {
 	switchMode(update) {
 		if (!tmp.ngp3) return
 		if (!update) ff_save.mode = (ff_save.mode + 1) % 2
-		getEl("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
+		el("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
 
 		if (ff_save.mode == 1 && ff_tmp.choose > 0) {
 			ff_tmp.choose = 0

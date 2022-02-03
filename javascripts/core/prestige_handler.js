@@ -66,7 +66,7 @@ var pH = {
 			return tmp.ngp3
 		},
 		ghostify() {
-			return tmp.ngp3
+			return false
 		}
 	},
 	resetFuncs: {
@@ -101,7 +101,7 @@ var pH = {
 			fluc.reset()
 		},
 		ghostify() {
-			ghostify()
+			return false
 		}
 	},
 	tabLocs: {
@@ -160,7 +160,7 @@ var pH = {
 			return fluc.unl()
 		},
 		ghostify() {
-			return player.ghostify.times >= 1
+			return false
 		}
 	},
 	did(id) {
@@ -272,20 +272,16 @@ var pH = {
 
 		//Time Dilation
 		if (player.dilation.active) el("eternitybtn").className = "presBtn presPos" + pH_tmp.eternity.shown + " dilationbtn"
-
-		//Quantum (after Neutrino Upgrade 16)
-		let bigRipAndQuantum = !hasNU(16)
-		if (!bigRipAndQuantum && !QCs.inAny()) el("quantumbtn").style.display = "none"
 	},
 	updateActive() {
 		tmp.eterUnl = pH.did("eternity")
 		tmp.quUnl = tmp.ngp3 && pH.did("quantum")
-		tmp.quActive = tmp.quUnl
 	},
 	onPrestige(layer) {
 		if (pH_tmp[layer].did) return
 
 		pH_tmp.layers++
+		pH_tmp.lastDid = layer
 		pH_tmp[layer].did = true
 		pH_tmp[layer].order = pH_tmp.layers
 

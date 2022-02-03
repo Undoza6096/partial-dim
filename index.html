@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(2/1/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(2/2/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -1616,13 +1616,6 @@
 					<div id="thisCompressor"></div>
 					<div id="bestCompressors"></div>
 					<div id="thisLastCompressor"></div>
-					<br>
-				</div>
-				<div id="bigRipStatistics">
-					<div id="bigRipped"></div>
-					<div id="bestmoneythisrip"></div>
-					<div id="totalmoneybigrip"></div>
-					<div id="bestgalsbigrip"></div>
 					<br>
 				</div>
 				<div id="eternityStatistics">
@@ -5049,6 +5042,10 @@
 			<span id="ff_pk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
 			<table id="ff_table" align="center" style="margin: auto">
 				<tr>
+					<td colspan=3 id="ff_eng_1">0 Power</td>
+					<td colspan=3 id="ff_eng_2">0 Power</td>
+					<td colspan=3 id="ff_eng_3">0 Power</td>
+				</tr><tr>
 					<td id="ff_arc_1_td"></td>
 					<td id="ff_arc_2_td"></td>
 					<td id="ff_arc_3_td"></td>
@@ -5094,6 +5091,10 @@
 					<td id="ff_arc_16_td"></td>
 					<td id="ff_arc_17_td"></td>
 					<td id="ff_arc_18_td"></td>
+				</tr><tr>
+					<td colspan=3 id="ff_eng_4">0 Power</td>
+					<td colspan=3 id="ff_eng_5">0 Power</td>
+					<td colspan=3 id="ff_eng_6">0 Power</td>
 				</tr>
 			</table>
 			<br><br>
@@ -5743,7 +5744,6 @@
 			<button id="exdilationConfirmBtn" class="storebtn" onclick="toggleExdilaConf()" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
 			<button id="quantumConfirmBtn" class="storebtn" onclick="toggleQuantumConf()" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
 			<button id="fluc_conf" class="storebtn" onclick="fluc.updateConf(true)" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
-			<button id="bigRipConfirmBtn" class="storebtn" onclick="toggleBigRipConf()" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
 			<button id="ghostifyConfirmBtn" class="storebtn" onclick="toggleGhostifyConf()" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
 			<button id="leConfirmBtn" class="storebtn" onclick="toggleLEConf()" style="width: 200px; height: 55px; font-size: 15px" style="display: inline"></button>
 		</div>
@@ -5873,17 +5873,13 @@
 	<div id="progress">
 		<div id="progressbar"><span id="progresspercent" ach-tooltip="Percentage until Infinity">0%</span></div>
 	</div>
-	<div id="ghostifyani">
-		<div id="ghostifyanibg"></div>
-		<div id="ghostifyanitext" style="font-size:24px"><b style="font-size:48px">You became a ghost!</b><br><span id="ghostifyanigained"></span></div>
-	</div>
-	<div id="plAni" style="display: none">
-		<div id="plAniBg"></div>
-		<div id="plAniBg2" style="display: none"></div>
-		<div id="plAniTxt" style="display: none">
-			<b id="plAniTitle">You have tiered up the Planck Scale!</b>
-			<br>
-			<div id="plAniTier">Tier 1 -> 2</div>
+	<div id="ngp3_feature_ani" style="display: none">
+		<div id="ngp3_feature_ani_5"></div>
+		<div id="ngp3_feature_ani_1"></div>
+		<div id="ngp3_feature_ani_2a"></div>
+		<div id="ngp3_feature_ani_2b"></div>
+		<div id="ngp3_feature_ani_3">
+			<b id="ngp3_feature_ani_4">Strings have been unlocked!</b>
 		</div>
 	</div>
 	<div id="fps"></div>

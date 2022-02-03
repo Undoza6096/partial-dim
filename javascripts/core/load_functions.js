@@ -1527,7 +1527,6 @@ function setConfirmationsDisplay(){
         el("eternityconf").style.display = pH.did("eternity") ? "inline-block" : "none"
         el("dilationConfirmBtn").style.display = (player.dilation.studies.includes(1) || pH.did("quantum")) ? "inline-block" : "none"
         el("quantumConfirmBtn").style.display = pH.did("quantum") ? "inline-block" : "none"
-        el("bigRipConfirmBtn").style.display = tmp.ngp3 && qu_save.bigRip.times ? "inline-block" : "none"
         el("ghostifyConfirmBtn").style.display = pH.did("ghostify") ? "inline-block" : "none"
         el("leConfirmBtn").style.display = pH.did("ghostify") && player.ghostify.ghostlyPhotons.enpowerments ? "inline-block" : "none"
 
@@ -1540,7 +1539,6 @@ function setConfirmationsDisplay(){
         el("dilationConfirmBtn").textContent = "Dilation confirmation: O" + (aarMod.dilationConf ? "N" : "FF")
         el("exdilationConfirmBtn").textContent = "Reverse dilation confirmation: O" + (player.options.exdilationconfirm ? "N" : "FF")
         el("quantumConfirmBtn").textContent = "Quantum confirmation: O" + (aarMod.quantumConf ? "N" : "FF")
-        el("bigRipConfirmBtn").textContent = "Big Rip confirmation: O" + (tmp.ngp3 && qu_save.bigRip.conf ? "N" : "FF")
         el("ghostifyConfirmBtn").textContent = "Ghostify confirmation: O" + (aarMod.ghostifyConf ? "N" : "FF")
         el("leConfirmBtn").textContent = "Light Empowerment confirmation: O" + (aarMod.leNoConf ? "FF" : "N")
 }
@@ -1573,7 +1571,7 @@ function setOptionsDisplaysStuff1() {
 	el("infmultbuyer").style.display = getEternitied()>0||player.masterystudies?"inline-block":"none"
 	if (!player.options.hotkeys) el("hotkeys").textContent = "Enable hotkeys"
 
-	document.getElementsByClassName("hideInMorse").display = player.options.notation == "Morse code" ? "none" : ""
+	el_class("hideInMorse").display = player.options.notation == "Morse code" ? "none" : ""
 
 	el("hideProductionTab").textContent = (aarMod.hideProductionTab?"Show":"Hide")+" production tab"
 	setStatsDisplay()
@@ -1880,7 +1878,7 @@ function onLoad(noOffline) {
 	qu_save = player.quantum
 	aarMod = player.aarexModifications
 	if (qu_save == undefined || aarMod.newGamePlusPlusVersion == undefined) {
-		tmp.quActive = false
+		tmp.quUnl = false
 		tmp.quUnl = false
 		qMs.tmp.amt = 0
 	}

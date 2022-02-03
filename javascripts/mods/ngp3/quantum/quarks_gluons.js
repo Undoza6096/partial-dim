@@ -396,7 +396,7 @@ function getQuantumEnergyDiv() {
 function updateQEGainTmp() {
 	let data = {}
 	tmp.qe = data
-	if (!tmp.quActive) return
+	if (!tmp.quUnl) return
 
 	//Quantum efficiency
 	data.expDen = hasAch("ng3p14") ? 2 : 3
@@ -422,7 +422,7 @@ function updateQEGainTmp() {
 }
 
 function updateQuarkEnergyEffects() {
-	if (!tmp.quActive) return
+	if (!tmp.quUnl) return
 
 	var eng = qu_save.quarkEnergy
 	var exp = tmp.qe.exp
@@ -434,7 +434,7 @@ function updateQuarkEnergyEffects() {
 
 function updateGluonicBoosts() {
 	tmp.glB = {}
-	if (!tmp.quActive) {
+	if (!tmp.quUnl) {
 		enB.updateTmp()
 		return
 	}
@@ -526,7 +526,7 @@ var enB = {
 		}
 		if (enB.colorUsed() == x) return
 		if (!qu_save.entBoosts || !this.glu.unl()) {
-			alert("You need to get at least 1 Entangled Boost and have gluons before choosing a type!")
+			$.notify("You need to get at least 1 Entangled Boost and have gluons before choosing a type!", "warn")
 			return
 		}
 		if (!confirm("This will perform a quantum reset without gaining anything. Are you sure?")) return
@@ -576,7 +576,7 @@ var enB = {
 
 		data.unl = {}
 		data.eff = {}
-		if (!tmp.quActive) return
+		if (!tmp.quUnl) return
 
 		for (var x = 0; x < this.types.length; x++) {
 			var type = this.types[x]
@@ -624,7 +624,7 @@ var enB = {
 		name: "Entangled",
 		engName: "Quantum Energy",
 		unl() {
-			return (tmp.quActive && Decimal.add(qu_save.gluons.rg, qu_save.gluons.gb).add(qu_save.gluons.br).gt(0)) || fluc.unl()
+			return (tmp.quUnl && Decimal.add(qu_save.gluons.rg, qu_save.gluons.gb).add(qu_save.gluons.br).gt(0)) || fluc.unl()
 		},
 
 		costs: [1,4,6,7,8,9,10,12,13,15,36,40,45,60,80],

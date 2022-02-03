@@ -693,7 +693,7 @@ ghostlyNewsArray = [//Ghostly news ticker messages
 ["We found out that ghosts are made of ghostly foam!", true, "gn66"],
 ["Did ghosts transform themselves to keep their lives? Oh, come on! We are immortal!", true, "gn67"],
 ["Hey. GhostSauce's Here.", "true", "gn68"],
-["We finally found a solution that end the war against Antipretus.", "hasBosonicUpg(53)", "gn69"],
+["We finally found a solution that end the war against Antipretus.", false, "gn69"],
 ["A ghost has retired from a haunted office to work on Bosonic Lab!", "hasAch('ng3p81')", "gn70"],
 ["Ghosts are hiding for a secret plan on ghost transformation curses to the developers.", true, "gn71"],
 ["A detective ghost, Ms. Koolka, has gone recently at a basement of Bosonic Lab. The team of Bosonic Lab is investigating that scenario to see he's alive or not.", "hasAch('ng3p81')", "gn72"],

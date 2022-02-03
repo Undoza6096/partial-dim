@@ -115,8 +115,6 @@ function doQuantumResetStuff(layer = 5, bigRip, isQC, qcData){
 	var headstart = !tmp.ngp3
 	var oheHeadstart = tmp.ngp3
 	var keepABnICs = oheHeadstart || hasAch("ng3p12")
-	var turnSomeOn = !bigRip || tmp.bruActive[1]
-	var bigRipChanged = false
 
 	if (qMs.tmp.amt < 1) {
 		if (player.dimensionMultDecrease <= 3) player.dimensionMultDecrease = 3
@@ -130,7 +128,7 @@ function doQuantumResetStuff(layer = 5, bigRip, isQC, qcData){
 	if (!headstart) player.eternities = qMs.tmp.amt >= 2 ? 100 * Math.pow(3, qMs.tmp.amt) : oheHeadstart ? 100 : 0
 	player.eternityPoints = E(0)
 
-	var keepTS = bigRip ? tmp.bruActive[12] : qMs.isOn(3)
+	var keepTS = qMs.isOn(3)
 	if (keepTS) respecTimeStudies()
 	else player.timestudy = {
 		theorem: 0,
@@ -155,7 +153,7 @@ function doQuantumResetStuff(layer = 5, bigRip, isQC, qcData){
 
 	player.autoIP = E(0)
 	player.autoTime = 1e300
-	player.infMultBuyer = bigRipChanged ? turnSomeOn : oheHeadstart ? player.infMultBuyer : false
+	player.infMultBuyer = oheHeadstart ? player.infMultBuyer : false
 	player.autoCrunchMode = keepABnICs ? player.autoCrunchMode : "amount"
 	player.autoEterMode = keepABnICs ? player.autoEterMode : "amount"
 	player.eternityBuyer = keepABnICs ? player.eternityBuyer : {

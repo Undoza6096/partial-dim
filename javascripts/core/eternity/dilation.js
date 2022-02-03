@@ -18,9 +18,11 @@ function buyDilationStudy(name) {
 			if (player.blackhole != undefined) updateEternityUpgrades()
 		} else if (name > 5) {
 			giveAchievement("I'm so meta")
-			showTab("dimensions")
-			showDimTab("metadimensions")
 			updateDilationUpgradeCosts()
+			if (tmp.quUnl || !tmp.ngp3) {
+				showTab("dimensions")
+				showDimTab("metadimensions")
+			} else ngp3_feature_notify("md")
 		}
 		player.dilation.studies.push(name)
 		player.timestudy.theorem -= dsStudyCosts[name]()
@@ -61,9 +63,8 @@ function getDilTimeGainPerSecond() {
 		if (hasAch("r138")) gain = gain.times(tmp.ngp3_exp ? 2 : 1.5)
 		if (hasAch("ng3p11")) gain = gain.times(Math.min(Math.max(Math.log10(player.eternityPoints.max(1).log10()) / 2, 1) / 2, 2.5))
 		if (enB.active("pos", 2)) gain = gain.times(enB_tmp.eff.pos2.mult)
-		if (hasBosonicUpg(15)) gain = gain.times(tmp.blu[15].dt)
 	}
-	if (tmp.quActive && tmp.ngp3_mul) gain = gain.times(colorBoosts.b) //Color Powers (NG*+3)
+	if (tmp.quUnl && tmp.ngp3_mul) gain = gain.times(colorBoosts.b) //Color Powers (NG*+3)
 
 	//NG Update
 	if (player.exdilation != undefined) gain = gain.times(getNGUDTGain())
@@ -120,7 +121,7 @@ function getTPMult() {
 		if (hasAch("ng3p11")) ret = ret.times(Math.min(Math.max(Math.log10(player.eternityPoints.max(1).log10()) / 2, 1), 2.5))
 		if (hasAch("ng3pr16")) ret = ret.times(5)
 		if (hasMTS(264)) ret = ret.times(doubleMSMult(5)) //Mastery Studies
-		if (tmp.quActive) ret = ret.times(colorBoosts.b) //Color Powers
+		if (tmp.quUnl) ret = ret.times(colorBoosts.b) //Color Powers
 	}
 	if (futureBoost("timeless_fuse") && dev.boosts.tmp[1]) ret = ret.times(dev.boosts.tmp[1])
 
@@ -496,6 +497,7 @@ function buyDilationUpgrade(pos, max, isId) {
 			el("respecMastery").style.display = "block"
 			el("respecMastery2").style.display = "block"
 			if (!quantumed) {
+				ngp3_feature_notify("ms")
 				$.notify("Congratulations for unlocking Mastery Studies! You can either click the 'mastery studies' button\nor 'continue to mastery studies' button in the Time Studies menu.")
 				el("welcomeMessage").innerHTML = "Congratulations for reaching the end-game of NG++. In NG+3, the game keeps going with a lot of new content starting at Mastery Studies. You can either click the 'Mastery studies' tab button or 'Continue to mastery studies' button in the Time Studies menu to access the new Mastery Studies available."
 				el("welcome").style.display = "flex"
@@ -687,7 +689,6 @@ function getDilGalaxyEff() {
 
 	if (hasMTS(263)) x = 1 + doubleMSMult(0.25)
 	if (hasMTS(312)) x *= getMTSMult(312).eff
-	if (hasBosonicUpg(34)) x *= tmp.blu[34]
 
 	return x
 }

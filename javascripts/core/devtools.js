@@ -285,7 +285,7 @@ dev.boosts = {
 	3: {
 		name: "Potential Strings",
 		unl() {
-			return tmp.quActive
+			return tmp.quUnl
 		},
 		eff(x) {
 			//Potential Strings: Potential Vibration Energy (scaled by antimatter) multiply Quantum Energy and Positronic Charge.
@@ -306,7 +306,7 @@ dev.boosts = {
 	5: {
 		name: "Quantum Tunneling",
 		unl() {
-			return tmp.quActive
+			return tmp.quUnl
 		},
 		eff(x) {
 			//Quantum Tunneling: Green power effect boosts Replicanti Stealth at a reduced rate.
@@ -316,7 +316,7 @@ dev.boosts = {
 	6: {
 		name: "Hypergluonic Flux",
 		unl() {
-			return tmp.quActive
+			return tmp.quUnl
 		},
 		eff(x) {
 			//Hypergluonic Flux: Increase the scaling of Quantum Power.

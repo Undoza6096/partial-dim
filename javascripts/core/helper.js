@@ -1,4 +1,5 @@
 el = x => document.getElementById(x)
+el_class = x => document.getElementsByClassName(x)
 getEl = el
 
 /* Credits to MrRedShark77. */

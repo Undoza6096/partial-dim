@@ -307,7 +307,6 @@ function getReplGalaxyEff() {
 
 	if (hasMTS(301)) x *= getTSReplEff()
 	if (hasMTS(311)) x *= getMTSMult(311).eff
-	if (hasBosonicUpg(34)) x *= tmp.blu[34]
 
 	return x
 }
@@ -395,7 +394,7 @@ function getReplSpeedExpMult() {
 	if (tmp.rep.ec14) exp *= tmp.rep.ec14.ooms
 
 	//Quantum
-	if (tmp.quActive) exp *= colorBoosts.g
+	if (tmp.quUnl) exp *= colorBoosts.g
 	if (QCs.in(6)) exp /= QCs_tmp.qc6
 
 	return exp

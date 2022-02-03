@@ -1241,32 +1241,6 @@ td .timestudybought.pos_study {
     box-shadow: inset 0 0 15px #fff3, 0 0 8px #fff7;
 }
 
-.gluonupgrade.bl {
-    background: 
-        linear-gradient(#6164, #0000 50%, #6164 100%), 
-        linear-gradient(90deg, #0000, #c314 50%, #0000 100%),
-        linear-gradient(#222, #000) !important;
-    color: #fff !important;
-    border: 1px solid #fff !important;
-    box-shadow: inset 0 0 15px #0003;
-    text-shadow: 0 0 5px #fff2;
-    animation: none !important;
-}
-.gluonupgrade.bl:hover {
-    box-shadow: inset 0 0 15px #fff3, 0 0 8px #fff7;
-}
-.gluonupgradebought.bl {
-    background: 
-        linear-gradient(#6164, #0000 50%, #6164 100%), 
-        linear-gradient(90deg, #0000, #c314 50%, #0000 100%),
-        linear-gradient(#222, #444) !important;
-    color: #fff !important;
-    border: 1px solid #fff !important;
-    box-shadow: inset 0 0 15px #fff5, 0 0 8px #fff7;
-    text-shadow: 0 0 2px #aaa7;
-    animation: none !important;
-}
-
 #produceQuarkCharge {
     background: linear-gradient(#445, #222) !important;
     color: #aab !important;

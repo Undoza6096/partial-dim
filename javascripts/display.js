@@ -201,19 +201,8 @@ function bestGhostifyDisplay(){
 	else {
 		el("ghostifyStatistics").style.display = ""
 		el("ghostified").textContent = "You have became a ghost and passed Big Ripped universes " + getFullExpansion(player.ghostify.times) + " times."
-		el("thisGhostify").textContent = "You have spent " + timeDisplay(player.ghostify.time) + (hasBosonicUpg(64) ? " (+" + timeDisplayShort(tmp.blu[64].gh) + ")" : "") + " in this Ghostify."
+		el("thisGhostify").textContent = "You have spent " + timeDisplay(player.ghostify.time) + " in this Ghostify."
 		el("bestGhostify").textContent = "Your fastest Ghostify is in " + timeDisplay(player.ghostify.best) + "."
-	}
-}
-
-function ng3p51Display(){
-	if (!hasAch("ng3p51"))  el("bigRipStatistics").style.display = "none"
-	else {
-		el("bigRipStatistics").style.display = ""
-		setAndMaybeShow("bigRipped", qu_save.bigRip.times, '"You have big ripped the universe " + getFullExpansion(qu_save.bigRip.times) + " times."')
-		setAndMaybeShow("bestmoneythisrip", qu_save.bigRip.active, "'Your best antimatter for this Big Rip is ' + shortenMoney(qu_save.bigRip.bestThisRun) + '.'")
-		el("totalmoneybigrip").textContent = 'You have made a total of ' + shortenMoney(qu_save.bigRip.totalAntimatter) + ' antimatter in all big rips.'
-		el("bestgalsbigrip").textContent = 'Your best amount of normal galaxies for all Big Rips is ' + getFullExpansion(qu_save.bigRip.bestGals) + "."
 	}
 }
 
@@ -400,7 +389,6 @@ function STATSDisplay(){
 	bestEternityDisplay()
 	quantumStatDisplay()
 	bestGhostifyDisplay()
-	ng3p51Display()
 	dilationStatsDisplay()
 	infoScaleDisplay()
 }
@@ -942,7 +930,7 @@ function showAutoTab(tabName) {
 	}
 
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('autotab');
+	var tabs = el_class('autotab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {

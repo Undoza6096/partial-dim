@@ -38,7 +38,7 @@ function setupFooterHTML() {
 			) + 
 		"</div></tr></td></table>"
 
-	var footers = document.getElementsByClassName("footer")
+	var footers = el_class("footer")
 	for (var f = 0; f < footers.length; f++) footers[f].innerHTML = html
 }
 
@@ -253,23 +253,6 @@ function setupBosonicExtraction(){
 	el("typeToExtract").innerHTML=toeDiv
 }
 
-function setupBosonicUpgrades(){
-	setupBosonicUpgReqData()
-	var buTable=el("bUpgs")
-	for (r = 1; r <= bu.limits[maxBLLvl]; r++) {
-		var row = buTable.insertRow(r - 1)
-		row.id = "bUpgRow" + r
-		for (c = 1; c < 6; c++) {
-			var col = row.insertCell(c - 1)
-			var id = (r * 10 + c)
-			col.innerHTML = "<button id='bUpg" + id + "' class='gluonupgrade unavailablebtn' style='font-size:" + (id == 51 || id == 52 ? 8 : 9) + "px' onclick='buyBosonicUpgrade(" + id + ")'>" + (bu.descs[id] || "???") + "<br>" +
-				(bu.effects[id] !== undefined ? "Currently: <span id='bUpgEffect" + id + "'>0</span><br>" : "") +
-				"Cost: <span id='bUpgCost" + id + "'></span> Bosonic Antimatter<br>" +
-				"Requires: <span id='bUpgG1Req" + id + "'></span> <div class='bRune' type='" + bu.reqData[id][2] + "'></div> & <span id='bUpgG2Req" + id + "'></span> <div class='bRune' type='" + bu.reqData[id][4] + "'></div></button>"
-		}
-	}
-}
-
 function setupBosonicRunes(){
 	var brTable=el("bRunes")
 	for (var g = 1; g <= br.limits[maxBLLvl]; g++) {
@@ -277,7 +260,7 @@ function setupBosonicRunes(){
 		col.id = "bRuneCol" + g
 		col.innerHTML = '<div class="bRune" type="' + g + '"></div>: <span id="bRune' + g + '"></span>'
 	}
-	var glyphs=document.getElementsByClassName("bRune")
+	var glyphs=el_class("bRune")
 	for (var g = 0 ; g < glyphs.length; g++) {
 		var glyph = glyphs[g]
 		var type = glyph.getAttribute("type")
@@ -303,7 +286,6 @@ function setupHTMLAndData() {
 	ff.setupHTML()
 	setupBraveMilestones()
 	setupBosonicExtraction()
-	setupBosonicUpgrades()
 	setupBosonicRunes()
 }
 
@@ -1290,7 +1272,7 @@ function showTab(tabName, init) {
 		return
 	}
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName("tab");
+	var tabs = el_class("tab");
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -2087,7 +2069,6 @@ function gainedEternityPoints() {
 	if (hasTimeStudy(122)) ret = ret.times(35)
 	if (hasTimeStudy(123)) ret = ret.times(Math.sqrt(1.39*player.thisEternity/10))
 	if (hasGalUpg(51)) ret = ret.times(galMults.u51())
-	if (tmp.ngp3 && tmp.be) ret = ret.times(getBreakUpgMult(7))
 	if (tmp.ngC) ret = softcap(ret, "ep_ngC")
 	if (hasTS(172) && tmp.ngC) ret = ret.times(tsMults[172]())
 	if (uEPM) ret = ret.times(player.epmult)
@@ -2122,7 +2103,7 @@ function updateNotationOption() {
 }
 
 function onNotationChange() {
-	document.getElementsByClassName("hideInMorse").display = player.options.notation == "Morse code" || player.options.notation == 'Spazzy' ? "none" : ""
+	el_class("hideInMorse").display = player.options.notation == "Morse code" || player.options.notation == 'Spazzy' ? "none" : ""
 	updateNotationOption()
 	if (player.pSac !== undefined) updatePUCosts()
 	updateLastTenRuns();
@@ -3217,7 +3198,7 @@ function eternity(force, auto, forceRespec, dilated = false) {
 
 function doAfterEternityResetStuff() {
 	if (getInfinitied() >= 1 && !player.challenges.includes("challenge1")) player.challenges.push("challenge1")
-	var autobuyers = document.getElementsByClassName('autoBuyerDiv')
+	var autobuyers = el_class('autoBuyerDiv')
 	if (getEternitied() < 2) {
 		for (var i = 0; i < autobuyers.length; i++) autobuyers.item(i).style.display = "none"
 		el("buyerBtnDimBoost").style.display = "inline-block"
@@ -3576,7 +3557,7 @@ function doNGP3UnlockStuff(){
 
 	var inEasierModeCheck = !inEasierMode()
 	if (player.eternityPoints.gte("1e1200") && qu_save.bigRip.active && !qu_save.breakEternity.unlocked) doBreakEternityUnlockStuff()
-	if (tmp.quActive) {
+	if (tmp.quUnl) {
 		if (!player.ghostify.reached && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(pow10(QCs.getGoalMA(undefined, true)))) doGhostifyUnlockStuff()
 		if (!player.ghostify.ghostlyPhotons.unl && qu_save.bigRip.active && qu_save.bigRip.bestThisRun.gte(pow10(6e9))) doPhotonsUnlockStuff()
 		if (!player.ghostify.wzb.unl && canUnlockBosonicLab()) doBosonsUnlockStuff()
@@ -3971,16 +3952,6 @@ function ghostifyAutomationUpdating(diff){
 		}
 	}
 	if (isAutoGhostActive(15) && hasNU(16) && getGHPGain().gte(player.ghostify.automatorGhosts[15].a)) ghostify(true)
-
-	//Quantum Layer
-	if (!tmp.quUnl) return
-
-	let limit = player.ghostify.automatorGhosts[13].o || 1 / 0
-	if (hasMTS("d14") && isAutoGhostActive(13)) {
-		if (qu_save.bigRip.active) {
-			if (qu_save.time >= player.ghostify.automatorGhosts[13].u * 10 && qu_save.bigRip.times <= limit) quantumReset(true, true)
-		} else if (qu_save.time >= player.ghostify.automatorGhosts[13].t * 10 && qu_save.bigRip.times < limit) bigRip(true)
-	}
 }
 
 function WZBosonsUpdating(diff){
@@ -4018,7 +3989,7 @@ function ghostlyPhotonsUpdating(diff){
 }
 
 function quantumOverallUpdating(diff){
-	if (tmp.quActive) {
+	if (tmp.quUnl) {
 		//Quantum Challenges
 		if (QCs.in(6)) QCs_save.qc6 = Math.min(QCs_save.qc6 + diff / (player.dilation.active ? 2 : 1), 60)
 
@@ -4288,7 +4259,6 @@ function doGhostifyButtonDisplayUpdating(diff){
 	if (pH.did("ghostify")) {
 		ghostifyGains.push(shortenDimensions(getGHPGain()) + " Ghost Particles")
 		if (hasAch("ng3p78")) ghostifyGains.push(shortenDimensions(Decimal.times(6e3 * qu_save.bigRip.bestGals, getGhostifiedGain()).times(getNeutrinoGain())) + " Neutrinos")
-		if (hasBosonicUpg(15)) ghostifyGains.push(getFullExpansion(getGhostifiedGain()) + " Ghostifies")
 	}
 	el("ghostifybtnFlavor").textContent = ghostifyGains.length > 1 ? "" : (ghostifyGains.length ? "" : "I need to ascend from this broken universe... ") + "I need to become a ghost."
 	el("GHPGain").textContent = ghostifyGains.length ? "Gain " + ghostifyGains[0] + (ghostifyGains.length > 2 ? ", " + ghostifyGains[1] + "," : "") + (ghostifyGains.length > 1 ? " and " + ghostifyGains[ghostifyGains.length-1] : "") + "." : ""
@@ -4593,9 +4563,6 @@ function passiveQuantumLevelStuff(diff){
 	if (hasAch("ng3p112") && pH.can("ghostify")) player.ghostify.ghostParticles = player.ghostify.ghostParticles.add(getGHPGain().times(diff / 100))
 	if (hasAch("ng3p112")) player.ghostify.times = c_add(player.ghostify.times, c_mul(getGhostifiedGain(), diff))
 
-	if (hasBosonicUpg(24)) qu_save.bigRip.spaceShards = qu_save.bigRip.spaceShards.add(getSpaceShardsGain().times(diff / 100))
-	if (hasBosonicUpg(51) || (tmp.be && player.ghostify.milestones > 14)) qu_save.breakEternity.eternalMatter = qu_save.breakEternity.eternalMatter.add(getEMGain().times(diff / 100))
-
 	qu_save.quarks = qu_save.quarks.add(quarkGain().sqrt().times(diff))
 	var p = ["rg", "gb", "br"]
 	for (var i = 0; i < 3; i++) {
@@ -4686,7 +4653,7 @@ function gameLoop(diff) {
 
 		if (tmp.ngp3) {
 			if (hasDilationStudy(1) && player.dilation.active) ngp3DilationUpdating()
-			if (player.ghostify.milestones >= 8 && tmp.quActive) passiveQuantumLevelStuff(diff)
+			if (player.ghostify.milestones >= 8 && tmp.quUnl) passiveQuantumLevelStuff(diff)
 			if (ETER_UPGS.has(15)) updateEternityUpgrades() // to fix the 5ep upg display
 			if (pH.did("ghostify")) {
 				if (player.ghostify.wzb.unl) WZBosonsUpdating(diff) // Bosonic Lab
@@ -5114,7 +5081,7 @@ function isEterBuyerOn() {
 
 function showGalTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('galaxytab');
+	var tabs = el_class('galaxytab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5130,7 +5097,7 @@ function showGalTab(tabName) {
 
 function showInfTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('inftab');
+	var tabs = el_class('inftab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5145,7 +5112,7 @@ function showInfTab(tabName) {
 
 function showStatsTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('statstab');
+	var tabs = el_class('statstab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5160,7 +5127,7 @@ function showStatsTab(tabName) {
 
 function showDimTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('dimtab');
+	var tabs = el_class('dimtab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5177,7 +5144,7 @@ function showDimTab(tabName) {
 
 function showChallengesTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('challengeTab');
+	var tabs = el_class('challengeTab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5194,7 +5161,7 @@ function showChallengesTab(tabName) {
 function showEternityTab(tabName, init) {
 	if (tabName == "timestudies" && player.boughtDims) tabName = "ers_" + tabName
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('eternitytab');
+	var tabs = el_class('eternitytab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -5219,7 +5186,7 @@ function showEternityTab(tabName, init) {
 
 function showAchTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('achtab');
+	var tabs = el_class('achtab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5234,7 +5201,7 @@ function showAchTab(tabName) {
 
 function showOptionTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('optionstab');
+	var tabs = el_class('optionstab');
 	var tab;
 	for (var i = 0; i < tabs.length; i++) {
 		tab = tabs.item(i);
@@ -5249,7 +5216,7 @@ function showOptionTab(tabName) {
 }
 
 function closeToolTip(showStuck) {
-	var elements = document.getElementsByClassName("popup")
+	var elements = el_class("popup")
 	for (var i=0; i<elements.length; i++) if (elements[i].id!='welcome') elements[i].style.display = "none"
 	if (showStuck && !game_loaded) showStuckPopup()
 }
@@ -5366,8 +5333,7 @@ window.addEventListener('keydown', function(event) {
 		break;
 
 		case 66: // B
-			if (hasAch("ng3p51")) bigRip()
-			else if (inNGM(3)) manualTickspeedBoost()
+			if (inNGM(3)) manualTickspeedBoost()
 		break;
 
 		case 67: // C

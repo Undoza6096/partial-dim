@@ -196,7 +196,6 @@ function updateBosonicLimits() {
 
 	//Bosonic Lab
 	br.limit = br.limits[lvl]
-	bu.rows = bu.limits[lvl]
 	bEn.limit = bEn.limits[lvl]
 
 	if (lvl == 0) return
@@ -211,12 +210,11 @@ function updateBosonicLimits() {
 			el("bEnRow" + (r - 1)).style.display = shown ? "" : "none"
 		}
 	}
-	for (var r = 3; r <= bu.limits[maxBLLvl]; r++) el("bUpgRow" + r).style.display = bu.rows >= r ? "" : "none"
 }
 
 function showBLTab(tabName) {
 	//iterate over all elements in div_tab class. Hide everything that's not tabName and show tabName
-	var tabs = document.getElementsByClassName('bltab');
+	var tabs = el_class('bltab');
 	var tab;
 	var oldTab
 	for (var i = 0; i < tabs.length; i++) {
@@ -278,12 +276,6 @@ function updateBosonicStuffCosts() {
 		el("bEnG1Cost" + id).textContent = (data !== undefined && data[0] !== undefined && shortenDimensions(getBosonicFinalCost(data[0]))) || "???"
 		el("bEnG2Cost" + id).textContent = (data !== undefined && data[1] !== undefined && shortenDimensions(getBosonicFinalCost(data[1]))) || "???"
 	}
-	for (var r = 1; r <= bu.rows; r++) for (var c = 1; c < 6; c++) {
-		var id = r * 10 + c
-		var data = bu.reqData[id]
-		el("bUpgCost" + id).textContent = (data[0] !== undefined && shorten(getBosonicFinalCost(data[0]))) || "???"
-		for (var g = 1; g < 3; g++) el("bUpgG" + g + "Req" + id).textContent = (data[g * 2 - 1] !== undefined && shortenDimensions(getBosonicFinalCost(data[g * 2 - 1]))) || "???"
-	}
 }
 
 function getBosonicFinalCost(x) {
@@ -294,14 +286,12 @@ function getBosonicFinalCost(x) {
 
 function updateBosonicLabTemp() {
 	delete tmp.bEn
-	delete tmp.blu
 	tmp.wzb = {}
 
 	if (!pH.did("ghostify")) return 
 	if (!player.ghostify.wzb.unl) return 
 
 	updateBosonicEnchantsTemp()
-	updateBosonicUpgradesTemp()
 	updateWZBosonsTemp()
 
 	if (!tmp.badm) updateBosonicAMDimReturnsTemp()
@@ -520,7 +510,6 @@ var bEn = {
 		},
 		15(l) {
 			let x = Math.pow(Math.log10(l.add(1).log10() + 1) / 5 + 1, 2)
-			if (hasBosonicUpg(61)) x = Math.max(Math.cbrt(l.add(1).log10() / 25 + 1), x)
 			return x
 		},
 		25(l) {
@@ -611,413 +600,7 @@ var bEn = {
 }
 
 //Bosonic Upgrades
-function setupBosonicUpgReqData() {
-	for (var r = 1; r <= bu.limits[maxBLLvl]; r++) for (var c = 1; c < 6; c++) {
-		var id = r * 10 + c
-		var data = bu.costs[id]
-		var rData = [undefined, undefined, 0, undefined, 0]
-		if (data) {
-			if (data.am !== undefined) rData[0] = data.am
-			var p = 1
-			for (var g = 1; g <= br.limits[maxBLLvl]; g++) if (data["g" + g] !== undefined) {
-				rData[p * 2 - 1] = data["g" + g]
-				rData[p * 2] = g
-				p++
-			}
-		}
-		bu.reqData[id] = rData
-	}
-}
-
-function canBuyBosonicUpg(id) {
-	let rData = bu.reqData[id]
-	if (rData[0] === undefined || rData[1] === undefined || rData[3] === undefined) return
-	if (!player.ghostify.bl.am.gte(getBosonicFinalCost(rData[0]))) return
-	for (var g = 1; g < 3; g++) if (!player.ghostify.bl.glyphs[rData[g * 2] - 1].gte(getBosonicFinalCost(rData[g * 2 - 1]))) return
-	return true
-}
-
-function buyBosonicUpgrade(id, quick) {
-	if (player.ghostify.bl.upgrades.includes(id)) return true
-	if (!canBuyBosonicUpg(id)) return false
-	player.ghostify.bl.upgrades.push(id)
-	player.ghostify.bl.am = player.ghostify.bl.am.sub(getBosonicFinalCost(bu.reqData[id][0]))
-	if (!quick) updateTmp()
-	if (id == 32 || id == 65) tmp.updateLights = true
-	return true
-}
-
-function buyMaxBosonicUpgrades() {
-	var stopped = false
-	var oldLength = player.ghostify.bl.upgrades.length
-	if (oldLength == bu.rows * 5) return
-	for (var r = 1; r <= bu.rows; r++) {
-		for (var c = 1; c <= 5; c++) {
-			var id = r * 10 + c
-			if (!buyBosonicUpgrade(id, true)) break
-		}
-	}
-	if (player.ghostify.bl.upgrades.length > oldLength) updateTmp()
-}
-
-function hasBosonicUpg(id) {
-	return tmp.ngp3 && tmp.blu && id <= bu.rows * 10 + 10 && player.ghostify.bl.upgrades.includes(id)
-}
-
-function updateBosonicUpgradeDescs() {
-	for (var r = 1; r <= bu.rows; r++) for (var c = 1; c <= 5; c++) {
-		var id = r * 10 + c
-		el("bUpg" + id).className = player.ghostify.bl.upgrades.includes(id) ? "gluonupgradebought bl" : canBuyBosonicUpg(id) ? "gluonupgrade bl" : "gluonupgrade unavailablebtn"
-		if (tmp.blu[id] !== undefined) el("bUpgEffect"+id).textContent = (bu.effectDescs[id] !== undefined && bu.effectDescs[id](tmp.blu[id])) || shorten(tmp.blu[id]) + "x"
-	}
-}
-
-var bu = {
-	limits: [0, 2, 4, 6],
-	costs: {
-		11: {
-			am: 200,
-			g1: 200,
-			g2: 100
-		},
-		12: {
-			am: 4e5,
-			g2: 3e3,
-			g3: 800
-		},
-		13: {
-			am: 3e6,
-			g1: 1e4,
-			g3: 1e3
-		},
-		14: {
-			am: 2e8,
-			g1: 2e5,
-			g2: 1e5
-		},
-		15: {
-			am: 1e9,
-			g2: 25e4,
-			g3: 35e3,
-		},
-		21: {
-			am: 8e10,
-			g1: 5e6,
-			g2: 25e5
-		},
-		22: {
-			am: 5e11,
-			g2: 4e6,
-			g3: 75e4
-		},
-		23: {
-			am: 1e13,
-			g1: 15e6,
-			g3: 15e3
-		},
-		24: {
-			am: 1e15,
-			g1: 8e7,
-			g2: 4e7
-		},
-		25: {
-			am: 15e16,
-			g2: 75e6,
-			g3: 15e6,
-		},
-		31: {
-			am: 1e10,
-			g1: 1e6,
-			g4: 1,
-		},
-		32: {
-			am: 1e17,
-			g2: 5e6,
-			g4: 10
-		},
-		33: {
-			am: 1e22,
-			g3: 3e7,
-			g4: 400
-		},
-		34: {
-			am: 2e25,
-			g1: 5e9,
-			g3: 5e8
-		},
-		35: {
-			am: 2e28,
-			g1: 5e10,
-			g4: 5e4
-		},
-		41: {
-			am: 2e33,
-			g2: 5e10,
-			g4: 1e6
-		},
-		42: {
-			am: 2e40,
-			g3: 1e12,
-			g4: 1e7
-		},
-		43: {
-			am: 2e50,
-			g1: 4e13,
-			g3: 4e12
-		},
-		44: {
-			am: 2e65,
-			g1: 1e14,
-			g4: 1e8
-		},
-		45: {
-			am: 2e79,
-			g2: 2e14,
-			g4: 4e8
-		},
-		51: {
-			am: 2e75,
-			g1: 6e12,
-			g3: 2e12
-		},
-		52: {
-			am: 2e150,
-			g2: 2e170,
-			g5: 2e150
-		},
-		53: {
-			am: 2e180,
-			g3: "2e455",
-			g4: "2e450"
-		},
-		54: {
-			am: 2e205,
-			g3: "2e680",
-			g5: "2e660"
-		},
-		55: {
-			am: 2e210,
-			g1: "2e750",
-			g2: "2e750"
-		},
-		61: {
-			am: 2e213,
-			g1: "2e763",
-			g2: "2e763"
-		},
-		62: {
-			am: 2e235,
-			g3: "2e950",
-			g5: "2e930"
-		},
-		63: {
-			am: 2e245,
-			g1: "2e1050",
-			g3: "2e1050"
-		},
-		64: {
-			am: 2e265,
-			g3: "2e1200",
-			g4: "2e1200"
-		},
-		65: {
-			am: 2e280,
-			g4: 1/0,
-			g5: "1e1350"
-		},
-	},
-	reqData: {},
-	descs: {
-		11: "Bosonic Antimatter increases blue Light effect.",
-		12: "???",
-		13: "Radioactive Decays boost the effect of Light Empowerments.",
-		14: "???",
-		15: "Ghostifies and dilated time power up each other.",
-		21: "???",
-		22: "???",
-		23: "Assigning gives more colored quarks based on your meta-antimatter.",
-		24: "You produce 1% of Space Shards on Big Rip per second, but Break Eternity upgrades that boost space shard gain are nerfed.",
-		25: "???",
-		31: "Bosonic Antimatter boosts all Nanorewards.",
-		32: "You unlock more boosts from Light Empowerments.",
-		33: "???",
-		34: "All types of galaxies boost each other.",
-		35: "Replicantis boost Emperor Dimensions.",
-		41: "Intergalactic and Infinite Time rewards boost each other.",
-		42: "Red power boosts the first Bosonic Upgrade.",
-		43: "Green power effect boosts Tree Upgrades.",
-		44: "???",
-		45: "???",
-		51: "You never produce preon anti-energy and always produce Eternal Matter (but at a reduced rate outside of Big Rips).",
-		52: "Replicantis raise all powers to Infinite Time and Intergalactic amount to an exponent.",
-		53: "Reduce the cost scaling of extra Gravity Dimension Boosts.",
-		54: "All row-4 Neutrino Boosts are stronger.",
-		55: "Greenshift Galaxies, which reduces Redshifted Galaxies.",
-		61: "Gain more Gravity Energy from Bosonic Enchants.",
-		62: "Charging one gives a secondary bonus from it.", 
-		63: "Time spent on Ghostify boosts Gravity Dimension Boosts.",
-		64: "Higgs Bosons greenshifts Galaxies more and give bonus to your Ghostify time.",
-		65: "Higgs Bosons make the linear scaling of Gravity Dimension Boosts starts earlier.",
-	},
-	effects: {
-		11() {
-			let x = player.ghostify.bl.am.add(1).log10()
-			let y = 1
-			if (hasBosonicUpg(42)) y = tmp.blu[42]
-
-			let exp = 0.5 - 0.25 * x / (x + 3) / y
-			if (tmp.ngp3_exp) x += x / 2 + Math.sqrt(x)
-			if (y > 1) x *= y
-			ret = Math.pow(x, exp) / 4
-
-			return ret
-		},
-		13() {
-			if (!tmp.quActive) return 1
-
-			let decays = 0
-			let exp = 0.5
-			let x = Math.pow(decays, exp)
-
-			if (tmp.ngp3_exp) x = x + 1
-			else x = x / 3 + .6
-
-			return Math.max(x, 1)
-		},
-		15() {
-			let gLog = Decimal.max(player.ghostify.times, 1).log10()
-			if (tmp.ngp3_exp) gLog += 2 * Math.sqrt(gLog)
-
-			let ghlog = player.dilation.dilatedTime.div("1e1520").add(1).pow(.05).log10()
-			if (ghlog > 308) ghlog = Math.sqrt(ghlog * 308)
-
-			return {
-				dt: player.dilation.dilatedTime.gt("1e50000") ? 1 : pow10(2 * gLog + 3 * gLog / (gLog / 20 + 1)),
-				gh: tmp.eterUnl ? pow10(ghlog) : E(1)
-			}
-		},
-		23() {
-			if (!tmp.eterUnl) return E(1)
-			return player.meta.antimatter.add(1).pow(0.06)
-		},
-		31() {
-			var ret = Math.pow(Math.log10(player.ghostify.bl.am.add(1).log10() / 5 + 1) / 2 + 1, 2)
-			for (var i = 4; i < 10; i++){
-				if (ret > i / 2) ret = i / 2 + Math.log10(ret - i/2 + 1)
-				else break
-			}
-			return ret
-		},
-		34() {
-			var galPart = Math.log10(player.galaxies / 1e4 + 10) * Math.log10(getTotalRGs() / 1e4 + 10) * Math.log10(getEffectiveTGs() / 1e4 + 10)
-			var exp = tmp.ngp3_exp ? 1/6 : 1/8
-			var ret = Math.pow(galPart, exp) - 1
-			for (var i = 2; i < 10; i++){
-				if (ret > i / 10) ret = i / 10 + Math.log10(ret - i/10 + 1)
-				else break
-			}
-			return ret / 5 + 1
-		},
-		35() {
-			return Decimal.pow(tmp.ngp3_exp ? 10 : 20, Math.pow(getReplEff().log10(), 2/3) / 15e3)
-		},
-		41() {
-			return {
-				ig: Decimal.pow(1.05, Math.pow(Decimal.max(tmp.it, 1).log10(), 2)),
-				it: Decimal.pow(5, Math.sqrt(Decimal.max(tmp.ig, 1).log10()))
-			}
-		},
-		42() {
-			if (!tmp.quActive) return 1
-			let exp = tmp.ngp3_exp ? 1/3 : 1/4
-			return Math.pow(qu_save.colorPowers.r / 2e4 + 1, exp)
-		},
-		43() {
-			if (!tmp.quActive) return 1
-			return Math.sqrt(colorBoosts.g) / 40 + 1
-		},
-		52() {
-			let log = player.replicanti.amount.max(1).log10()
-			let div1 = 7.5e8
-			let div2 = 1e3
-
-			return {
-				ig: Math.pow(log / div1 + 1, 0.1),
-				it: Math.log10(log + 1) / div2 + 1
-			}
-		},
-		55() {
-			return hasBosonicUpg(64) ? tmp.blu[64].gs : 0.95
-		},
-		62() {
-			return 1
-		},
-		63() {
-			let x = player.ghostify.time
-			if (hasBosonicUpg(64)) x += tmp.blu[64].gh
-			return Math.log2(x / 50 + 1) / 50 + 1
-		},
-		64() {
-			return {
-				gs: 1,
-				gh: 0
-			}
-		},
-		65() {
-			return 15
-		}
-	},
-	effectDescs: {
-		11(x) {
-			return formatPercentage(x) + "%"
-		},
-		12(x) {
-			return "-" + x.toFixed(5)
-		},
-		15(x) {
-			return shorten(x.gh) + "x more Ghostifies & " + shorten(x.dt) + "x more DT"
-		},
-		31(x) {
-			return formatPercentage(x - 1) + "% stronger"
-		},
-		34(x) {
-			return formatPercentage(x - 1, 2) + "% stronger"
-		},
-		41(x) {
-			return shorten(x.ig) + "x to Intergalactic, " + shorten(x.it) + "x to Infinite Time"
-		},
-		42(x) {
-			return formatPercentage(x, 2) + "% to growth and softcap slowdown"
-		},
-		43(x) {
-			return formatPercentage(x - 1, 2) + "% stronger"
-		},
-		44(x) {
-			return "+" + x.toFixed(1) + " OoMs"
-		},
-		52(x) {
-			return "^" + formatValue(player.options.notation, x.ig, 3, 3) + " to Intergalactic, ^" + formatValue(player.options.notation, x.it, 3, 3) + " to Infinite Time"
-		},
-		55(x) {
-			return (
-				x < 0 ? "^" + (-x).toFixed(3) + " to Blueshifted Galaxies" :
-				"^" + x.toFixed(3) + " to Redshifted Galaxies"
-			)
-		},
-		62(x) {
-			return "Removed."
-		},
-		63(x) {
-			return formatPercentage(x - 1, 2) + "% stronger"
-		},
-		64(x) {
-			return "^0.950 greenshift -> ^" + x.gs.toFixed(3) + ", +" + timeDisplayShort(x.gh) + " bonus time"
-		},
-		65(x) {
-			return "Starts at " + x.toFixed(2) + " GDBs"
-		}
-	}
-}
+//Gone
 
 //Bosonic Overdrive
 function getBosonicBatteryLoss() {

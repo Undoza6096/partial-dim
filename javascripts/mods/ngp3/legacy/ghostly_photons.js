@@ -81,11 +81,6 @@ function updateRaysPhotonsDisplay(){
 function updateLightBoostDisplay(){
 	let gphData = player.ghostify.ghostlyPhotons
 	el("lightMax1").textContent = getFullExpansion(gphData.maxRed)
-	//el("lightBoost1").textContent = tmp.le[0].toFixed(3)
-	//el("lightBoost2").textContent = tmp.le[1].toFixed(2)
-	//el("lightBoost3").textContent = getFullExpansion(Math.floor(tmp.le[2]))
-	//el("lightBoost4").textContent = formatPercentage(tmp.le[3] - 1)
-	//el("lightBoost5").textContent = formatPercentage(tmp.le[4]) + (hasBosonicUpg(11) ? "+" + formatPercentage(tmp.blu[11]) : "")
 	el("lightBoost6").textContent = shorten(tmp.le[5])
 	el("lightBoost7").textContent = shorten(tmp.le[6])
 }
@@ -167,7 +162,6 @@ function maxLightEmpowerments() {
 
 function getLightEmpowermentBoost() {
 	let r = player.ghostify.ghostlyPhotons.enpowerments
-	if (hasBosonicUpg(13)) r *= tmp.blu[13]
 	return r
 }
 
@@ -196,7 +190,7 @@ var leBoosts = {
 	},
 	4: {
 		req() {
-			return hasBosonicUpg(32)
+			return false
 		},
 		leThreshold: 10,
 		eff() {
@@ -205,7 +199,7 @@ var leBoosts = {
 	},
 	5: {
 		req() {
-			return hasBosonicUpg(32)
+			return false
 		},
 		leThreshold: 13,
 		eff() {
@@ -220,7 +214,7 @@ var leBoosts = {
 	},
 	6: {
 		req() {
-			return hasBosonicUpg(32)
+			return false
 		},
 		leThreshold: 16,
 		eff() {
@@ -229,7 +223,7 @@ var leBoosts = {
 	},
 	7: {
 		req() {
-			return hasBosonicUpg(32)
+			return false
 		},
 		leThreshold: 19,
 		eff() {
@@ -241,7 +235,7 @@ var leBoosts = {
 	},
 	8: {
 		req() {
-			return hasBosonicUpg(32)
+			return false
 		},
 		leThreshold: 22,
 		eff() {
