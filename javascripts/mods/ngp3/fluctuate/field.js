@@ -87,21 +87,31 @@ let ff = {
 
 		d.spent = 0
 		d.linked = []
+		d.linked_2 = []
 		d.shown = []
 		d.used = []
+		d.pkPos = {}
 		d.pos = {}
 		for (var i = 0; i < save.length; i++) {
+			var a = save[i]
 			d.spent++
-			d.linked.push(Math.ceil(save[i][0] / 3))
-			d.shown.push(save[i][0])
-			d.used.push(save[i][1])
-			d.pos[save[i][0]] = i
+			d.linked.push(Math.ceil(a[0] / 3))
+			d.linked_2 = d.linked_2.concat(ff.calcArc(a))
+			d.shown.push(a[0])
+			d.pos[a[0]] = i
+			if (a[1]) {
+				d.used.push(a[1])
+				d.pkPos[a[1]] = a[0]
+			}
 		}
 
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
 		if (!ff_tmp.unl) return
+		var d = ff_tmp
+		d.pow = {}
+		for (var i = 0; i < d.used.length; i++) d.pow[d.used[i]] = ff.powerStr(Math.ceil(d.pkPos[d.used[i]] / 3))
 	},
 
 	updateTab() {
@@ -113,6 +123,7 @@ let ff = {
 	updateDisplays() {
 		for (var i = 1; i <= 18; i++) {
 			var pos = ff_tmp.pos[i]
+			el("ff_arc_"+i).style.display = ff.arcUnl(i) ? "" : "none"
 			el("ff_arc_"+i).className = pos !== undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn"
 			el("ff_arc_"+i+"_name").textContent = "Pos. " + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
 			el("ff_arc_"+i+"_eng").textContent = shorten(pos !== undefined ? 1 : 0) + " FE used"
@@ -122,33 +133,11 @@ let ff = {
 			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
 			el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
 		}
-		/*for (var i = 1; i <= 6; i++) {
-			var a = ff_save.arcs[i]
-			var aUnl = fluc_save.energy >= ff.data.reqs[i]
-			el("ff_arc_"+i).style.visibility = !c || aUnl ? "visible" : "hidden"
-			if (!c || aUnl) {
-				if (ff_save.arcs[c]) console.log(ff_save.arcs[c][0], i, ff_save.arcs[c][1])
-				el("ff_arc_"+i).className = !aUnl ? "unavailablebtn" :
-					c ? (c == i ? "ff_btn" : ff.canArc(c, i) ? "storebtn" : ff_save.arcs[c][0] <= i && ff_save.arcs[c][1] >= i ? "chosenbtn" : "unavailablebtn") :
-					(a ? "storebtn" : ff.canArc(i) ? "ff_btn" : "unavailablebtn")
-				el("ff_arc_"+i+"_title").textContent = aUnl ? "Position " + i : "Locked"
-				el("ff_arc_"+i+"_cost").textContent = c ? (c == i ? "Click to exit" : "Cost: " + 
-				shorten(ff.arcCost(c, true) - ff.arcCost(c)) + " FE") :
-					(a ? "Click to arc" : aUnl ? "(Cost: " + getFullExpansion(this.arcCost(x, true)) + " FE)" : "(requires " + getFullExpansion(ff.data.reqs[i]) + " FE)")
-			}
 
-			var pk = ff_save.perks[i]
-			var pkUnl = a !== undefined && (!c || c == i)
-			el("ff_pk_"+i).style.display = pkUnl ? "" : "none"
-			el("ff_eng_"+i).innerHTML = pkUnl ? (
-				shorten(ff.arcCost(i)) + (c ? " / " + shorten(ff.unspent() + ff.arcCost(c)) : "") + " FE used<br>" +
-				shorten(ff.arcPower(i)) + " Power"
-			) : ""
-			if (pkUnl) {
-				el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
-				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
-			}
-		}*/
+		for (var i = 1; i <= 6; i++) {
+			el("ff_eng_"+i).style.display = ff.arcUnl(i * 3) ? "" : "none"
+			el("ff_eng_"+i).textContent = shorten(ff.powerStr(i)) + " total Power"
+		}
 		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
 		var nxt = ff.data[ff.data.all[ff_tmp.pkUnl + 1]]
@@ -165,11 +154,14 @@ let ff = {
 	unspent() {
 		return fluc_save.energy - ff_tmp.spent
 	},
+	arcUnl(x) {
+		return ff_tmp.pkUnl >= Math.ceil(x / 3)
+	},
 	cost() {
 		return 1
 	},
 	canArc(x) {
-		if (ff_save.data.length >= ff_tmp.pkUnl) return
+		if (!ff.arcUnl(x)) return
 		if (ff.unspent() < ff.arcCost(x, true)) return
 		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
 		return true
@@ -179,6 +171,8 @@ let ff = {
 	},
 	calcArc(d) {
 		var a = d[2]
+		if (a.length == 0) return [d[0]]
+
 		var n = 0
 		for (var i = 0; i < a.length; i++) {
 			var j = a[i]
@@ -209,8 +203,20 @@ let ff = {
 		return r
 	},
 
+	powerStr(x) {
+		var r = 0
+		for (var i = 0; i < 3; i++) r += ff_tmp.linked_2.includes(x * 3 - i) ? 1 : 0
+		return r
+	},
+
 	perkPos(x) {
 		return ff_tmp.pos[x]
+	},
+	perkEff(x) {
+		return ff_tmp.pow[x]
+	},
+	perkActive(x) {
+		return ff_tmp.used.includes(x)
 	},
 	perkShown(x) {
 		return ff_tmp.shown.includes(x)
@@ -247,7 +253,7 @@ let ff = {
 			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
 			ff.updateTmp()
 			restartQuantum()
-		} else $.notify("Rework incoming...", "warn")
+		} else $.notify("Deletion rework incoming...", "warn")
 
 		/*if (mode == "perk") {
 			var newV = (ff_save.perks[x] || 0) + 1
