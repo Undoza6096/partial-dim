@@ -105,6 +105,15 @@ let ff = {
 			}
 		}
 
+		d.choose = {
+			x: (d.choose && d.choose.x) || 0,
+			a: []
+		}
+		if (d.choose.x) {
+			var c = save[d.choose.x]
+			for (var i = 1; i <= 3; i++) if (!c[2].includes(i) && !c[2].includes(-i)) d.a.push(i)
+		}
+
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
@@ -240,6 +249,18 @@ let ff = {
 			ff_save.data.push([x, 0, []])
 			ff.updateTmp()
 			ff.updateDisplays()
+		} else if (mode == "arc" && ff_save.mode == 1) {
+			var p = ff_tmp.pos[x]
+			if (p === undefined) return
+			if (!confirm("This will perform a Quantum reset and remove an arc from this position. Are you sure?")) return
+
+			var newD = []
+			for (var i = 0; i < ff_save.data.length; i++) if (i != p) newD.push(ff_save.data[i])
+			ff_save.data = newD
+
+			ff.updateTmp()
+			ff.updateDisplays()
+			restartQuantum()
 		} else if (mode == "perk") {
 			var data = ff_save.data[ff_tmp.pos[x]]
 			var newV = (data[1] || 0) + 1
@@ -253,22 +274,9 @@ let ff = {
 			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
 			ff.updateTmp()
 			restartQuantum()
-		} else $.notify("Deletion rework incoming...", "warn")
-
-		/*if (mode == "perk") {
-			var newV = (ff_save.perks[x] || 0) + 1
-			while (ff_tmp.used.includes(newV)) newV++
-
-			var name = ff.data.all[newV]
-			if (newV == ff.data.all.length || fluc_save.energy < ff.data[name].req) newV = 0
-			ff_save.perks[x] = newV
-
-			el("ff_pk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
-			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
-			ff.updateTmp()
-			restartQuantum()
 		}
-		if (mode == "arc" && ff_save.mode == 0) {
+
+		/*if (mode == "arc" && ff_save.mode == 0) {
 			var a = ff_save.arcs[x]
 			var c = ff_tmp.choose
 			if (c) {
@@ -287,13 +295,6 @@ let ff = {
 				ff.updateTmp()
 			}
 			ff.updateDisplays()
-		}
-		if (mode == "arc" && ff_save.mode == 1) {
-			if (!ff_save.arcs[x]) return
-			if (!confirm("This will perform a Quantum reset and remove an arc from this position. Are you sure?")) return
-			delete ff_save.arcs[x]
-			ff.updateTmp()
-			restartQuantum()
 		}*/
 	},
 	switchMode(update) {
