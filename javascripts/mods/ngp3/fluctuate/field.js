@@ -94,7 +94,7 @@ let ff = {
 		d.pos = {}
 		for (var i = 0; i < save.length; i++) {
 			var a = save[i]
-			d.spent++
+			d.spent += ff.cost(a[2].length + 1)
 			d.linked.push(Math.ceil(a[0] / 3))
 			d.linked_2 = d.linked_2.concat(ff.calcArc(a))
 			d.shown.push(a[0])
@@ -166,8 +166,9 @@ let ff = {
 	arcUnl(x) {
 		return ff_tmp.pkUnl >= Math.ceil(x / 3)
 	},
-	cost() {
-		return 1
+	cost(x) {
+		if (!x) x = 1
+		return Math.pow(x, 0.4)
 	},
 	canArc(x) {
 		if (!ff.arcUnl(x)) return

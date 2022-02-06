@@ -132,10 +132,11 @@ let str = {
 		data.alt = {}
 		data.disable = {}
 		data.lastVibrate = 0
+		data.totalAlt = 0
 		data.vibrated = vibrated.length
-		for (var i = 0; i < data.vibrated; i++) {
-			this.onVibrate(vibrated[i])
-		}
+		for (var i = 0; i < data.vibrated; i++) this.onVibrate(vibrated[i])
+		for (var i = 1; i <= 18; i++) data.totalAlt += data.alt[i] || 0
+		if (ff.perkActive(6)) for (var i = 7; i <= 18; i++) if (data.alt[i - 6]) data.alt[i] = (data.alt[i] || 0) + data.alt[i - 6] * ff.perkEff(6) / 5
 		str_save.spent = str.veCost(data.vibrated)
 
 		//Powers
@@ -179,6 +180,8 @@ let str = {
 		if (!data.unl) return
 
 		data.str = Math.log10(Math.log10(str_save.energy * 3 + 1) + 1) * 1.5 + 1
+		if (ff.perkActive(2)) data.str *= ff.perkEff(2) / 2 + 1
+		if (ff.perkActive(4)) data.str *= Math.log10(data.totalAlt * ff.perkEff(4) / 2 + 1) + 1
 
 		//Boosts
 		data.effs = {}
@@ -211,7 +214,7 @@ let str = {
 			el("str_a" + p + "_boost").textContent = powTotal >= a_req ? str.data.effs["a" + p].disp(str_tmp.effs["a" + p]) : "(requires " + shorten(a_req) + " power)"
 			el("str_b" + p + "_boost").textContent = powTotal >= b_req ? str.data.effs["b" + p].disp(str_tmp.effs["b" + p]) : "(requires " + shorten(b_req) + " power)"
 
-			var c_unl = fluc.unl()
+			var c_unl = ff.perkActive(5)
 			el("str_c" + p + "_boost").style.display = c_unl ? "" : "none"
 			if (c_unl) {
 				var c_req = str.req("c", p)
@@ -314,7 +317,7 @@ let str = {
 			var d = Math.abs(p)
 			var y = p + x
 			var add = 0.17 - 0.13 * d + 0.25 * ((d + 1) % 2)
-			if (ff.perkActive(1)) add += ff_tmp.pows[ff_tmp.pos[1]] * 0.15
+			if (ff.perkActive(1)) add += ff.perkEff(1) * 0.1
 			if (fluc.unl() && fluc_tmp.temp && add < 0) add /= fluc_tmp.temp
 			str_tmp.alt[y] = (str_tmp.alt[y] || 0) + add
 		}
@@ -325,7 +328,6 @@ let str = {
 	altitude(x, next) {
 		if (this.disabled()) return
 		let r = str_tmp.alt[x] || 0
-		//if (ff.perkActive(6) && x > 6) r += str_tmp.alt[x - 6] * ff_tmp.pows[ff_tmp.pos[6]]
 		return Math.max(Math.min(r, 1), -1)
 	},
 	eff(x) {
@@ -340,6 +342,8 @@ let str = {
 	req(t, x) {
 		var r = str.data.effs[t + x].req
 		r -= str.upgEff(3).pow || 0
+		if (ff.perkActive(3)) r -= ff.perkEff(3)
+		if (ff.perkActive(5)) r /= ff.perkEff(5) + 1
 		return r
 	},
 
