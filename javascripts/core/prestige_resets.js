@@ -177,14 +177,15 @@ function doQuantumResetStuff(layer = 5, bigRip, isQC, qcData){
 	for (var i = 0; i < oldUpgs.length; i++) if (upgs.includes(oldUpgs[i])) newUpgs.push(oldUpgs[i])
 
 	if (!player.dilation.bestTP) player.dilation.bestTP = player.dilation.tachyonParticles
+	var tpStart = E(QCs.perkActive(3) ? 1 : 0)
 	player.dilation = {
 		studies:
 			!qMs.isOn(5) ? [] :
 			qMs.tmp.amt >= 9 ? [1, 2, 3, 4, 5, 6] : qMs.tmp.amt >= 6 ? [1, 2, 3, 4, 5] : [1],
 		active: false,
-		tachyonParticles: E(QCs.perkActive(3) ? 1 : 0),
+		tachyonParticles: tpStart,
 		dilatedTime: E(0),
-		bestTP: Decimal.max(player.dilation.bestTP || 0, player.dilation.tachyonParticles),
+		bestTP: Decimal.max(player.dilation.bestTP || tpStart, player.dilation.tachyonParticles),
 		nextThreshold: E(1000),
 		freeGalaxies: 0,
 		upgrades: newUpgs,

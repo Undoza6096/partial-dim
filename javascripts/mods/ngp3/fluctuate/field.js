@@ -226,7 +226,7 @@ let ff = {
 		return ff_tmp.pow[x]
 	},
 	perkActive(x) {
-		return ff_tmp.used.includes(x)
+		return ff_tmp.unl && ff_tmp.used.includes(x)
 	},
 	perkShown(x) {
 		return ff_tmp.shown.includes(x)
