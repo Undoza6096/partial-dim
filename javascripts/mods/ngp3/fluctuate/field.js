@@ -1,6 +1,7 @@
 //FLUCTUANT FIELD
 let ff = {
 	unl: (force) => force ? fluc.unl() : ff_tmp.unl && ff_tmp.eff,
+	canUse: () => ff_tmp.unl && (fluc_save.energy > 1 || str_save.energy >= 1),
 
 	data: {
 		all: [null, "alt", "pow", "free", "syn", "upg", "share"],
@@ -152,6 +153,9 @@ let ff = {
 		var nxt = ff.data[ff.data.all[ff_tmp.pkUnl + 1]]
 		el("ff_pk_next").style.display = nxt ? "" : "none"
 		el("ff_pk_next").textContent = nxt && (nxt.title + " perk unlocks at " + getFullExpansion(nxt.req) + " Fluctuant Energy.")
+
+		el("ff_req").style.display = ff.canUse() ? "none" : ""
+		el("ff_spent_disp").style.display = ff.canUse() ? "" : "none"
 	},
 	setupHTML() {
 		for (var i = 1; i <= 18; i++) {
@@ -233,14 +237,17 @@ let ff = {
 	},
 
 	respec() {
-		if (fluc_save.energy == 1 && str_save.energy < 1) return
+		if (!ff.canUse()) {
+			$.notify("You need to get at least 1 Vibration Energy before using this mechanic.", "warn")
+			return
+		}
 		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
 		ff_save.data = []
 		ff.updateTmp()
 		restartQuantum()
 	},
 	choose(x, mode) {
-		if (fluc_save.energy == 1 && str_save.energy < 1) {
+		if (!ff.canUse()) {
 			$.notify("You need to get at least 1 Vibration Energy before using this mechanic.", "warn")
 			return
 		}
@@ -300,13 +307,26 @@ let ff = {
 	},
 	switchMode(update) {
 		if (!tmp.ngp3) return
-		if (!update) ff_save.mode = (ff_save.mode + 1) % 2
+		if (!update) {
+			if (!ff.canUse()) {
+				$.notify("You need to get at least 1 Vibration Energy before using this mechanic.", "warn")
+				return
+			}
+			ff_save.mode = (ff_save.mode + 1) % 2
+		}
 		el("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
 
 		if (ff_save.mode == 1 && ff_tmp.choose > 0) {
 			ff_tmp.choose = 0
 			ff.updateDisplays()
 		}
+	},
+	
+	exportPreset() {
+		alert("Coming soon...")
+	},
+	importPreset() {
+		alert("Coming soon...")
 	}
 }
 let ff_tmp = {}
