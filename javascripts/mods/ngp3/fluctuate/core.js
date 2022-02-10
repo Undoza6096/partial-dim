@@ -50,15 +50,17 @@ let fluc = {
 		ff.reset()
 	},
 
-	gain() {
+	gain(rat) {
 		if (!fluc.unl()) return 1
-		return Math.max(fluc.targ() - fluc_save.energy, 0)
+		return Math.max(fluc.targ(rat) - fluc_save.energy, 0)
 	},
 	res() {
 		return fluc.unl() ? fluc_save.bestAM : player.totalmoney
 	},
-	targ() {
-		return Math.floor((Math.log10(fluc.res().log10()) - 13.5) * 20 + 1)
+	targ(rat) {
+		var r = (Math.log10(fluc.res().log10()) - 13.5) * 20 + 1
+		if (!rat) r = Math.floor(rat)
+		return r
 	},
 	req(x) {
 		if (!x) x = fluc_save.energy

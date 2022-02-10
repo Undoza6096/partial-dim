@@ -75,7 +75,7 @@ let ff = {
 	updateTmp() {
 		ff_tmp = {
 			unl: ff_tmp.unl,
-			choose: ff_tmp.choose
+			choose: ff_tmp.choose !== undefined ? ff_tmp.choose : {x: -1}
 		}
 
 		if (!ff_tmp.unl) return
@@ -106,15 +106,7 @@ let ff = {
 			}
 		}
 
-		d.choose = {
-			x: (d.choose && d.choose.x) || 0,
-			a: []
-		}
-		if (d.choose.x) {
-			var c = save[d.choose.x]
-			for (var i = 1; i <= 3; i++) if (!c[2].includes(i) && !c[2].includes(-i)) d.a.push(i)
-		}
-
+		ff.updateChooseTmp()
 		ff.updateTmpOnTick()
 	},
 	updateTmpOnTick() {
@@ -122,6 +114,14 @@ let ff = {
 		var d = ff_tmp
 		d.pow = {}
 		for (var i = 0; i < d.used.length; i++) d.pow[d.used[i]] = ff.powerStr(Math.ceil(d.pkPos[d.used[i]] / 3))
+	},
+	updateChooseTmp() {
+		var d = ff_tmp.choose
+		d.a = []
+		if (d.x != -1) {
+			var c = save[d.x]
+			for (var i = 1; i <= 3; i++) if (!c[2].includes(i) && !c[2].includes(-i)) d.a.push(i)
+		}
 	},
 
 	updateTab() {
@@ -135,7 +135,7 @@ let ff = {
 			var pos = ff_tmp.pos[i]
 			el("ff_arc_"+i).style.display = ff.arcUnl(i) ? "" : "none"
 			el("ff_arc_"+i).className = pos !== undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn"
-			el("ff_arc_"+i+"_name").textContent = "Pos. " + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
+			el("ff_arc_"+i+"_name").textContent = pos == ff_tmp.choose ? "Choosing" : "Pos. " + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
 			el("ff_arc_"+i+"_eng").textContent = shorten(pos !== undefined ? 1 : 0) + " FE used"
 
 			var pk = pos !== undefined && ff_save.data[pos][1]
@@ -174,9 +174,14 @@ let ff = {
 		if (!x) x = 1
 		return Math.pow(x, 0.4)
 	},
-	canArc(x) {
+	canArc(x, c) {
 		if (!ff.arcUnl(x)) return
 		if (ff.unspent() < ff.arcCost(x, true)) return
+		if (c) {
+			if (ff_tmp.linked_2.includes(x)) return
+			return
+		}
+
 		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
 		return true
 	},
@@ -253,10 +258,19 @@ let ff = {
 		}
 
 		if (mode == "arc" && ff_save.mode == 0) {
-			if (!ff.canArc(x)) return
-			ff_save.data.push([x, 0, []])
-			ff.updateTmp()
-			ff.updateDisplays()
+			var c = ff_tmp.choose.x
+			if (x == c) {
+				c = -1
+				ff.updateChooseTmp()
+			} else if (ff_tmp.pos[x] !== undefined) {
+				c = x
+				ff.updateChooseTmp()
+			} else {
+				if (!ff.canArc(x)) return
+				ff_save.data.push([x, 0, []])
+				ff.updateTmp()
+				ff.updateDisplays()
+			}
 		} else if (mode == "arc" && ff_save.mode == 1) {
 			var p = ff_tmp.pos[x]
 			if (p === undefined) return

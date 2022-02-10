@@ -155,10 +155,18 @@ function doQuantumProgress() {
 	var name = ""
 
 	if (!first && quarkGain().gte(Number.MAX_VALUE)) {
-		var fluctuate = pow10(Math.pow(10, 13.5))
-		percentage = player.money.log(fluctuate)
-		name = "Percentage until Fluctuate (" + shortenCosts(fluctuate) + " antimatter)"
-		className = "quantumProgress"
+		if (fluc.unl() && pH.can('fluctuate')) {
+			var feLog = fluc.gain(true).log(2)
+			var feNext = Math.pow(2, Math.floor(Math.log2(feLog) + 1))
+			percentage = feLog / feNext
+			name = "Percentage until " + shorten(Decimal.pow(2, feNext)) + " FE"
+			className = "quantumProgress"
+		} else {
+			var fluctuate = pow10(fluc.req())
+			percentage = player.money.log(fluctuate)
+			name = "Percentage until " + (fluc.unl() ? "next Fluctuant Energy" : "") + " (" + shortenCosts(fluctuate) + " antimatter)"
+			className = "quantumProgress"
+		}
 	} else if (!first && quarkGain().gte(256)) {
 		var qkLog = quarkGain().log(2)
 		var qkNext = Math.pow(2, Math.floor(Math.log2(qkLog) + 1))
