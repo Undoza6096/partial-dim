@@ -75,7 +75,7 @@ let ff = {
 	updateTmp() {
 		ff_tmp = {
 			unl: ff_tmp.unl,
-			choose: ff_tmp.choose !== undefined ? ff_tmp.choose : {x: -1}
+			choose: ff_tmp.choose != undefined ? ff_tmp.choose : {}
 		}
 
 		if (!ff_tmp.unl) return
@@ -95,7 +95,7 @@ let ff = {
 		d.pos = {}
 		for (var i = 0; i < save.length; i++) {
 			var a = save[i]
-			d.spent += ff.cost(a[2].length + 1)
+			d.spent += ff.arcCost(a)
 			d.linked.push(Math.ceil(a[0] / 3))
 			d.linked_2 = d.linked_2.concat(ff.calcArc(a))
 			d.shown.push(a[0])
@@ -118,7 +118,7 @@ let ff = {
 	updateChooseTmp() {
 		var d = ff_tmp.choose
 		d.a = []
-		if (d.x != -1) {
+		if (d.x) {
 			var c = save[d.x]
 			for (var i = 1; i <= 3; i++) if (!c[2].includes(i) && !c[2].includes(-i)) d.a.push(i)
 		}
@@ -131,14 +131,16 @@ let ff = {
 		}*/
 	},
 	updateDisplays() {
+		var c = ff_tmp.choose.x
 		for (var i = 1; i <= 18; i++) {
 			var pos = ff_tmp.pos[i]
+			var arc = c && ff.calcArc(ff_save.data[c])
 			el("ff_arc_"+i).style.display = ff.arcUnl(i) ? "" : "none"
-			el("ff_arc_"+i).className = pos !== undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn"
-			el("ff_arc_"+i+"_name").textContent = pos == ff_tmp.choose ? "Choosing" : "Pos. " + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
-			el("ff_arc_"+i+"_eng").textContent = shorten(pos !== undefined ? 1 : 0) + " FE used"
+			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
+			el("ff_arc_"+i+"_name").textContent = pos != undefined && pos == c ? "Choosing" : "P-" + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
+			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
 
-			var pk = pos !== undefined && ff_save.data[pos][1]
+			var pk = pos != undefined && ff_save.data[pos][1]
 			el("ff_pk_"+i).style.display = ff_tmp.shown.includes(i) ? "" : "none"
 			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
 			el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
@@ -172,21 +174,23 @@ let ff = {
 	},
 	cost(x) {
 		if (!x) x = 1
-		return Math.pow(x, 0.4)
+		return Math.pow(x / 3, 0.6)
 	},
 	canArc(x, c) {
 		if (!ff.arcUnl(x)) return
-		if (ff.unspent() < ff.arcCost(x, true)) return
+		if (ff.unspent() < ff.arcCost(c) - ff.arcCost(c, false)) return
 		if (c) {
 			if (ff_tmp.linked_2.includes(x)) return
-			return
+			return ff_tmp.choose.includes(Math.abs(x - ff_save.data[c][0]))
 		}
 
 		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
 		return true
 	},
-	arcCost(x) {
-		return 1
+	arcCost(x, next = true) {
+		var l = ff_save.data[x] ? ff_save.data[x][2].length + 1 : 0
+		if (next) l++
+		return this.cost(l)
 	},
 	calcArc(d) {
 		var a = d[2]
@@ -259,18 +263,18 @@ let ff = {
 
 		if (mode == "arc" && ff_save.mode == 0) {
 			var c = ff_tmp.choose.x
-			if (x == c) {
-				c = -1
+			if (ff_tmp.pos[x] == c) {
+				delete ff_tmp.choose.x
 				ff.updateChooseTmp()
-			} else if (ff_tmp.pos[x] !== undefined) {
-				c = x
+			} else if (ff_tmp.pos[x] != undefined) {
+				ff_tmp.choose.x = ff_tmp.pos[x]
 				ff.updateChooseTmp()
 			} else {
 				if (!ff.canArc(x)) return
 				ff_save.data.push([x, 0, []])
 				ff.updateTmp()
-				ff.updateDisplays()
 			}
+			ff.updateDisplays()
 		} else if (mode == "arc" && ff_save.mode == 1) {
 			var p = ff_tmp.pos[x]
 			if (p === undefined) return
