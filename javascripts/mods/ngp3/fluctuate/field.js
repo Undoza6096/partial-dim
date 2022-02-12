@@ -118,9 +118,15 @@ let ff = {
 	updateChooseTmp() {
 		var d = ff_tmp.choose
 		d.a = []
-		if (d.x) {
-			var c = save[d.x]
-			for (var i = 1; i <= 3; i++) if (!c[2].includes(i) && !c[2].includes(-i)) d.a.push(i)
+		if (d.x != undefined) {
+			var a = ff_save.data[d.x]
+			var c = ff.calcArc(a)
+			var p = []
+			for (var i = 1; i <= 3; i++) if (!a[2].includes(i) && !a[2].includes(-i)) p.push(i)
+			for (var i = 0; i < p.length; i++) {
+				d.a.push(c[0] - p[i])
+				d.a.push(c[c.length-1] + p[i])
+			}
 		}
 	},
 
@@ -132,11 +138,12 @@ let ff = {
 	},
 	updateDisplays() {
 		var c = ff_tmp.choose.x
+		var arc = c != undefined && ff.calcArc(ff_save.data[c])
+		console.log(arc)
 		for (var i = 1; i <= 18; i++) {
 			var pos = ff_tmp.pos[i]
-			var arc = c && ff.calcArc(ff_save.data[c])
 			el("ff_arc_"+i).style.display = ff.arcUnl(i) ? "" : "none"
-			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
+			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : arc.includes(i) ? "chosenbtn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff_tmp.linked_2.includes(i) ? "chosenbtn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
 			el("ff_arc_"+i+"_name").textContent = pos != undefined && pos == c ? "Choosing" : "P-" + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
 			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
 
@@ -176,13 +183,10 @@ let ff = {
 		if (!x) x = 1
 		return Math.pow(x / 3, 0.6)
 	},
-	canArc(x, c) {
+	canArc(x) {
 		if (!ff.arcUnl(x)) return
 		if (ff.unspent() < ff.arcCost(c) - ff.arcCost(c, false)) return
-		if (c) {
-			if (ff_tmp.linked_2.includes(x)) return
-			return ff_tmp.choose.includes(Math.abs(x - ff_save.data[c][0]))
-		}
+		if (ff_tmp.choose.x != undefined) return !ff_tmp.linked_2.includes(x) && ff_tmp.choose.a.includes(x)
 
 		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
 		return true
@@ -263,13 +267,22 @@ let ff = {
 
 		if (mode == "arc" && ff_save.mode == 0) {
 			var c = ff_tmp.choose.x
-			if (ff_tmp.pos[x] == c) {
+				console.log("...")
+			if (c != undefined && ff_tmp.pos[x] == c) {
 				delete ff_tmp.choose.x
 				ff.updateChooseTmp()
+			} else if (c != undefined) {
+				if (!ff.canArc(x, c)) return
+				var d = ff_save.data[c]
+				var a = ff.calcArc(d)
+				if (x < a[0]) d[2] = [x - a[0]].concat(d[2])
+				else d[2].push(x - a[a.length-1])
+				ff.updateTmp()
 			} else if (ff_tmp.pos[x] != undefined) {
 				ff_tmp.choose.x = ff_tmp.pos[x]
 				ff.updateChooseTmp()
 			} else {
+				console.log("...")
 				if (!ff.canArc(x)) return
 				ff_save.data.push([x, 0, []])
 				ff.updateTmp()
@@ -277,7 +290,7 @@ let ff = {
 			ff.updateDisplays()
 		} else if (mode == "arc" && ff_save.mode == 1) {
 			var p = ff_tmp.pos[x]
-			if (p === undefined) return
+			if (p == undefined) return
 			if (!confirm("This will perform a Quantum reset and remove an arc from this position. Are you sure?")) return
 
 			var newD = []
@@ -334,8 +347,8 @@ let ff = {
 		}
 		el("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
 
-		if (ff_save.mode == 1 && ff_tmp.choose > 0) {
-			ff_tmp.choose = 0
+		if (ff_save.mode == 1 && ff_tmp.choose.x !== undefined) {
+			ff_tmp.choose.x = 0
 			ff.updateDisplays()
 		}
 	},
