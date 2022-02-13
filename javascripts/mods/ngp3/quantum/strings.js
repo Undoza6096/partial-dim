@@ -24,8 +24,12 @@ let str = {
 			},
 			a2: {
 				req: 1.1,
-				eff: (x) => Math.sqrt(x / 3 + 1),
-				disp: (x) => "^" + (1 / x).toFixed(3) + " to PC goals"
+				eff(x) {
+					x = Math.sqrt(x / 3 + 1)
+					if (x > 1.5) x = Math.sqrt(x * 1.5)
+					return x
+				},
+				disp: (x) => "^" + (1 / x).toFixed(3) + " to QC and PC goals"
 			},
 			b2: {
 				req: 2,

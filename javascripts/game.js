@@ -3502,7 +3502,7 @@ function dilationStuffABTick(){
 
 	if (isGamePaused()) return
 	if (canAutoUpgs && player.autoEterOptions.dilUpgs) autoBuyDilUpgs()
-	if (qMs.isObtained(21) && player.dilation.active && getTPGain().gt(player.dilation.tachyonParticles)) {
+	if (qMs.has(21) && player.dilation.active && getTPGain().gt(player.dilation.tachyonParticles)) {
 		setTachyonParticles(getTPGain())
 		player.eternityBuyer.alwaysDilCond = false
 	}

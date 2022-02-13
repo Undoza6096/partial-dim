@@ -122,7 +122,7 @@ let qMs = {
 				el("qMs_reward_" + i).style.display = shown ? "" : "none"
 
 				if (shown) {
-					var got = qMs.isObtained(i)
+					var got = qMs.has(i)
 					el("qMs_reward_" + i).className = !got || qMs.forceOff(i) ? "qMs_locked" :
 						!evalData(this[i].disablable) ? "qMs_reward" :
 						"qMs_toggle_" + (!qu_save.disabledRewards[i] ? "on" : "off")
@@ -168,18 +168,18 @@ let qMs = {
 
 		el("qMs_points").textContent = getFullExpansion(qMs.tmp.points)
 	},
-	isObtained(id) {
+	has(id) {
 		var d = qMs[id]
 		return (d.best ? qu_save.bestMP >= d.req : qMs.tmp.amt >= id) || evalData(d.forceGot)
 	},
 	isOn(id) {
-		return qMs.isObtained(id) && !qu_save.disabledRewards[id] && !qMs.forceOff(id)
+		return qMs.has(id) && !qu_save.disabledRewards[id] && !qMs.forceOff(id)
 	},
 	forceOff(id) {
 		return evalData(qMs[id].forceDisable)
 	},
 	toggle(id) {
-		if (!qMs.isObtained(id)) return
+		if (!qMs.has(id)) return
 		if (qMs.forceOff(id)) return
 		if (!evalData(qMs[id].disablable)) return
 
@@ -188,7 +188,7 @@ let qMs = {
 		el("qMs_reward_" + id).className = "qMs_toggle_" + (!on ? "on" : "off")
 	},
 
-	max: 29,
+	max: 30,
 	1: {
 		req: 1,
 		eff: () => "Completing an EC only exits your challenge, and unlock automation for TT and study presets.",
@@ -331,8 +331,8 @@ let qMs = {
 	27: {
 		req: 130,
 		best: true,
-		eff: () => "Keep Quantum Challenges and Entangled Boosts.",
-		effGot: () => "You now keep Quantum Challenges and Entangled Boosts."
+		eff: () => "Keep Quantum Challenges + Entangled Boosts, and unlock auto-Paired Challenges.",
+		effGot: () => "You now keep Quantum Challenges and Entangled Boosts, and you have unlocked Paired Challenge autobuyer."
 	},
 	28: {
 		req: 140,
@@ -345,5 +345,11 @@ let qMs = {
 		best: true,
 		eff: () => "Keep your Vibration Energy.",
 		effGot: () => "You now keep your Vibration Energy."
+	},
+	30: {
+		req: 200,
+		best: true,
+		eff: () => "Auto-assign PC combinations based on first row.",
+		effGot: () => "You now auto-assign PC combinations based on first row."
 	},
 }

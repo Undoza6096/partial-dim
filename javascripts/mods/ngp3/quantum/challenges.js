@@ -658,6 +658,7 @@ var QCs = {
 			x = QCs_save.in[0]
 		}
 		if (x) r = this.data[x].goalMA
+		if (str.unl() && str_tmp.effs) r = r.pow(1 / str_tmp.effs.a2)
 		return r
 	},
 	isRewardOn(x) {

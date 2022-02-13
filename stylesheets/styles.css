@@ -2592,7 +2592,6 @@ td.grey {
 .ff_btn {
 	border: 2px solid rgba(0, 0, 0, 0.25);
 	font-family: "MonospaceTypewriter";
-	border-radius: 8px;
 	background: #3f1f00;
 	box-shadow: inset 0px 0px 36px #ffdfdf, inset 0px 0px 36px #ffbfdf;
 	text-shadow: 0px 0px 6px #ff003f;
@@ -2605,6 +2604,7 @@ td.grey {
 #ff_table button {
 	width: 96px;
 	height: 96px;
+	border-radius: 6px;
 	font-size: 10px
 }
 #ff_table button b {
@@ -2612,10 +2612,6 @@ td.grey {
 }
 #ff_table .ff_btn b {
 	color: #ff3f00
-}
-.ff_perk {
-	width: 72px !important;
-	height: 72px !important
 }
 @keyframes ff {
 	0% {

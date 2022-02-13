@@ -173,7 +173,7 @@ function metaBoost() {
 	if (qMs.tmp.amt >= 25) return
 
 	player.meta.antimatter = getMetaAntimatterStart()
-	if (!qMs.isObtained(19)) clearMetaDimensions()
+	if (!qMs.has(19)) clearMetaDimensions()
 }
 
 

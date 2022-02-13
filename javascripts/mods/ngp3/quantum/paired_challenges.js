@@ -481,6 +481,8 @@ var PCs = {
 			el("pc_export_" + i).style.display = respec ? "" : "none"
 		}
 		el("pc_info").style.display = PCs_save.lvl == 1 ? "none" : ""
+		el("pc_auto").style.display = qMs.has(27) ? "" : "none"
+		el("pc_auto_assign").style.display = qMs.has(30) ? "" : "none"
 		el("pctabbtn_milestone").style.display = PCs_save.lvl == 1 ? "none" : ""
 		el("pctabbtn_perk").style.display = PCs_save.lvl < 4 ? "none" : ""
 

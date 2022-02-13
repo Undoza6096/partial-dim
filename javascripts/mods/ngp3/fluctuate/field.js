@@ -88,22 +88,23 @@ let ff = {
 
 		d.spent = 0
 		d.linked = []
-		d.linked_2 = []
+		d.linked_2 = {}
 		d.shown = []
 		d.used = []
 		d.pkPos = {}
 		d.pos = {}
 		for (var i = 0; i < save.length; i++) {
 			var a = save[i]
-			d.spent += ff.arcCost(a)
+			var arc = ff.calcArc(a)
+			d.spent += ff.cost(arc.length)
 			d.linked.push(Math.ceil(a[0] / 3))
-			d.linked_2 = d.linked_2.concat(ff.calcArc(a))
 			d.shown.push(a[0])
 			d.pos[a[0]] = i
 			if (a[1]) {
 				d.used.push(a[1])
 				d.pkPos[a[1]] = a[0]
 			}
+			for (var h = 0; h < arc.length; h++) d.linked_2[arc[h]] = i
 		}
 
 		ff.updateChooseTmp()
@@ -124,8 +125,8 @@ let ff = {
 			var p = []
 			for (var i = 1; i <= 3; i++) if (!a[2].includes(i) && !a[2].includes(-i)) p.push(i)
 			for (var i = 0; i < p.length; i++) {
-				d.a.push(c[0] - p[i])
-				d.a.push(c[c.length-1] + p[i])
+				d.a.push(ff.wrap(c[0] - p[i]))
+				d.a.push(ff.wrap(c[c.length-1] + p[i]))
 			}
 		}
 	},
@@ -139,23 +140,17 @@ let ff = {
 	updateDisplays() {
 		var c = ff_tmp.choose.x
 		var arc = c != undefined && ff.calcArc(ff_save.data[c])
-		console.log(arc)
 		for (var i = 1; i <= 18; i++) {
 			var pos = ff_tmp.pos[i]
-			el("ff_arc_"+i).style.display = ff.arcUnl(i) ? "" : "none"
-			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : arc.includes(i) ? "chosenbtn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff_tmp.linked_2.includes(i) ? "chosenbtn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
-			el("ff_arc_"+i+"_name").textContent = pos != undefined && pos == c ? "Choosing" : "P-" + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
-			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
+			el("ff_arc_"+i).style.visibility = ff.arcUnl(i) ? "visible" : "hidden"
+			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : arc.includes(i) ? "chosenbtn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff_tmp.linked_2[i] != undefined ? "chosenbtn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
+			el("ff_arc_"+i+"_name").textContent = pos != undefined ? (pos == c ? "Choosing" : "[ARC-" + pos + "]") : ff_tmp.linked_2[i] != undefined ? "L-" + ff_tmp.linked_2[i] : "P-" + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
+			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : (c == undefined ? ff_tmp.linked.includes(Math.ceil(i / 3)) : ff_tmp.linked_2[i] != undefined) ? "" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
 
 			var pk = pos != undefined && ff_save.data[pos][1]
 			el("ff_pk_"+i).style.display = ff_tmp.shown.includes(i) ? "" : "none"
 			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
 			el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
-		}
-
-		for (var i = 1; i <= 6; i++) {
-			el("ff_eng_"+i).style.display = ff.arcUnl(i * 3) ? "" : "none"
-			el("ff_eng_"+i).textContent = shorten(ff.powerStr(i)) + " total Power"
 		}
 		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
@@ -167,9 +162,21 @@ let ff = {
 		el("ff_spent_disp").style.display = ff.canUse() ? "" : "none"
 	},
 	setupHTML() {
+		var html = ""
+		for (var i = 1; i <= 9; i++) {
+			var ni = 19 - i
+			var grey = (i - 1) % 6 > 2
+			html += "<tr><td id='ff_pk_"+i+"_td'></td>" +
+				"<td class='" + (grey ? "grey" : "") + "' id='ff_arc_"+i+"_td'></td>" +
+				"<td>" + (i == 5 ? "<button class='storebtn' id='ff_mode' onclick='ff.switchMode()' style='font-size: 18px'></button>" : "") + "</td>" +
+				"<td class='" + (!grey ? "grey" : "") + "' id='ff_arc_"+ni+"_td'></td>" +
+				"<td id='ff_pk_"+ni+"_td'></td></tr>"
+		}
+		el("ff_table").innerHTML = html
+
 		for (var i = 1; i <= 18; i++) {
 			el("ff_arc_"+i+"_td").innerHTML = '<button class="ff_btn" id="ff_arc_'+i+'" onclick="ff.choose('+i+', \'arc\')"><b id="ff_arc_'+i+'_name"></b><br><span id="ff_arc_'+i+'_eng"></span></button>'
-			el("ff_pk_"+i+"_td").innerHTML = '<button class="fluctuatebtn ff_perk" id="ff_pk_'+i+'" onclick="ff.choose('+i+', \'perk\')"><b id="ff_pk_'+i+'_name"></b><br><span id="ff_pk_'+i+'_desc"></span><span id="ff_pk_'+i+'_pow"></span></button>'
+			el("ff_pk_"+i+"_td").innerHTML = '<button class="fluctuatebtn" id="ff_pk_'+i+'" onclick="ff.choose('+i+', \'perk\')"><b id="ff_pk_'+i+'_name"></b><br><span id="ff_pk_'+i+'_desc"></span><span id="ff_pk_'+i+'_pow"></span></button>'
 		}
 	},
 
@@ -181,13 +188,13 @@ let ff = {
 	},
 	cost(x) {
 		if (!x) x = 1
-		return Math.pow(x / 3, 0.6)
+		return Math.pow((2.5 * (x - 1) + 1) / 3, 0.6)
 	},
 	canArc(x) {
 		if (!ff.arcUnl(x)) return
-		if (ff.unspent() < ff.arcCost(c) - ff.arcCost(c, false)) return
-		if (ff_tmp.choose.x != undefined) return !ff_tmp.linked_2.includes(x) && ff_tmp.choose.a.includes(x)
-
+		if (ff.unspent() < ff.arcCost(ff_tmp.choose.x) - ff.arcCost(ff_tmp.choose.x, false)) return
+		if (ff_tmp.linked_2[x] != undefined) return
+		if (ff_tmp.choose.x != undefined) return ff_tmp.choose.a.includes(x)
 		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
 		return true
 	},
@@ -215,7 +222,7 @@ let ff = {
 			var j = a[i]
 			var nx = a[i+1]
 			if (j < 0) {
-				r.push(s - n)
+				r.push(ff.wrap(s - n))
 				n += j
 			}
 			if ((!nx || nx > 0) && m == 0) {
@@ -224,15 +231,16 @@ let ff = {
 			}
 			if (j > 0) {
 				p += j
-				r.push(s + p)
+				r.push(ff.wrap(s + p))
 			}
 		}
 		return r
 	},
+	wrap: (x) => ((x - 1) % 18) + 1,
 
 	powerStr(x) {
 		var r = 0
-		for (var i = 0; i < 3; i++) r += ff_tmp.linked_2.includes(x * 3 - i) ? 1 : 0
+		for (var i = 0; i < 3; i++) r += ff_tmp.linked_2[x * 3 - i] !== undefined ? 1 : 0
 		return r
 	},
 
@@ -257,6 +265,7 @@ let ff = {
 		if (!confirm("This will perform a Quantum reset and reset this mechanic entriely. Are you sure?")) return
 		ff_save.data = []
 		ff.updateTmp()
+		ff.updateDisplays()
 		restartQuantum()
 	},
 	choose(x, mode) {
@@ -267,7 +276,6 @@ let ff = {
 
 		if (mode == "arc" && ff_save.mode == 0) {
 			var c = ff_tmp.choose.x
-				console.log("...")
 			if (c != undefined && ff_tmp.pos[x] == c) {
 				delete ff_tmp.choose.x
 				ff.updateChooseTmp()
@@ -282,7 +290,6 @@ let ff = {
 				ff_tmp.choose.x = ff_tmp.pos[x]
 				ff.updateChooseTmp()
 			} else {
-				console.log("...")
 				if (!ff.canArc(x)) return
 				ff_save.data.push([x, 0, []])
 				ff.updateTmp()
@@ -347,7 +354,7 @@ let ff = {
 		}
 		el("ff_mode").textContent = "Mode: " + ff.data.modes[ff_save.mode]
 
-		if (ff_save.mode == 1 && ff_tmp.choose.x !== undefined) {
+		if (ff_save.mode == 1 && ff_tmp.choose.x != undefined) {
 			ff_tmp.choose.x = 0
 			ff.updateDisplays()
 		}
@@ -363,3 +370,9 @@ let ff = {
 let ff_tmp = {}
 let ff_save
 let FLUCTUANT_FIELD = ff
+
+/* TO DO:
+	1. OVERLAP ARCS.
+	2. MULTIPLE DISTANCES.
+	3. DISTANCE 4.
+*/

@@ -243,12 +243,12 @@ function doFluctuateResetStuff(layer = 6) {
 		gb: E(0),
 		br: E(0),
 	}
-	if (!qMs.isObtained(27)) qu_save.entLvl = 0
+	if (!qMs.has(27)) qu_save.entLvl = 0
 
-	if (!qMs.isObtained(29)) str.reset()
-	if (!qMs.isObtained(28)) PCs.reset()
-	QCs.reset(!qMs.isObtained(27))
-	if (!qMs.isObtained(28)) pos.reset()
+	if (!qMs.has(29)) str.reset()
+	if (!qMs.has(28)) PCs.reset()
+	QCs.reset(!qMs.has(27))
+	if (!qMs.has(28)) pos.reset()
 
 	fluc_save.bestAM = E(0)
 	fluc_save.time = 0
