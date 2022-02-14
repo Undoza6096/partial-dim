@@ -59,7 +59,7 @@ let fluc = {
 	},
 	targ(rat) {
 		var r = (Math.log10(fluc.res().log10()) - 13.5) * 20 + 1
-		if (!rat) r = Math.floor(rat)
+		if (!rat) r = Math.floor(r)
 		return r
 	},
 	req(x) {

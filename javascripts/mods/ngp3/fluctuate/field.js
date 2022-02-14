@@ -9,32 +9,38 @@ let ff = {
 		alt: {
 			req: 1,
 			title: "Altitude",
-			desc: "Increases the altitudes."
+			eff: (s) => 0,
+			desc: (x) => "Increases the altitudes."
 		},
 		pow: {
 			req: 2,
 			title: "Power",
-			desc: "Multiplies the power gain."
+			eff: (s) => 0,
+			desc: (x) => "Multiplies the power gain."
 		},
 		free: {
 			req: 3,
 			title: "Freebie",
-			desc: "Decreases the power requirement."
+			eff: (s) => 0,
+			desc: (x) => "Decreases the power requirement."
 		},
 		syn: {
 			req: 6,
 			title: "Synthesis",
-			desc: "Strengthens Strings by altitudes."
+			eff: (s) => 0,
+			desc: (x) => "Strengthens Strings by altitudes."
 		},
 		upg: {
 			req: 7,
 			title: "Upgrade",
-			desc: "Unlocks a new power."
+			eff: (s) => 0,
+			desc: (x) => "Unlocks a new power."
 		},
 		share: {
 			req: 10,
 			title: "Sharing",
-			desc: "Shares altitudes to the right."
+			eff: (s) => 0,
+			desc: (x) => "Shares altitudes to the right."
 		}
 	},
 
@@ -87,7 +93,7 @@ let ff = {
 		for (var i = 1; i < data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) d.pkUnl++
 
 		d.spent = 0
-		d.linked = []
+		d.linked = {}
 		d.linked_2 = {}
 		d.shown = []
 		d.used = []
@@ -97,14 +103,17 @@ let ff = {
 			var a = save[i]
 			var arc = ff.calcArc(a)
 			d.spent += ff.cost(arc.length)
-			d.linked.push(Math.ceil(a[0] / 3))
 			d.shown.push(a[0])
 			d.pos[a[0]] = i
 			if (a[1]) {
 				d.used.push(a[1])
 				d.pkPos[a[1]] = a[0]
 			}
-			for (var h = 0; h < arc.length; h++) d.linked_2[arc[h]] = i
+			for (var h = 0; h < arc.length; h++) {
+				var p = Math.ceil(arc[h] / 3)
+				d.linked[p] = (d.linked[p] || 0) + 1
+				d.linked_2[arc[h]] = i
+			}
 		}
 
 		ff.updateChooseTmp()
@@ -114,7 +123,14 @@ let ff = {
 		if (!ff_tmp.unl) return
 		var d = ff_tmp
 		d.pow = {}
-		for (var i = 0; i < d.used.length; i++) d.pow[d.used[i]] = ff.powerStr(Math.ceil(d.pkPos[d.used[i]] / 3))
+		d.eff = {}
+		for (var i = 1; i <= 6; i++) {
+			if (d.used.includes(i)) {
+				var p = ff_tmp.pos[i]
+				d.pow[i] = d.linked[Math.ceil(ff_save.data[p][0] / 3)]
+				d.eff[i] = ff.data[ff.data.all[i]].eff(d.pow[i])
+			}
+		}
 	},
 	updateChooseTmp() {
 		var d = ff_tmp.choose
@@ -132,10 +148,14 @@ let ff = {
 	},
 
 	updateTab() {
-		/*for (var i = 1; i <= 6; i++) {
-			var pk = ff_save.perks[i]
-			el("ff_pk_"+i+"_pow").innerHTML = pk && shiftDown ? "<br>(" + shorten(ff_tmp.pows[i]) + " power)" : ""
-		}*/
+		for (var i = 1; i <= 18; i++) {
+			var pos = ff_tmp.pos[i]
+			if (pos !== undefined) {
+				var pk = pos != undefined && ff_save.data[pos][1]
+				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc(ff_tmp.eff[pk]) : ""
+				el("ff_pk_"+i+"_pow").innerHTML = ff_tmp.used.includes(i) ? " (" + shorten(ff_tmp.pow[pk]) + ")" : ""
+			}
+		}
 	},
 	updateDisplays() {
 		var c = ff_tmp.choose.x
@@ -145,12 +165,11 @@ let ff = {
 			el("ff_arc_"+i).style.visibility = ff.arcUnl(i) ? "visible" : "hidden"
 			el("ff_arc_"+i).className = c != undefined ? (pos == c ? "ff_btn" : arc.includes(i) ? "chosenbtn" : ff.canArc(i, c) ? "storebtn" : "unavailablebtn") : (pos != undefined ? "ff_btn" : ff_tmp.linked_2[i] != undefined ? "chosenbtn" : ff.canArc(i) ? "storebtn" : "unavailablebtn")
 			el("ff_arc_"+i+"_name").textContent = pos != undefined ? (pos == c ? "Choosing" : "[ARC-" + pos + "]") : ff_tmp.linked_2[i] != undefined ? "L-" + ff_tmp.linked_2[i] : "P-" + Math.ceil(i / 3) + ["a", "b", "c"][(i - 1) % 3]
-			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : (c == undefined ? ff_tmp.linked.includes(Math.ceil(i / 3)) : ff_tmp.linked_2[i] != undefined) ? "" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
+			el("ff_arc_"+i+"_eng").textContent = pos != undefined && c == undefined ? shorten(pos != undefined ? 1 : 0) + " FE used" : (c == undefined ? ff_tmp.linked[Math.ceil(i / 3)] != undefined : ff_tmp.linked_2[i] != undefined) ? "" : "Cost: " + shorten(c == undefined ? ff.cost(1) : ff.arcCost(c) - ff.arcCost(c, false)) + " FE"
 
 			var pk = pos != undefined && ff_save.data[pos][1]
 			el("ff_pk_"+i).style.display = ff_tmp.shown.includes(i) ? "" : "none"
 			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
-			el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc : ""
 		}
 		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
@@ -195,7 +214,7 @@ let ff = {
 		if (ff.unspent() < ff.arcCost(ff_tmp.choose.x) - ff.arcCost(ff_tmp.choose.x, false)) return
 		if (ff_tmp.linked_2[x] != undefined) return
 		if (ff_tmp.choose.x != undefined) return ff_tmp.choose.a.includes(x)
-		if (ff_tmp.linked.includes(Math.ceil(x / 3))) return
+		if (ff_tmp.linked[Math.ceil(x / 3)] != undefined) return
 		return true
 	},
 	arcCost(x, next = true) {
@@ -248,10 +267,10 @@ let ff = {
 		return ff_tmp.pos[x]
 	},
 	perkEff(x) {
-		return ff_tmp.pow[x]
+		return ff_tmp.eff[x]
 	},
 	perkActive(x) {
-		return ff_tmp.unl && ff_tmp.used.includes(x)
+		return ff_tmp.pow && ff_tmp.pow[x]
 	},
 	perkShown(x) {
 		return ff_tmp.shown.includes(x)
