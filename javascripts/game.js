@@ -3643,7 +3643,7 @@ function doNGm2CorrectPostC3Reward(){
 }
 
 let autoSaveSeconds=0
-setInterval(function() {
+function updateDisplays() {
 	updateTmp()
 	runAutoSave()
 	if (!player) return
@@ -3709,7 +3709,7 @@ setInterval(function() {
 	if (isNaN(player.totalmoney.e)) player.totalmoney = E(10)
 	if (!tmp.ngp3 || !pH.did("quantum")) if (player.infinityPoints.lt(100)) player.infinityPoints = player.infinityPoints.round()
 	checkGluonRounding()
-}, 1000)
+}
 
 function autoPerSecond() {
 	dilationStuffABTick()
@@ -5248,10 +5248,12 @@ function initGame() {
 	//On load
 	updateAdvOpts()
 	updateChart(true)
+	setInterval(updateDisplays, 1000)
 	setTimeout(function(){
+		updateDisplays()
 		el("container").style.display = "block"
 		el("loading").style.display = "none"
-	},1000)
+	}, 100)
 	clearInterval(stuckTimeout)
 
 	//Check for Test Server
@@ -5446,6 +5448,6 @@ function updateAdvOpts(toggle) {
 	el("autoApply").style.display = on ? "" : "none"
 	el("toggleLogRateChange").style.display = on ? "" : "none"
 	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, pow10(9e15)) || !on ? "hidden" : "visible"
-	for (var i = 1; i <= 8; i++) el("advTheme" + i).style.display = on ? "" : "none"
+	for (var i = 1; i <= 7; i++) el("advTheme" + i).style.display = on ? "" : "none"
 	pH.reset()
 }
