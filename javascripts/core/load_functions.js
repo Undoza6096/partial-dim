@@ -361,6 +361,7 @@ function setEverythingPreNGp3onLoad(){
 	setPreBreakIfUndefined()
 	setPreEterIfUndefined()
 	setPreNGp3IfUndefined()
+	setFont(aarMod.font || "Typewriter")
 	setTheme(player.options.theme);
 	sliderText.textContent = "Update rate: " + player.options.updateRate + "ms";
 	slider.value = player.options.updateRate;
@@ -1794,6 +1795,7 @@ function setSomeQuantumAutomationDisplay(){
         el('replicantibulkmodetoggle').textContent="Mode: "+(player.galaxyMaxBulk?"Max":"Singles")
         el('versionDesc').style.display = tmp.ngp3 ? "" : "none"
 		if (tmp.ngp3) {
+			el('versionDescEndgame').innerHTML = "Endgame: " + ngp3Welcomes.goals["0.7"]()
 			el('versionDescAlpha').style.display = beta ? "" : "none"
 			el('warningBeta').textContent = beta ? "THIS BETA IS CURRENTLY IN ALPHA, ANYTHING CAN BREAK" :
 				"THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK"

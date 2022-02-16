@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Antimatter Dimensions</title>
+	<title id="z">Antimatter Dimensions</title>
 	<link rel="icon" type="image/png" href="icon.png">
 	<meta name="AD: Aarex's Mods" content="A modification site of Antimatter Dimensions created by Aarex." charset="utf-8"/>
 	<script type="text/javascript" src="javascripts/jquery-3.2.1.min.js"></script>
@@ -13,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css?12">
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 	<script type="text/javascript" src="javascripts/stuck.js"></script>
 </head>
@@ -22,7 +23,7 @@
 	<div id='ghostlyNewsTicker'><span id='ghostlyNewsTickerText'></span></div>
 	<div style="display:none;position:fixed;left:0;top:0"><textarea id="output" style="color:black; width: 200px; height: 55px;"></textarea></div>
 	<div id="bg" style="display: none"></div>
-	<div id="container" class="container" style="color:#4F5957; font-family: Typewriter; text-align:center; font-size: 11px; display:none">
+	<div id="container" class="container" style="color:#4F5957; font-family: var(--font); text-align:center; font-size: 11px; display:none">
 		<div id='ghostlyNewsTickerBlock'></div>
 		<div id='game' style='display:none'>
 			<div id='news'>.</div>
@@ -99,8 +100,8 @@
 		<div id="ec12Mult"></div>
 		<div id="qc3Mult"></div>
 		<div id="qc6Mult"></div>
-		<div>
-			<p>You have <span id="coinAmount" onclick="onAntimatterClick()" style="font-size:25px; color: black">0</span> antimatter.</p>
+		<div onclick="onAntimatterClick()">
+			<span id="coinAmount_pharse1">You have </span><span id="coinAmount" style="font-size:25px; color: black">0</span> <span id="coinAmount_pharse2">antimatter</span><span id="coinAmount_pharse3">.</span>
 		</div>
 		<div id="coinsPerSec">You are getting 0 antimatter per second.</div>
 
@@ -122,26 +123,26 @@
 		</div>
 		<p></p>
 		<div style="position:absolute; left: 0; right: 0; margin-left: auto; margin-right: auto; width: 360px; top: 19px">
-			<button id="bigcrunch" style="font-family: Typewriter; font-size: 50px; width: 360px; height: 100px;" class="tabbtn infinitybtn" onclick="bigCrunch()">Big Crunch</button>
+			<button id="bigcrunch" style="font-family: var(--font); font-size: 50px; width: 360px; height: 100px;" class="tabbtn infinitybtn" onclick="bigCrunch()">Big Crunch</button>
 		</div>
 		<div>
-			<button id="dimensionsbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick="showTab('dimensions')">Dimensions</button>
-			<button id="optionsbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick="showTab('options')">Options</button>
-			<button id="statisticsbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick="showTab('statistics')">Statistics</button>
-			<button id="achievementsbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick="showTab('achievements')">Achievements</button>
-			<button id="challengesbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick="showTab('challenges')">Challenges</button>
-			<button id="automationbtn" style="font-family: Typewriter; font-size: 20px" class="tabbtn" onclick='showTab("automation")'>Automation</button>
-			<button id="accTabBtn" style="font-family: Typewriter; font-size: 20px; display: none" class="acceleratebtn" onclick='showTab("accTab")'>Accelerate</button>
-			<button id="paradoxbtn" style="font-family: Typewriter; font-size: 20px; display: none" class="tabbtn paradoxbtn" onclick='showTab("paradox")'>Paradox</button>
-			<button id="galaxybtn" style="font-family: Typewriter; font-size: 20px; display: none" onclick='showTab("galaxy")' class="tabbtn galaxybtn">Galaxy</button>
-			<button id="infinitybtn" style="font-family: Typewriter; font-size: 20px; display: none" class="infinitybtn" onclick="showTab('infinity')">Infinity</button>
-			<button id="repMajorBtn" style="font-family: Typewriter; font-size: 20px; display: none" class="infinitybtn" onclick="showTab('repMajor')">Replicantis</button>
-			<button id="eternitystorebtn" style="font-family: Typewriter; font-size: 20px; display: none" class="eternitytabbtn" onclick="showTab('eternitystore')">Eternity</button>
-			<button id="irTabBtn" style="font-family: Typewriter; font-size: 20px; display: none" class="interrealitybtn" onclick='showTab("irTab")'>Interreality</button>
-			<button id="sgTabBtn" style="font-family: Typewriter; font-size: 20px; display: none" class="singularitybtn" onclick='showTab("sgTab")'>Singularity</button>
-			<button id="quantumtabbtn" style="font-family: Typewriter; font-size: 20px; display: none" class="quantumbtn" onclick='showTab("quantumtab")'>Quantum</button>
-			<button id="fluctuateBtn" style="font-family: Typewriter; font-size: 20px; display: none" class="fluctuatebtn" onclick='showTab("flucTab")'>Fluctuate</button>
-			<button id="ghostifytabbtn" style="font-family: Typewriter; font-size: 20px" class="ghostifybtn" onclick='showTab("ghostify")'>Ghostify</button>
+			<button id="dimensionsbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick="showTab('dimensions')">Dimensions</button>
+			<button id="optionsbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick="showTab('options')">Options</button>
+			<button id="statisticsbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick="showTab('statistics')">Statistics</button>
+			<button id="achievementsbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick="showTab('achievements')">Achievements</button>
+			<button id="challengesbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick="showTab('challenges')">Challenges</button>
+			<button id="automationbtn" style="font-family: var(--font); font-size: 20px" class="tabbtn" onclick='showTab("automation")'>Automation</button>
+			<button id="accTabBtn" style="font-family: var(--font); font-size: 20px; display: none" class="acceleratebtn" onclick='showTab("accTab")'>Accelerate</button>
+			<button id="paradoxbtn" style="font-family: var(--font); font-size: 20px; display: none" class="tabbtn paradoxbtn" onclick='showTab("paradox")'>Paradox</button>
+			<button id="galaxybtn" style="font-family: var(--font); font-size: 20px; display: none" onclick='showTab("galaxy")' class="tabbtn galaxybtn">Galaxy</button>
+			<button id="infinitybtn" style="font-family: var(--font); font-size: 20px; display: none" class="infinitybtn" onclick="showTab('infinity')">Infinity</button>
+			<button id="repMajorBtn" style="font-family: var(--font); font-size: 20px; display: none" class="infinitybtn" onclick="showTab('repMajor')">Replicantis</button>
+			<button id="eternitystorebtn" style="font-family: var(--font); font-size: 20px; display: none" class="eternitytabbtn" onclick="showTab('eternitystore')">Eternity</button>
+			<button id="irTabBtn" style="font-family: var(--font); font-size: 20px; display: none" class="interrealitybtn" onclick='showTab("irTab")'>Interreality</button>
+			<button id="sgTabBtn" style="font-family: var(--font); font-size: 20px; display: none" class="singularitybtn" onclick='showTab("sgTab")'>Singularity</button>
+			<button id="quantumtabbtn" style="font-family: var(--font); font-size: 20px; display: none" class="quantumbtn" onclick='showTab("quantumtab")'>Quantum</button>
+			<button id="fluctuateBtn" style="font-family: var(--font); font-size: 20px; display: none" class="fluctuatebtn" onclick='showTab("flucTab")'>Fluctuate</button>
+			<button id="ghostifytabbtn" style="font-family: var(--font); font-size: 20px" class="ghostifybtn" onclick='showTab("ghostify")'>Ghostify</button>
 		</div>
 		<div id="emptiness" class="tab" style="font-size: 150%">
 			<br>
@@ -1473,7 +1474,7 @@
 						<td><div class="storebtn" id="renderrate_div" style="color:black; width: 198px; height: 55px; font-size: 130%; text-align: center"><b id="renderrate">Render rate: 1 tick</b><input id="renderrateslider" style="width: 170px;" type="range" min="1" max="20" value="1" class="slider"></div></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td><div><button id="font" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 12px" onclick="showOptions('fontmenu')"></button></div></td>
 						<td><div><button id="layerDispOptions" onclick="showOptions('layervisibilitymenu')" class="storebtn" style="color:black; width: 200px; height: 55px; font-size: 15px">Show/hide layers</button></div></td>
 						<td><div><button id="animationoptionsbtn" class="storebtn" onclick="showOptions('animationoptions')" style="color:black; width: 200px; height: 55px; font-size:160%;">Animations</button></div></td>
 					</tr>
@@ -1572,10 +1573,11 @@
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
+				<p id='versionDescEndgame'>End-game:</p>
 			</span>
 			<div class="footer bottom" style="display: block !important"></div>
 		</div>
-		<div id="statistics" class="tab" align="center" style="color: black; font-size: 12px; font-family: Typewriter; margin: 0 auto">
+		<div id="statistics" class="tab" align="center" style="color: black; font-size: 12px; font-family: var(--font); margin: 0 auto">
 			<div id='statstabs'>
 				<br>
 				<td><button class="secondarytabbtn" onclick="showStatsTab('stats')">Statistics</button><td>
@@ -5776,6 +5778,20 @@
 				<button class='storebtn' id="advTheme6" onclick="setTheme('Void')" style='width: 240px'>Select Void (by Soul147)</button>
 				<button class='storebtn' id="advTheme7" onclick="setTheme('Void (uv)')" style='width: 240px'>Void (usavictor's version)</button>
 				<button class='storebtn' onclick="setTheme('Aero')" style='width: 240px'>Select Aero (by ducdat0507)</button>
+			</div>
+		</p>
+	</div>
+	<div class="popup optionmenu" id="fontmenu">
+		<button class="closebtn storebtn" onclick="closeToolTip()">&times;</button>
+		<p style='display:inline'>
+			<p id='chosenFont'></p>
+			<div class="scrollablemenu">
+				<button class='storebtn' onclick="setFont('Typewriter')" style='width: 240px'>Typewriter</button>
+				<button class='storebtn' onclick="setFont('Roboto Mono')" style='width: 240px'>Roboto Mono</button>
+				<button class='storebtn' onclick="setFont('IBM Plex Mono')" style='width: 240px'>IBM Plex Mono</button>
+				<button class='storebtn' onclick="setFont('Inconsolata')" style='width: 240px'>Inconsolata</button>
+				<button class='storebtn' onclick="setFont('Default')" style='width: 240px'>Default</button>
+				<button class='storebtn' onclick="setFont('Roboto')" style='width: 240px'>Roboto</button>
 			</div>
 		</p>
 	</div>

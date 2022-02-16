@@ -1246,6 +1246,13 @@ function setTheme(name) {
 	head.appendChild(link);
 }
 
+function setFont(name) {
+	document.documentElement.style.setProperty('--font', name)
+	aarMod.font = name
+	el("font").innerHTML = "<p style='font-size:15px'>Fonts</p>Current font: " + name
+	el("chosenFont").textContent = "Current font: " + name
+}
+
 function doWeakerPowerReductionSoftcapNumber(num,start,exp){
 	if (num < start || num < 1) return num
 	return start*(( (num/start)**exp -1)/exp+1)
@@ -1305,7 +1312,11 @@ function showTab(tabName, init) {
 
 
 function updateMoney() {
+	el("z").textContent = shortenMoney(player.money) + " antimatter"
 	el("coinAmount").textContent = shortenMoney(player.money)
+	el("coinAmount_pharse1").style.display = player.money.e >= 1e6 ? "none" : ""
+	el("coinAmount_pharse2").style.display = player.money.e >= 1e9 ? "none" : ""
+	el("coinAmount_pharse3").style.display = player.money.e >= 1e6 ? "none" : ""
 
 	var element2 = el("matter");
 	if (player.currentChallenge == "postc6") element2.textContent = "There is " + formatValue(player.options.notation, player.matter, 2, 1) + " " + "matter."; //TODO
@@ -1327,7 +1338,7 @@ function updateCoinPerSec() {
 	var element = el("coinsPerSec");
 	var ret = getDimensionProductionPerSecond(1)
 	if (tmp.inEC12) ret = ret.div(tmp.ec12Mult)
-	element.innerHTML = ret.gt(0) ? 'You are getting ' + shortenND(ret) + ' antimatter per second.' : "<br>"
+	element.innerHTML = ret.gt(0) && player.money.e < 1e9 ? 'You are getting ' + shortenND(ret) + ' antimatter per second.' : "<br>"
 }
 
 var clickedAntimatter
@@ -2118,6 +2129,7 @@ function onNotationChange() {
 	updateExdilation()
 	updateMilestones()
 	if (tmp.ngp3) {
+		el('versionDescEndgame').innerHTML = "Endgame: " + ngp3Welcomes.goals["0.7"]()
 		qMs.updateDisplay()
 		updateQuarksTabOnUpdate()
 		updateGluonsTabOnUpdate("notation")
@@ -2125,11 +2137,6 @@ function onNotationChange() {
 		QCs.updateDisp()
 		updateMasteryStudyTextDisplay()
 		updateBreakEternity()
-		onNotationChangeNeutrinos()
-		updateBosonicStuffCosts()
-		if (!player.ghostify.ghostlyPhotons.unl) el("gphUnl").textContent = "To unlock Ghostly Photons, you need to get "+shortenCosts(pow10(6e9))+" antimatter while your universe is Big Ripped first."
-		else if (!player.ghostify.wzb.unl) updateBLUnlockDisplay()
-		else updateBosonUnlockDisplay()
 	}
 	el("achmultlabel").textContent = "Current achievement multiplier on each Dimension: " + shortenMoney(player.achPow) + "x"
 }
@@ -5448,6 +5455,7 @@ function updateAdvOpts(toggle) {
 	el("autoApply").style.display = on ? "" : "none"
 	el("toggleLogRateChange").style.display = on ? "" : "none"
 	el("decimalModeBtn").style.visibility = Decimal.gt(player.totalmoney, pow10(9e15)) || !on ? "hidden" : "visible"
+	el("font").style.display = on ? "" : "none"
 	for (var i = 1; i <= 7; i++) el("advTheme" + i).style.display = on ? "" : "none"
 	pH.reset()
 }

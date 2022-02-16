@@ -30,7 +30,7 @@ button {
 }
 
 #TTbuttons {
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 #news {
@@ -38,7 +38,7 @@ button {
     /*transition: transform 1s;*/
     position: relative;
     display: inline-block;
-    font-family: Typewriter;
+    font-family: var(--font);
     font-size: 15px;
     white-space: nowrap;
     font-weight: bold
@@ -50,7 +50,7 @@ button {
     color: black;
     background: #F2F2F2;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 3px solid #127A20;
     cursor: pointer;
     border-radius: 10px;
@@ -70,7 +70,7 @@ button {
     color: black;
     background: rgb(92, 92, 92);
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 3px solid rgb(136, 29, 29);
     border-radius: 10px;
     font-size: 140%;
@@ -93,7 +93,7 @@ button {
     color: black;
     background: #F2F2F2;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 2px solid black;
     border-radius: 10px;
     font-size: 80%;
@@ -112,7 +112,7 @@ button {
     color: white;
     background: #181818;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 2px solid black;
     border-radius: 10px;
     font-size: 80%;
@@ -131,7 +131,7 @@ button {
     color: #b341e0;
     background: black;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 3px solid #b341e0;
     border-radius: 10px;
     font-size: 80%;
@@ -149,7 +149,7 @@ button {
 	color: #32c832;
 	background: #0a640a;
 	font-weight: bold;
-	font-family: Typewriter;
+	font-family: var(--font);
 	border: 3px solid #32c832;
 	border-radius: 10px;
 	font-size: 80%;
@@ -165,7 +165,7 @@ button {
   color: #FFF;
   background: #5AC467;
   font-weight: bold;
-  font-family: Typewriter;
+  font-family: var(--font);
   border: 3px solid #127A20;
   cursor: pointer;
   border-radius: 10px;
@@ -179,7 +179,7 @@ button {
   color: #FFF;
   background: #1F1F1F;
   font-weight: bold;
-  font-family: Typewriter;
+  font-family: var(--font);
   border: 3px solid #127A20;
   cursor: pointer;
   border-radius: 10px;
@@ -203,7 +203,7 @@ button {
     color: black;
     background: #F2F2F2;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #127A20;
     width: 120px;
     height: 25px;
@@ -230,7 +230,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinimultbtn:hover {
@@ -249,7 +249,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinistorebtn1:hover {
@@ -268,7 +268,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinistorebtn2:hover {
@@ -287,7 +287,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinistorebtn3:hover {
@@ -306,7 +306,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinistorebtn4:hover {
@@ -325,7 +325,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .infinistorebtnlocked:hover {
@@ -343,14 +343,14 @@ button {
     height: 90px;
     transition-duration: 0.2s;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .unavailablebtn {
     color: #000000;
     background: #A3A3A3;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #B84B5F;
     width: 120px;
     height: 25px;
@@ -391,7 +391,7 @@ button {
     cursor: pointer;
     width: 175px;
     height: 25px;
-    font-family: Typewriter;
+    font-family: var(--font);
     font-size: 0.8rem;
 }
 
@@ -414,7 +414,7 @@ button {
 #sacrificebtn, #pSac {
 	width: 210px;
 	height: 70px;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-size: 11px
 }
 
@@ -566,7 +566,7 @@ button {
     cursor: pointer;
     width: 210px;
     height: 70px;
-    font-family: Typewriter;
+    font-family: var(--font);
     font-size: 11px
 }
 
@@ -646,7 +646,7 @@ button {
     border: 1px solid #ED85DF;
     transition-duration: 0.2s;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .newdim {
@@ -657,7 +657,7 @@ button {
     color: #000000;
     background: #F2F2F2;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #127A20;
     z-index: 1;
 }
@@ -675,7 +675,7 @@ button {
     color: #000000;
     background: #A3A3A3;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #B84B5F;
     z-index: 1;
 }
@@ -692,7 +692,7 @@ button {
 	border-radius: 4px;
 	color: #ffefbf;
 	text-shadow: 0px 0px 6px #ffdf7f, 0px 0px 6px #000000, 0px 0px 12px #ffbf00;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	animation: 5s accelerate ease-in-out infinite;
 	transition-duration: 0.2s;
@@ -720,7 +720,7 @@ button {
 	border: 2px solid #ff00ff;
 	color: #ff7fff;
 	text-shadow: 0px 0px 3px #000000, 0px 0px 6px #ff00ff;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	border-radius: 4px;
 	transition-duration: 0.2s
@@ -741,7 +741,7 @@ button {
     height: 90px;
 	color: #ff7fff;
 	text-shadow: 0px 0px 3px #000000, 0px 0px 6px #ff00ff;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
     font-size:  10px;
 	border-radius: 4px;
@@ -762,7 +762,7 @@ button {
 	color: #ffffff;
 	box-shadow: inset 0px 0px 12px 0px #ffffff;
 	text-shadow: 0px 0px 6px #000000, 0px 0px 6px #ff00ff;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
     font-size:  10px;
 	border-radius: 4px;
@@ -832,7 +832,7 @@ button {
     border: 2px solid #7f7f7f;
 	border-radius: 4px;
     color: #bfbfbf;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	transition-duration: 0.2s;
 	cursor: pointer
@@ -850,7 +850,7 @@ button {
 	box-shadow: inset 0px 0px 12px 0px #000000;
 	color: #ffffff;
 	text-shadow: 0px 0px 3px #ffffff, 0px 0px 6px #ffffff;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	transition-duration: 0.2s;
 	cursor: pointer
@@ -865,7 +865,7 @@ button {
     color: #32c832;
     background: #0a640a;
     border: 2px solid #32c832;
-    font-family: Typewriter;
+    font-family: var(--font);
     font-weight: bold;
     border-radius: 4px;
     transition-duration: 0.2s;
@@ -883,7 +883,7 @@ button {
 
 	border: 2px solid #bf005f;
 	color: #ffbfdf;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	border-radius: 4px;
 	transition-duration: 0.2s;
@@ -911,7 +911,7 @@ button {
 	background: linear-gradient(#0c0033, #2e0033) !important;
 	box-shadow: inset 0px 0px 24px 0px black;
 	border: 2px solid;
-	font-family: Typewriter;
+	font-family: var(--font);
 	font-weight: bold;
 	border-radius: 4px;
 	transition-duration: 0.2s;
@@ -945,7 +945,7 @@ button {
     border-radius: 8px;
     margin: 0px auto;
     text-align: center;
-    font-family: TypeWriter;
+    font-family: var(--font);
     color: black;
     font-size: 70%;
     user-select: none;
@@ -959,7 +959,7 @@ button {
     border-radius: 8px;
     margin: 0px auto;
     text-align: center;
-    font-family: TypeWriter;
+    font-family: var(--font);
     color: black;
     font-size: 70%;
     user-select: none;
@@ -974,7 +974,7 @@ button {
     border-radius: 8px;
     margin: 0px auto;
     text-align: center;
-    font-family: TypeWriter;
+    font-family: var(--font);
     color: black;
     font-size: 70%;
     user-select: none;
@@ -1008,7 +1008,7 @@ button {
       transition-duration: 0.2s;
       cursor: pointer;
       border-radius: 4px;
-      font-family: Typewriter;
+      font-family: var(--font);
 }
 
 .autobuyerbtn:hover {
@@ -1054,7 +1054,7 @@ button {
     text-align:center;
     z-index: 2;
     color: black;
-    font-family: Typewriter;
+    font-family: var(--font);
     padding: 10px;
     padding-bottom: 15px;
     display: none;
@@ -1156,7 +1156,7 @@ button {
     margin: auto;
     text-align:center;
     font-size: 15px;
-    font-family: Typewriter
+    font-family: var(--font)
 }
 
 #footer tr td div {
@@ -1185,7 +1185,7 @@ button {
 }
 
 #progresspercent {
-    font-family: Typewriter;
+    font-family: var(--font);
     pointer-events: all !important;
 }
 
@@ -1207,7 +1207,7 @@ button {
     background-color: #f2d729;
     border: 1px solid red;
     border-radius: 5px;
-    font-family: TypeWriter;
+    font-family: var(--font);
     transition-duration: 0.2s;
 }
 
@@ -1260,7 +1260,7 @@ button {
     background: white;
     border: 1px solid black;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     width: 170px;
     height: 80px;
     transition-duration: 0.2s;
@@ -1277,7 +1277,7 @@ button {
     background: black;
     border: 1px solid #b341e0;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     width: 170px;
     height: 80px;
     transition-duration: 0.2s;
@@ -1406,7 +1406,7 @@ button {
     color: #181818;
     background: #5F5F5F;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     width: 170px;
     height: 80px;
@@ -1426,7 +1426,7 @@ button {
     color: #1e0830;
     background: #0BD251;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     width: 170px;
     height: 80px;
@@ -1441,7 +1441,7 @@ button {
     color: black;
     background: #71219a;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid black;
     width: 170px;
     height: 80px;
@@ -1456,7 +1456,7 @@ button {
     color: #3AACD6;
     background: #232028;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     width: 170px;
     height: 70px;
@@ -1481,7 +1481,7 @@ button {
     color: black;
     background: #4A4A4A;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     width: 170px;
     height: 70px;
@@ -1566,7 +1566,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .eternityupbtn:hover {
@@ -1584,7 +1584,7 @@ button {
     height: 90px;
     transition-duration: 0.2s;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
     cursor: pointer;
 }
 
@@ -1602,7 +1602,7 @@ button {
     height: 90px;
     transition-duration: 0.2s;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .eternityttbtn {
@@ -1616,7 +1616,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .eternityttbtn:hover {
@@ -1634,7 +1634,7 @@ button {
     height: 120px;
     transition-duration: 0.2s;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
 }
 
 .eternityttbtnlocked:hover {
@@ -1657,7 +1657,7 @@ button {
     color: black;
     background: #8D48C3;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     transition-duration: 0.2s;
     border-radius: 4px;
@@ -1684,7 +1684,7 @@ button {
     color: black;
     background: #696969;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #691fa5;
     transition-duration: 0.2s;
     border-radius: 4px;
@@ -1706,7 +1706,7 @@ button {
     color: #003f00;
     background: #7fff7f;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #00bf00;
     transition-duration: 0.2s;
     border-radius: 4px;
@@ -1725,7 +1725,7 @@ button {
     color: #3f0000;
     background: #ff7f7f;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #bf0000;
     transition-duration: 0.2s;
     border-radius: 4px;
@@ -1766,7 +1766,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
     animation: dilationBtnGlow 10s infinite;
 }
 
@@ -1791,7 +1791,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
     animation: dilationBtnGlow 10s infinite;
     vertical-align: top;
     margin:7px;
@@ -1808,7 +1808,7 @@ button {
     transition-duration: 0.2s;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Typewriter;
+    font-family: var(--font);
     animation: dilationBtnGlow2 10s infinite;
     vertical-align: top;
     margin:7px;
@@ -1818,7 +1818,7 @@ button {
     color: black;
     background: #64DD17;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid black;
     width: 170px;
     height: 80px;
@@ -1833,7 +1833,7 @@ button {
     color: #181818;
     background: #5F5F5F;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #64ddad;
     width: 170px;
     height: 80px;
@@ -1848,7 +1848,7 @@ button {
     color: #181818;
     background: #5F5F5F;
     font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
     border: 1px solid #3e8a0f;
     width: 170px;
     height: 80px;
@@ -2370,7 +2370,7 @@ td.grey {
     transition-duration: 0.2s;
     border-radius: 4px;
     font-size: 12px;
-    font-family: Typewriter;
+    font-family: var(--font);
     vertical-align: top;
 }
 
@@ -2591,7 +2591,7 @@ td.grey {
 
 .ff_btn {
 	border: 2px solid rgba(0, 0, 0, 0.25);
-	font-family: "MonospaceTypewriter";
+	font-family: "Monospacevar(--font)";
 	background: #3f1f00;
 	box-shadow: inset 0px 0px 36px #ffdfdf, inset 0px 0px 36px #ffbfdf;
 	text-shadow: 0px 0px 6px #ff003f;
@@ -2637,7 +2637,7 @@ td.grey {
 	color: black;
 	background: #2d7233 !important;
 	font-weight: bold;
-	font-family: Typewriter;
+	font-family: var(--font);
 	border: 3px solid #5be567;
 	cursor: pointer;
 	border-radius: 10px;
@@ -2691,7 +2691,7 @@ td.grey {
 	background: linear-gradient(#0c0033, #2e0033);
 	box-shadow: inset 0px 0px 24px 0px black;
 	border: 2px solid transparent;
-	font-family: Typewriter;
+	font-family: var(--font);
 	border-radius: 10px;
 	transition-duration: 0.2s;
 	animation: ghostifytext 4s linear infinite
@@ -2719,7 +2719,7 @@ td.grey {
 
 #ghostlyNewsTickerText {
 	position: absolute;
-    font-family: Typewriter;
+    font-family: var(--font);
 	font-size: 16px;
     white-space: nowrap
 }
@@ -2872,7 +2872,7 @@ td.lEp {
 	border-radius: 4px;
 	font-size: 13px;
 	font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
 	transition-duration: 0.2s
 }
 
@@ -2885,7 +2885,7 @@ td.lEp {
 	border-radius: 4px;
 	font-size: 13px;
 	font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
 	transition-duration: 0.2s
 }
 
@@ -2897,7 +2897,7 @@ td.lEp {
 	border-radius: 4px;
 	font-size: 13px;
 	font-weight: bold;
-    font-family: Typewriter;
+    font-family: var(--font);
 	transition-duration: 0.2s
 }
 
@@ -3456,7 +3456,7 @@ screen and (max-width: 480px) {
 	width: 100%;
 	height: 30px;
 	top: 5px;
-    font-family: Typewriter;
+    font-family: var(--font);
 	text-align: center;
 	font-size: 30px;
 	animation: rainbow 4s linear infinite;
