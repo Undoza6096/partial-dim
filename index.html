@@ -1569,7 +1569,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(2/14/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(2/16/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5035,20 +5035,21 @@
 			</tr>
 		</table>
 		<div class="flucTab" id="ffTab">
-			<br>
 			<b class="warning" id="ff_req" style="font-size: 20px">You need to get at least 1 Vibration Energy before using this mechanic.</b>
-			<span id="ff_spent_disp" style="font-size: 20px">You have associated <span id="ff_spent" class="flucEne"></span> Fluctuant Energy to this field.</span>
+			<div id="ff_div">
+				<span id="ff_spent_disp" style="font-size: 20px">You have associated <span id="ff_spent" class="flucEne"></span> Fluctuant Energy to this field.</span>
+				<br><br>
+				<b class="warning" style="font-size: 15px">WARNING: Arcs and Perks affect every String Power, and performs a Quantum reset!</b>
+				<br>
+				<button class="storebtn" onclick="ff.respec()">Respec</button>
+				<button class="storebtn" onclick="ff.exportPreset()">Export</button>
+				<button class="storebtn" onclick="ff.importPreset()">Import</button>
+				<br>
+				<span id="ff_pk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
+				<table id="ff_table" align="center" style="margin: auto"></table>
+			</div>
 			<br><br>
-			<b class="warning" style="font-size: 15px">WARNING: Arcs and Perks affect every String Power, and performs a Quantum reset!</b>
-			<br>
-			<button class="storebtn" onclick="ff.respec()">Respec</button>
-			<button class="storebtn" onclick="ff.exportPreset()">Export</button>
-			<button class="storebtn" onclick="ff.importPreset()">Import</button>
-			<br>
-			<span id="ff_pk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
-			<table id="ff_table" align="center" style="margin: auto"></table>
-			<br><br>
-			<div class="footer"></div>
+			<div class="footer bottom"></div>
 		</div>
 		<div class="flucTab" id="qfTab">
 			<span id="unknown_unl">You need 11 Fluctuant Energy in order to unlock Quantum Field.</span>
