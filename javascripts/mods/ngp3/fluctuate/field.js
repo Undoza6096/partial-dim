@@ -139,7 +139,12 @@ let ff = {
 			var a = ff_save.data[d.x]
 			var c = ff.calcArc(a)
 			var p = []
-			for (var i = 1; i <= 3; i++) if (!a[2].includes(i) && !a[2].includes(-i)) p.push(i)
+			var p2 = [1,2,3]
+			if (fluc.energy >= 12) p2.push(1)
+			if (fluc.energy >= 15) p2.push(2)
+			if (fluc.energy >= 18) p2.push(3)
+			if (fluc.energy >= 21) p2.push(4)
+			for (var i = 0; i < p2.length; i++) if (!a[2].includes(p2[i]) && !a[2].includes(-p2[i])) p.push(i)
 			for (var i = 0; i < p.length; i++) {
 				d.a.push(ff.wrap(c[0] - p[i]))
 				d.a.push(ff.wrap(c[c.length-1] + p[i]))
