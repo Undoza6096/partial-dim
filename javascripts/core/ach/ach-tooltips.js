@@ -391,7 +391,7 @@ function setR16p5Tooltip() {
 
 	mayhem.setAttribute('ach-tooltip', "Max out Mastery Studies in QC1. Reward: You keep Mastery Studies except in QC1 and QC7.")
 	cantGet.setAttribute('ach-tooltip', "Reach " + shortenCosts(pow10(Math.PI * 1e11)) + " antimatter in Eternity Challenge 11. Reward: You gain 5x more Dilated Time, Time Theorems, and Quarks, and can reduce the gluon gains by 50%.")
-	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1600)) + " MA in any QC without vibrations. Reward: +0.5 extra Vibration Energy.")
+	rid.setAttribute('ach-tooltip', "Get " + shortenCosts(pow10(1600)) + " MA in any QC without vibrations. Reward: +0.2 extra Vibration Energy.")
 }
 
 function setR17Tooltip() {

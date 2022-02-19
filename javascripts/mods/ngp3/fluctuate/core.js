@@ -285,7 +285,7 @@ let FDs = {
 	},
 	cost(x, amt) {
 		if (!amt) amt = FDs_save[x].bgt
-		return Math.min(Math.floor(amt * 1.75 + x), 12)
+		return Math.min(Math.floor(amt * 1.75 + x + 0.25), 12)
 	},
 
 	dimMult(x) {

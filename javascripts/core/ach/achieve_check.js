@@ -282,7 +282,7 @@ function preHiggsNGp3AchieveCheck() {
 	//ROW 17
 	if (pH.can("quantum") && QCs.in(3) && player.meta[2].bought == 0 && player.meta[3].bought == 0 && player.meta[4].bought == 0 && player.meta[5].bought == 0 && player.meta[6].bought == 0 && player.meta[7].bought == 0 && player.meta[8].bought == 0) giveAchievement("ERROR 500: INTERNAL DIMENSION ERROR")
 	if (pH.did("fluctuate")) giveAchievement("Feel the Momentum")
-	if (str.unl() && (str_tmp.powers[1] * str_tmp.str < -1.5 || str_tmp.powers[2] * str_tmp.str < -1.5 || str_tmp.powers[3] * str_tmp.str < -1.5)) giveAchievement("Never make paradoxes!")
+	if (str.unl() && (str_tmp.powers[1] * str_tmp.str < -1.2 || str_tmp.powers[2] * str_tmp.str < -1.2 || str_tmp.powers[3] * str_tmp.str < -1.2)) giveAchievement("Never make paradoxes!")
 	if (str.unl() && !hasAch("ng3p44")) {
 		var cond1 = 0
 		var cond2 = 0
