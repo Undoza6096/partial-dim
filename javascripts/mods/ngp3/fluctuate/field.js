@@ -126,8 +126,8 @@ let ff = {
 		d.eff = {}
 		for (var i = 1; i <= 6; i++) {
 			if (d.used.includes(i)) {
-				var p = ff_tmp.pos[i]
-				d.pow[i] = d.linked[Math.ceil(ff_save.data[p][0] / 3)]
+				var p1 = ff_tmp.pkPos[i]
+				d.pow[i] = d.linked[Math.ceil(p1 / 3)]
 				d.eff[i] = ff.data[ff.data.all[i]].eff(d.pow[i])
 			}
 		}
@@ -333,7 +333,7 @@ let ff = {
 			data[1] = newV
 
 			el("ff_pk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
-			el("ff_pk_"+x+"_desc").textContent = newV ? ff.data[name].desc : ""
+			el("ff_pk_"+x+"_desc").textContent = newV ? evalData(ff.data[name].desc) : ""
 			ff.updateTmp()
 			restartQuantum()
 		}
