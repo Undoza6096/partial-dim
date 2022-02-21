@@ -111,7 +111,7 @@ let ff = {
 			}
 			for (var h = 0; h < arc.length; h++) {
 				var p = Math.ceil(arc[h] / 3)
-				d.linked[p] = (d.linked[p] || 0) + 1
+				d.linked[p] = (d.linked[p] || 0) + Math.sqrt(Math.abs(arc[h] - arc[0]) + 1)
 				d.linked_2[arc[h]] = i
 			}
 		}
