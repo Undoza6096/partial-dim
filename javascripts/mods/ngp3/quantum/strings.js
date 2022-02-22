@@ -175,6 +175,8 @@ let str = {
 			el("str_upg_" + u + "_btn").style.display = evalData(upg.hidden) ? "none" : ""
 			el("str_upg_" + u + "_eff").textContent = upg.effDisp(this.upgEff(u))
 			el("str_upg_" + u + "_cost").textContent = "(requires " + shortenDimensions(this.upgCost(u)) + " " + upg.resDisp + ")"
+
+			el("str_c" + u + "_boost").style.display = ff.perkActive(5) ? "" : "none"
 		}
 	},
 
@@ -184,7 +186,7 @@ let str = {
 		if (!data.unl) return
 
 		data.str = Math.log10(Math.log10(str_save.energy * 3 + 1) + 1) * 1.5 + 1
-		if (ff.perkActive(2)) data.str *= ff.perkEff(2) / 2 + 1
+		if (ff.perkActive(2)) data.str *= ff.perkEff(2)
 		if (ff.perkActive(4)) data.str *= Math.log10(data.totalAlt * ff.perkEff(4) / 2 + 1) + 1
 
 		//Boosts
@@ -219,7 +221,6 @@ let str = {
 			el("str_b" + p + "_boost").textContent = powTotal >= b_req ? str.data.effs["b" + p].disp(str_tmp.effs["b" + p]) : "(requires " + shorten(b_req) + " power)"
 
 			var c_unl = ff.perkActive(5)
-			el("str_c" + p + "_boost").style.display = c_unl ? "" : "none"
 			if (c_unl) {
 				var c_req = str.req("c", p)
 				el("str_c" + p + "_boost").textContent = powTotal >= c_req ? str.data.effs["c" + p].disp(str_tmp.effs["c" + p]) : "(requires " + shorten(c_req) + " power)"
@@ -324,7 +325,7 @@ let str = {
 			var d = Math.abs(p)
 			var y = p + x
 			var add = 0.17 - 0.13 * d + 0.25 * ((d + 1) % 2)
-			if (ff.perkActive(1)) add += ff.perkEff(1) * 0.1
+			if (ff.perkActive(1)) add += ff.perkEff(1)
 			if (fluc.unl() && fluc_tmp.temp && add < 0) add /= fluc_tmp.temp
 			str_tmp.alt[y] = (str_tmp.alt[y] || 0) + add
 		}
@@ -350,7 +351,7 @@ let str = {
 		var r = str.data.effs[t + x].req
 		r -= str.upgEff(3).pow || 0
 		if (ff.perkActive(3)) r -= ff.perkEff(3)
-		if (ff.perkActive(5)) r /= ff.perkEff(5) + 1
+		if (ff.perkActive(5) && t == "c") r /= ff.perkEff(5)
 		return r
 	},
 

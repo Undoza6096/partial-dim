@@ -9,38 +9,38 @@ let ff = {
 		alt: {
 			req: 1,
 			title: "Altitude",
-			eff: (s) => 0,
-			desc: (x) => "Increases the altitudes."
+			eff: (s) => Math.pow(s, 0.75) * 0.1,
+			desc: (x) => "Increases the altitudes by " + shorten(x) + "."
 		},
 		pow: {
 			req: 2,
 			title: "Power",
-			eff: (s) => 0,
-			desc: (x) => "Multiplies the power gain."
+			eff: (s) => Math.log2(s / 2 + 1) / 3 + 1,
+			desc: (x) => "Multiplies the power gain by " + shorten(x) + "x."
 		},
 		free: {
 			req: 3,
 			title: "Freebie",
-			eff: (s) => 0,
-			desc: (x) => "Decreases the power requirement."
+			eff: (s) => s,
+			desc: (x) => "Decreases the power requirement by -" + formatReductionPercentage(x) + "."
 		},
 		syn: {
 			req: 6,
 			title: "Synthesis",
-			eff: (s) => 0,
-			desc: (x) => "Strengthens Strings by altitudes."
+			eff: (s) => Math.sqrt(s / 2 + 1),
+			desc: (x) => "Strengthens Strings by altitudes. (Power: " + shorten(x) + ")"
 		},
 		upg: {
 			req: 7,
 			title: "Upgrade",
-			eff: (s) => 0,
-			desc: (x) => "Unlocks a new power."
+			eff: (s) => Math.log10(s * 9 + 1),
+			desc: (x) => "Unlocks a new power, and reduce it by " + formatReductionPercentage(x) + "%."
 		},
 		share: {
 			req: 10,
 			title: "Sharing",
-			eff: (s) => 0,
-			desc: (x) => "Shares altitudes to the right."
+			eff: (s) => Math.log2(s / 2 + 1) / 3 + 1,
+			desc: (x) => "Shares altitudes to the right by " + formatPercentage(x) + "."
 		}
 	},
 
