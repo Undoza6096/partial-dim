@@ -371,7 +371,20 @@ let ff = {
 	},
 	
 	exportPreset() {
-		alert("Coming soon...")
+		let str = ""
+		let letters = " abcdefghijklmnopqrstuvwxyz"
+		for (var i = 0; i < ff_save.data.length; i++) {
+			let d = ff_save.data[i]
+			str += letters[d[0]] + letters[d[1] || 0]
+			for (var i = 0; i < d[2].length; i++) {
+				let s = d[2][i]
+				if (s < 0) str += letters[-s]
+				else str += letters[s]
+			}
+			str += "|"
+		}
+
+		copyToClipboard(str)
 	},
 	importPreset() {
 		alert("Coming soon...")
