@@ -88,7 +88,7 @@ function quarkGain(base) {
 		if (hasAch("ng3pr16")) r = r.times(5)
 		if (fluc.unl()) {
 			r = Decimal.pow(r.log10(), 10).add(1)
-			r = r.times(Math.max(2 / (r.add(1).log10() / 10 + 1), 1))
+			r = r.times(Math.max(3 / (r.add(1).log10() / 10 + 1), 1))
 		}
 	}
 	return r

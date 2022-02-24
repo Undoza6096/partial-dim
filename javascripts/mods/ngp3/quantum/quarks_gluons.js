@@ -802,7 +802,7 @@ var enB = {
 			title: "Energy Lever",
 			type: "g",
 			eff(x) {
-				if (pos.on()) {
+				if (pos.on() && !hasAch("ng3pr12")) {
 					return Math.min(Math.pow(x / 20 + 1, 0.2), 1 / (1 - pos_tmp.mults.mdb))
 				} else {
 					return Decimal.div(x, 2).sqrt()
@@ -810,11 +810,11 @@ var enB = {
 			},
 			disp(x) {
 				return pos.on() ? "Positrons on: Meta-Dimension Boosts are <span style='font-size: 18px'>" + formatPercentage(x - 1) + "%</span> stronger."
-				: "Positrons off: You gain <span style='font-size: 18px'>+" + shorten(x) + "</span> extra Positronic Charge."
+				: (hasAch("ng3pr12") ? "" : "Positrons off: ") + "You gain <span style='font-size: 18px'>+" + shorten(x) + "</span> extra Positronic Charge."
 			},
 			dispFull(x) {
 				return pos.on() ? "Positrons on: Meta-Dimension Boosts are " + formatPercentage(x - 1) + "% stronger."
-				: "Positrons off: You gain +" + shorten(x) + " extra Positronic Charge."
+				: (hasAch("ng3pr12") ? "" : "Positrons off: ") + "You gain +" + shorten(x) + " extra Positronic Charge."
 			}
 		},
 		7: {
