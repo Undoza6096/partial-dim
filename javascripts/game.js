@@ -1869,12 +1869,6 @@ function toggle_mod(id) {
 		el("ngppBtn").textContent = "NG++: NG+++"
 	}
 
-	var ngp3ex = mods.diff >= 2 && mods.ngpp == 2
-	if (mods.ngp3ex != ngp3ex) {
-		if (notifyExpert && ngp3ex) $.notify("A space crystal begins to collide with reality...")
-		mods.ngp3ex = ngp3ex
-	}
-
 	/* 
 	this function is a MESS someone needs to clean it up
 	Also, id=NGC should force NG+++ and not NG+, 

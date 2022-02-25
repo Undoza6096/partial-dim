@@ -337,27 +337,6 @@ let ff = {
 			ff.updateTmp()
 			restartQuantum()
 		}
-
-		/*if (mode == "arc" && ff_save.mode == 0) {
-			var a = ff_save.arcs[x]
-			var c = ff_tmp.choose
-			if (c) {
-				if (c != x) {
-					if (!ff.canArc(c, x)) return
-					a = ff_save.arcs[c]
-					if (x < a[0]) a[0] = x
-					else a[1] = x
-					ff.updateTmp()
-				} else ff_tmp.choose = 0
-			} else if (a) {
-				ff_tmp.choose = x
-				ff.updateTmp()
-			} else if (ff.unspent() >= ff.arcCost(x, true)) {
-				ff_save.arcs[x] = [x, x]
-				ff.updateTmp()
-			}
-			ff.updateDisplays()
-		}*/
 	},
 	switchMode(update) {
 		if (!tmp.ngp3) return
