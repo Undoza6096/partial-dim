@@ -564,9 +564,8 @@ var enB = {
 	getMastered(type, x) {
 		var data = this[type]
 		var r = data[x].masReq
-		if (type == "glu") {
-			if (QCs.perkActive(8) && !this.colorMatch("glu", x)) r = 0
-		}
+		if (type == "glu" && QCs.perkActive(8) && !this.colorMatch("glu", x)) r = 0
+		if (type == "pos" && hasAch("ng3pr15")) r = 0
 		return r
 	},
 

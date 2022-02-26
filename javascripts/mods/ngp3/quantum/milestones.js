@@ -140,7 +140,7 @@ let qMs = {
 		el('rebuyupgmax').style.display = qMs.tmp.amt < 20 ? "" : "none"
 		el('repExpandAuto').style.display = PCs.milestoneDone(13) ? "" : "none"
 
-        var autoAssignUnl = qMs.tmp.amt >= 23
+        var autoAssignUnl = qMs.tmp.amt >= 23 || qMs.has(28)
 		el('respec_quarks').style.display = autoAssignUnl ? "" : "none"
         el('autoAssign').style.display = autoAssignUnl ? "" : "none"
         el('autoAssignRotate').style.display = autoAssignUnl ? "" : "none"
@@ -167,6 +167,7 @@ let qMs = {
 		}
 
 		el("qMs_points").textContent = getFullExpansion(qMs.tmp.points)
+		el("qMs_best").textContent = fluc.unl() ? "(" + getFullExpansion(qu_save.bestMP) + " best)" : ""
 	},
 	has(id) {
 		var d = qMs[id]
@@ -188,7 +189,7 @@ let qMs = {
 		el("qMs_reward_" + id).className = "qMs_toggle_" + (!on ? "on" : "off")
 	},
 
-	max: 30,
+	max: 31,
 	1: {
 		req: 1,
 		eff: () => "Completing an EC only exits your challenge, and unlock automation for TT and study presets.",
@@ -329,24 +330,30 @@ let qMs = {
 		effGot: () => "You now can disable swaps in any Quantum Challenge."
 	},
 	27: {
+		req: 125,
+		best: true,
+		eff: () => "Keep your QoL features for anti-Quarks.",
+		effGot: () => "You now keep your QoL features for anti-Quarks."
+	},
+	28: {
 		req: 130,
 		best: true,
 		eff: () => "Keep Quantum Challenges + Entangled Boosts, and unlock auto-Paired Challenges.",
 		effGot: () => "You now keep Quantum Challenges and Entangled Boosts, and you have unlocked Paired Challenge autobuyer."
 	},
-	28: {
+	29: {
 		req: 140,
 		best: true,
 		eff: () => "Keep Paired Challenges and Positrons.",
 		effGot: () => "You now keep Paired Challenges and Positrons."
 	},
-	29: {
+	30: {
 		req: 150,
 		best: true,
 		eff: () => "Keep your Vibration Energy.",
 		effGot: () => "You now keep your Vibration Energy."
 	},
-	30: {
+	31: {
 		req: 200,
 		best: true,
 		eff: () => "Auto-assign PC combinations based on first row.",
