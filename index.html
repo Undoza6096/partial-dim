@@ -1569,7 +1569,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(2/25/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(2/26/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -3420,6 +3420,7 @@
 					<button id="pc_auto" class="storebtn" onclick="PCs.toggleAuto()" style="width: 96px; height: 48px" ach-tooltip="Automates through uncompleted combinations for every 3rd Quantum run.">Auto: OFF [Soon]</button>
 					<button id="pc_auto_assign" class="storebtn" onclick="PCs.toggleAutoAssign()" style="width: 96px; height: 48px" ach-tooltip="Assigns combinations based on the first row.">Auto-Assign: OFF [Soon]</button>
 					<button class="storebtn" id="disable_qc2_perk" style="width: 96px; height: 48px" onclick="QCs.disablePerk(2)"></button>
+					<div id="pc_auto_preset_div"><br>Auto-Preset: <input id="pc_auto_preset" type="string"></div>
 				</span>
 				<span id="pc_omega">
 					<br>
@@ -4774,17 +4775,12 @@
 				<tr>
 					<td><button class="qMs_locked" id="qMs_reward_25" onclick="qMs.toggle(25)"></button></td>
 					<td><button class="qMs_locked" id="qMs_reward_26" onclick="qMs.toggle(26)"></button></td>
-					<td><button class="qMs_locked" id="qMs_reward_27" onclick="qMs.toggle(27)"></button></td>
+					<td><button class="qMs_locked" id="qMs_reward_27" onclick="qMs.toggle(27)" style="font-size: 11px"></button></td>
 				</tr>
 				<tr>
-					<td><button class="qMs_locked" id="qMs_reward_28" onclick="qMs.toggle(28)" style="font-size: 11px"></button></td>
-					<td><button class="qMs_locked" id="qMs_reward_29" onclick="qMs.toggle(29)"></button></td>
+					<td><button class="qMs_locked" id="qMs_reward_28" onclick="qMs.toggle(28)"></button></td>
+					<td><button class="qMs_locked" id="qMs_reward_29" onclick="qMs.toggle(29)" style="font-size: 11px"></button></td>
 					<td><button class="qMs_locked" id="qMs_reward_30" onclick="qMs.toggle(30)"></button></td>
-				</tr>
-				<tr>
-					<td><button class="qMs_locked" id="qMs_reward_31" onclick="qMs.toggle(31)"></button></td>
-					<td></td>
-					<td></td>
 				</tr>
 			</table>
 		</div>

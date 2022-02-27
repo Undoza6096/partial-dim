@@ -189,7 +189,7 @@ let qMs = {
 		el("qMs_reward_" + id).className = "qMs_toggle_" + (!on ? "on" : "off")
 	},
 
-	max: 31,
+	max: 30,
 	1: {
 		req: 1,
 		eff: () => "Completing an EC only exits your challenge, and unlock automation for TT and study presets.",
@@ -332,31 +332,25 @@ let qMs = {
 	27: {
 		req: 125,
 		best: true,
-		eff: () => "Keep your QoL features for anti-Quarks.",
-		effGot: () => "You now keep your QoL features for anti-Quarks."
+		eff: () => "Keep your QoL features for anti-Quarks, and unlock auto-Paired Challenges.",
+		effGot: () => "You now keep your QoL features for anti-Quarks, and you have unlocked Paired Challenge autobuyer."
 	},
 	28: {
 		req: 130,
 		best: true,
-		eff: () => "Keep Quantum Challenges + Entangled Boosts, and unlock auto-Paired Challenges.",
-		effGot: () => "You now keep Quantum Challenges and Entangled Boosts, and you have unlocked Paired Challenge autobuyer."
+		eff: () => "Keep Quantum Challenges + Entangled Boosts",
+		effGot: () => "You now keep Quantum Challenges and Entangled Boosts."
 	},
 	29: {
 		req: 140,
 		best: true,
-		eff: () => "Keep Paired Challenges and Positrons.",
-		effGot: () => "You now keep Paired Challenges and Positrons."
+		eff: () => "Keep Paired Challenges and Positrons, and unlock auto-assign for Paired Challenges.",
+		effGot: () => "You now keep Paired Challenges and Positrons, and you can now automatically assign challenges."
 	},
 	30: {
 		req: 150,
 		best: true,
 		eff: () => "Keep your Vibration Energy.",
 		effGot: () => "You now keep your Vibration Energy."
-	},
-	31: {
-		req: 200,
-		best: true,
-		eff: () => "Auto-assign PC combinations based on first row.",
-		effGot: () => "You now auto-assign PC combinations based on first row."
 	},
 }
