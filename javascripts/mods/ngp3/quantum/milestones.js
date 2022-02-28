@@ -350,7 +350,7 @@ let qMs = {
 	30: {
 		req: 150,
 		best: true,
-		eff: () => "Keep your Vibration Energy.",
-		effGot: () => "You now keep your Vibration Energy."
+		eff: () => "Keep your Vibration Energy and Strings.",
+		effGot: () => "You now keep your Vibration Energy and Strings."
 	},
 }
