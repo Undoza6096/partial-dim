@@ -339,7 +339,7 @@ button:hover {
 
 /* Fluctuate */
 .fluctuatebtn {
-	box-shadow: 60px 0 120px #ffbf00, -60px 0 120px #ff00bf
+	box-shadow: 60px 0 120px #ffbf00, -60px 0 120px #ff00bf !important
 }
 
 /* Fixes */
