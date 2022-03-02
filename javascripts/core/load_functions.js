@@ -1881,7 +1881,6 @@ function onLoad(noOffline) {
 	aarMod = player.aarexModifications
 	if (qu_save == undefined || aarMod.newGamePlusPlusVersion == undefined) {
 		tmp.quUnl = false
-		tmp.quUnl = false
 		qMs.tmp.amt = 0
 	}
 	ghostifyDenied = 0
