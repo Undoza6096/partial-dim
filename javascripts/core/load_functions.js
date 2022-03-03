@@ -2746,7 +2746,7 @@ function set_save(id, value) {
 function get_save(id) {
         try {
                 var dimensionSave = localStorage.getItem(btoa(savePrefix+id))
-                if (dimensionSave !== null) dimensionSave = JSON.parse(atob(dimensionSave, function(k, v) { return (v === Infinity) ? "Infinity" : v; }))
+                if (dimensionSave !== null) dimensionSave = JSON.parse(atob(dimensionSave))
                 return dimensionSave
         } catch(e) { }
 }
