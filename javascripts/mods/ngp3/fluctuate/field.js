@@ -28,7 +28,7 @@ let ff = {
 			req: 6,
 			title: "Synthesis",
 			eff: (s) => Math.sqrt(s / 2 + 1),
-			desc: (x) => "Strengthens Strings by altitudes. (Power: " + shorten(x) + ")"
+			desc: (x) => "Strengthens Strings by altitudes."
 		},
 		upg: {
 			req: 7,
@@ -158,7 +158,7 @@ let ff = {
 			if (pos !== undefined) {
 				var pk = pos != undefined && ff_save.data[pos][1]
 				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc(ff_tmp.eff[pk]) : ""
-				el("ff_pk_"+i+"_pow").innerHTML = ff_tmp.used.includes(i) ? " (" + shorten(ff_tmp.pow[pk]) + ")" : ""
+				el("ff_pk_"+i+"_pow").innerHTML = pk && shiftDown ? " (" + shorten(ff_tmp.pow[pk]) + ")" : ""
 			}
 		}
 	},
@@ -201,7 +201,7 @@ let ff = {
 
 		for (var i = 1; i <= 18; i++) {
 			el("ff_arc_"+i+"_td").innerHTML = '<button class="ff_btn" id="ff_arc_'+i+'" onclick="ff.choose('+i+', \'arc\')"><b id="ff_arc_'+i+'_name"></b><br><span id="ff_arc_'+i+'_eng"></span></button>'
-			el("ff_pk_"+i+"_td").innerHTML = '<button class="fluctuatebtn" id="ff_pk_'+i+'" onclick="ff.choose('+i+', \'perk\')"><b id="ff_pk_'+i+'_name"></b><br><span id="ff_pk_'+i+'_desc"></span><span id="ff_pk_'+i+'_pow"></span></button>'
+			el("ff_pk_"+i+"_td").innerHTML = '<button class="fluctuatebtn" id="ff_pk_'+i+'" onclick="ff.choose('+i+', \'perk\')"><b id="ff_pk_'+i+'_name"></b><span id="ff_pk_'+i+'_pow"></span><br><span id="ff_pk_'+i+'_desc"></span></button>'
 		}
 	},
 
