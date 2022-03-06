@@ -10,7 +10,7 @@ let qMs = {
 			targKind: "quantum",
 			daysStart: () => tmp.dtMode ? 0.25 : tmp.exMode ? 0.375 : tmp.bgMode ? 0.75 : 0.5,
 			gain: (x) => Math.log10(86400 * qMs.data.sr.daysStart() / x) / Math.log10(2) * 2 + 1,
-			nextAt: (x) => Math.pow(2, (1 - x) / 2) * 86400 * qMs.data.sr.daysStart()
+			nextAt: (x) => m_pow2((1 - x) / 2) * 86400 * qMs.data.sr.daysStart()
 		},
 		en: {
 			name: "Energetic",
@@ -23,7 +23,7 @@ let qMs = {
 				return x
 			},
 			nextAt(x) {
-				if (x > 20) x = Math.pow(10, x / 20) * 2
+				if (x > 20) x = m_pow10(x / 20) * 2
 				x = Math.pow(x / 3, 2) + 0.5
 				return x
 			}
@@ -40,7 +40,7 @@ let qMs = {
 				return x
 			},
 			nextAt(x) {
-				if (x > 20) x = Math.pow(10, x / 20) * 2
+				if (x > 20) x = m_pow10(x / 20) * 2
 				x = pow10((x - 1) * 3 + 90)
 				return x
 			}

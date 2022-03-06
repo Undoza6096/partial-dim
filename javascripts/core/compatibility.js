@@ -9,7 +9,7 @@ function c_parse(a) {
 }
 
 function c_conv(a) {
-	if (a.lt(Number.MAX_VALUE)) return Math.floor(a.toNumber())
+	if (a.lt(INF)) return Math.floor(a.toNumber())
 	return a
 }
 
@@ -115,7 +115,7 @@ function f_mul(list) { //Multiplication
 	var r = n
 	if (d.gt(1)) {
 		r = d.times(n)
-		if (r.lt(Number.MAX_VALUE)) r = r.toNumber()
+		if (r.lt(INF)) r = r.toNumber()
 	}
 	return r
 }

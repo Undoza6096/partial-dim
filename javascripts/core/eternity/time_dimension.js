@@ -301,7 +301,7 @@ function timeDimCost(tier, bought) {
 	let cost = Decimal.pow(mult, bought).times(base)
 	if (inNGM(2)) return cost
 
-	if (cost.gte(Number.MAX_VALUE)) cost = Decimal.pow(mult * 1.5, bought).times(base)
+	if (cost.gte(INF)) cost = Decimal.pow(mult * 1.5, bought).times(base)
 	if (cost.gte("1e1300")) cost = Decimal.pow(mult * 2.2, bought).times(base)
 	if (tier >= 5) cost = Decimal.pow(mult * 100, bought).times(base)
 

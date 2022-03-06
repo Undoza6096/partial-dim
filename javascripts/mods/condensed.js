@@ -257,7 +257,7 @@ let CONDENSED = {
 		rep: {
 			cost() {
 				let c = ngC.save.repl
-				let cost = pow10(2 + Math.pow(2, c))
+				let cost = pow10(2 + m_pow2(c))
 				return cost
 			},
 			update() {
@@ -266,7 +266,7 @@ let CONDENSED = {
 				el("replCond2").textContent = shorten(ngC.tmp.rep.eff2)
 
 				let cost = this.cost()
-				el("replCondenseReq").textContent = shortenCosts(cost)
+				el("replCondenseReq").textContent = shortenInt(cost)
 				el("replCondense").className = player.replicanti.amount.gte(cost) ? "storebtn" : "unavailablebtn"
 			},
 			buy() {
@@ -376,13 +376,13 @@ let CONDENSED = {
 			else el("postinfi82").className = "infinistorebtnlocked"
 
 
-			el("postinfi70").innerHTML = "Normal Condensers are stronger based on your Dimension Boosts<br>Currently: "+shorten(this[70]())+"x<br>Cost: "+shortenCosts(1e6)+" IP"
-			el("postinfi71").innerHTML = "Normal Condensers cost scale 40% slower<br>Cost: "+shortenCosts(5e7)+" IP"
-			el("postinfi72").innerHTML = "Normal Condensers are stronger based on your Infinity Condensers<br>Currently: "+shorten(this[72]())+"x<br>Cost: "+shortenCosts(1e17)+" IP"
+			el("postinfi70").innerHTML = "Normal Condensers are stronger based on your Dimension Boosts<br>Currently: "+shorten(this[70]())+"x<br>Cost: "+shortenInt(1e6)+" IP"
+			el("postinfi71").innerHTML = "Normal Condensers cost scale 40% slower<br>Cost: "+shortenInt(5e7)+" IP"
+			el("postinfi72").innerHTML = "Normal Condensers are stronger based on your Infinity Condensers<br>Currently: "+shorten(this[72]())+"x<br>Cost: "+shortenInt(1e17)+" IP"
 
-			el("postinfi80").innerHTML = "Infinity Power boosts Infinity Point gain<br>Currently: "+shorten(this[80]())+"x<br>Cost: "+shortenCosts(1e24)+" IP"
-			el("postinfi81").innerHTML = "Infinity Condensers are cheaper based on your Infinity Points<br>Currently: /"+shorten(this[81]())+"<br>Cost: "+shortenCosts(1e33)+" IP"
-			el("postinfi82").innerHTML = "Dimensional Sacrifice also divides tickspeed, and both other upgrades in this row use better formulas<br>Cost: "+shortenCosts(1e36)+" IP"
+			el("postinfi80").innerHTML = "Infinity Power boosts Infinity Point gain<br>Currently: "+shorten(this[80]())+"x<br>Cost: "+shortenInt(1e24)+" IP"
+			el("postinfi81").innerHTML = "Infinity Condensers are cheaper based on your Infinity Points<br>Currently: /"+shorten(this[81]())+"<br>Cost: "+shortenInt(1e33)+" IP"
+			el("postinfi82").innerHTML = "Dimensional Sacrifice also divides tickspeed, and both other upgrades in this row use better formulas<br>Cost: "+shortenInt(1e36)+" IP"
 		},
 		70() {
 			let r = Math.sqrt(getTotalDBs())

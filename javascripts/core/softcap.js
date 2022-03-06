@@ -91,7 +91,7 @@ var softcap_data = {
 		name: "effective meta-antimatter",
 		1: {
 			func: "pow",
-			start: () => E(Number.MAX_VALUE).pow((enB.active("pos", 2) && enB_tmp.eff.pos2.igal_softcap) || 1),
+			start: () => E(INF).pow((enB.active("pos", 2) && enB_tmp.eff.pos2.igal_softcap) || 1),
 			pow(x) {
 				let l2 = Decimal.log(x, 2)
 				return 1 / (Math.log2(l2 / softcap_data.ma[1].start().log(2)) / 4 + 2)
@@ -147,7 +147,7 @@ var softcap_data = {
 		2: {
 			func: "pow",
 			start() {
-				let x = Number.MAX_VALUE
+				let x = INF
 				if (hasTimeStudy(63)) x = tsMults[63]().times(x)
 				return x
 			},
@@ -173,7 +173,7 @@ var softcap_data = {
 		name: "Tickspeed (NG Condensed)",
 		1: {
 			func: "pow",
-			start: Number.MAX_VALUE,
+			start: INF,
 			pow() {
 				return player.challenges.includes("postcngc_2") ? 2/5 : 1/3
 			},
@@ -206,7 +206,7 @@ var softcap_data = {
 		},
 		2: {
 			func: "pow",
-			start: Number.MAX_VALUE,
+			start: INF,
 			pow() {
 				return hasTimeStudy(196) ? Math.pow(1/4, .2) : 1/4
 			},
@@ -304,7 +304,7 @@ var softcap_data = {
 		},
 		3: {
 			func: "pow",
-			start: E(Number.MAX_VALUE),
+			start: E(INF),
 			pow: 1/4,
 			derv: false,
 		},
@@ -355,7 +355,7 @@ var softcap_data = {
 		},
 		2: {
 			func: "pow",
-			start: E(Number.MAX_VALUE),
+			start: E(INF),
 			pow: 1/4,
 			derv: false,
 		},
@@ -602,7 +602,7 @@ function numSoftcapsTotal(id){
 
 function softcapShorten(x){
 	if (typeof x == "number" && x < 1000 && x % 1 == 0) return x
-	if (x < 1) return formatValue(player.options.notation, x, 3, 3)
+	if (x < 1) return formatQuick(x, 3, 3)
 	if (x == 1) return 1
 	else return shorten(x)
 }

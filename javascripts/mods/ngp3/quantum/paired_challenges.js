@@ -17,7 +17,7 @@ var PCs = {
 		52: "Replicated Compressors raise Replicanti Energy by an exponent.",
 		62: "Eternitying timewraps Meta Dimensions and Replicantis by 3 seconds.",
 		72: "Mastery Studies are 5x cheaper.",
-		82: "Remote Galaxies scaling is slower based on its starting point.",
+		82: "Remote Galaxies scale is slower based on its starting point.",
 
 		13: "Unlock Replicated Expanders.",
 		23: "Color Charge multiplies its respective efficency by 10%.",
@@ -282,18 +282,15 @@ var PCs = {
 		var relDiv = div
 		if (fluc.unl() && fluc_tmp.temp) relDiv += fluc_tmp.temp.pc
 
-		var base = Number.MAX_VALUE
-		var r = qc1.pow(qc2.log(base) / relDiv)
-
-		var scaling = 1
-		if (str.unl() && str_tmp.effs) scaling /= str_tmp.effs.b2
-
-		var mul = PCs_save.comps.length * Math.max(PCs_save.comps.length / 4, 3) * scaling + //Completion Scaling
+		var scale = 1
+		if (str.unl() && str_tmp.effs) scale /= str_tmp.effs.b2
+		var mul = PCs_save.comps.length * Math.max(PCs_save.comps.length / 4, 3) * scale + //Completion Scaling
 			(Math.floor(pos / 10) - 1) + //Row Scaling
 			PCs_tmp.row_comps[Math.floor(pos / 10)] - //Row Completion Scaling
 			(PCs_tmp.row_comps[5] + PCs_tmp.row_comps[6] + PCs_tmp.row_comps[7]) * 5 //Omega Sets
 		if (pos >= 50) mul += Math.floor(pos / 10) - 4
 
+		var r = qc1.pow(qc2.log(INF) / relDiv)
 		var pow = Math.pow(1 + div / 150, mul)
 		if (str.unl() && str_tmp.effs) pow /= str_tmp.effs.a2
 		return r.pow(pow)

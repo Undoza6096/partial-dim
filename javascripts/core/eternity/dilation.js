@@ -46,7 +46,7 @@ function hasDilationStudy(x) {
 }
 
 function getDilTimeGainPerSecond() {
-	let gain = player.dilation.tachyonParticles.times(Decimal.pow(2, getDilUpgPower(1)))
+	let gain = player.dilation.tachyonParticles.times(pow2(getDilUpgPower(1)))
 
 	//Boosts
 	if (NGP3andVanillaCheck() && player.achievements.includes("r132")) gain = gain.times(Math.max(Math.pow(player.galaxies, 0.04), 1))
@@ -550,7 +550,7 @@ function updateDilationUpgradeButtons() {
 		if (unl) el("dil" + pos).className = hasDilationUpg(id) || (id == "r2" && !canBuyGalaxyThresholdUpg()) ? "dilationupgbought" : player.dilation.dilatedTime.gte(getDilUpgCost(id)) ? "dilationupg" : "dilationupglocked"
 	}
 
-	el("dil11desc").textContent = "Currently: " + shorten(Decimal.pow(2, getDilUpgPower(1))) + "x"
+	el("dil11desc").textContent = "Currently: " + shorten(pow2(getDilUpgPower(1))) + "x"
 	el("dil12eff").textContent = "Scaling: +" + formatPercentage(getFreeGalaxyThresholdIncrease() - 1, 1, true) + "%"
 
 	var power = getDil3Power()
@@ -590,12 +590,12 @@ function updateDilationUpgradeCost(pos, id) {
 	else {
 		let r = getDilUpgCost(id)
 		if ((id == "r3" || id == "r4") && tmp.ngp3) r = shorten(r)
-		else if (id == "r3") r = formatValue(player.options.notation, getRebuyableDilUpgCost(3), 1, 1)
-		else r = shortenCosts(r)
+		else if (id == "r3") r = formatQuick(getRebuyableDilUpgCost(3), 1, 1)
+		else r = shortenInt(r)
 		el("dil" + pos + "cost").textContent = "Cost: " + r + " dilated time"
 	}
 
-	if (id == "ngud1") el("dil42oom").textContent = shortenCosts(E("1e1000"))
+	if (id == "ngud1") el("dil42oom").textContent = shortenInt(E("1e1000"))
 }
 
 function onDilationRebuyable() {
@@ -729,7 +729,7 @@ function getDilationTotalTTReq() {
 }
 
 function getDil26Mult() {
-	let mult = Math.pow(10, Math.pow(Math.log10(player.dilation.tachyonParticles.plus(1).log10()/5+1)+1, 1/4)-1)
+	let mult = m_pow10(Math.pow(Math.log10(player.dilation.tachyonParticles.plus(1).log10()/5+1)+1, 1/4)-1)
 	return mult;
 }
 
@@ -750,7 +750,7 @@ function getDil83Mult() {
 
 function getDil85Mult() {
 	let tp = player.dilation.tachyonParticles
-	if (tp.gte(Number.MAX_VALUE)) tp = tp.sqrt().times(Decimal.sqrt(Number.MAX_VALUE))
+	if (tp.gte(INF)) tp = tp.sqrt().times(Decimal.sqrt(INF))
 	let mult = Math.pow(tp.plus(1).log10()+1, 0.165)
 	return mult;
 }

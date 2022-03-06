@@ -99,16 +99,16 @@ let puSizes = {x: 4, y: 6}
 let puMults = {
 	11(l) {
 		//l - upgrade level
-		return Math.pow(2, l)
+		return m_pow2(l)
 	},
 	12(l) {
-		return Math.pow(2, l)
+		return m_pow2(l)
 	},
 	13(l) {
 		return 1 + l / 20
 	},
 	14(l) {
-		return Math.min(Math.pow(2, l), 1e3)
+		return Math.min(m_pow2(l), 1e3)
 	},
 
 	21() {
@@ -213,14 +213,14 @@ let puCosts = {
 		return Math.pow(4, l + 1)
 	},
 	12: function(l) {
-		return Math.pow(2, Math.pow(2, l)) //between the diminishing returns and terrible scaling, this one outta be good. 
+		return m_pow2(m_pow2(l)) //between the diminishing returns and terrible scaling, this one outta be good. 
 	},
 	13: function(l) {
 		if (l >= 10) l *= l - 9 //very harsh softcap as a compromise between Apeirogon and Aarex.
 		return Math.pow(4, l + 4)
 	},
 	14: function(l) {
-		return Decimal.pow(4,Math.pow(2, l) - 1) //tbh I don't think that this upgrade needs a softcap, since the scaling is already pretty terrible. 
+		return Decimal.pow(4,m_pow2(l) - 1) //tbh I don't think that this upgrade needs a softcap, since the scaling is already pretty terrible. 
 	},
 
 	21: 1, //TODO
@@ -228,15 +228,15 @@ let puCosts = {
 	23: 512,
 	24: 4096,
 
-	31: Math.pow(2, 18),
+	31: m_pow2(18),
 	32: 1e6,
 	33: 1e7,
-	34: Math.pow(2, 28), //We really need to rebalance this
+	34: m_pow2(28), //We really need to rebalance this
 
 	41: 1e5, 
-	42: Math.pow(2, 20),
+	42: m_pow2(20),
 	43: 3e6,
-	44: Math.pow(2, 24),
+	44: m_pow2(24),
 }
 let puScalings = {
 	11(l) {
@@ -365,7 +365,7 @@ function maxPDs() {
 			ps.dims[d].bought += tb
 			ps.dims[d].amount = ps.dims[d].amount.add(tb)
 			ps.dims[d].cost = ps.dims[d].cost.times(Decimal.pow(m, tb))
-			ps.dims[d].power = ps.dims[d].power.times(Decimal.pow(2, tb))
+			ps.dims[d].power = ps.dims[d].power.times(pow2(tb))
 			upd = true
 
 			if (d === 3) giveAchievement("Impossible Equations")

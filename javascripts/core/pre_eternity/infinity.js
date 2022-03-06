@@ -44,14 +44,14 @@ function gainedInfinityPoints(next) {
 	let uIPM = player.dilation.upgrades.includes("ngp3c5") && tmp.ngC
 
 	if (player.infinityUpgradesRespecced == undefined) var ret = pow10(player.money.e / div - 0.75).times(uIPM ? 1 : getIPMult())
-	else var ret = player.money.div(Number.MAX_VALUE).pow(2 * (1 - Math.log10(2)) / Decimal.log10(Number.MAX_VALUE)).times(uIPM ? 1 : getIPMult())
+	else var ret = player.money.div(INF).pow(2 * (1 - Math.log10(2)) / Decimal.log10(INF)).times(uIPM ? 1 : getIPMult())
 	if (hasTS(41)) ret = ret.times(Decimal.pow(tsMults[41](), player.galaxies + player.replicanti.galaxies))
 	if (hasTS(51)) ret = ret.times(tsMults[51]())
 	if (hasTS(141)) ret = ret.times(tsMults[141]())
 	if (hasTS(142)) ret = ret.times(1e25)
 	if (hasTS(143)) ret = ret.times(Decimal.pow(15, Math.log(player.thisInfinityTime+1)*Math.pow(player.thisInfinityTime+1, 0.125)))
 	if (hasAch("r116")) ret = ret.times(Decimal.add(getInfinitied(), 1).pow(Math.log10(2)))
-	if (hasAch("r125")) ret = ret.times(Decimal.pow(2, Math.log(player.thisInfinityTime+1)*Math.pow(player.thisInfinityTime+1, 0.11)))
+	if (hasAch("r125")) ret = ret.times(pow2(Math.log(player.thisInfinityTime+1)*Math.pow(player.thisInfinityTime+1, 0.11)))
 	if (player.dilation.upgrades.includes(7)) ret = ret.times(player.dilation.dilatedTime.max(1).pow(1000))
 	if (player.boughtDims) {
 		ret = ret.times(Decimal.pow(Math.max(1e4/player.thisInfinityTime),player.timestudy.ers_studies[5]+(next==5?1:0)))
@@ -257,7 +257,7 @@ function bigCrunch(autoed) {
 	if (split[1] != undefined) challNumber = parseInt(split[1])
 	var icID = checkICID(player.currentChallenge)
 	if (icID) challNumber = icID
-	var crunchStuff = (player.money.gte(Number.MAX_VALUE) && !player.currentChallenge.includes("post")) || (player.currentChallenge !== "" && player.money.gte(player.challengeTarget))
+	var crunchStuff = (player.money.gte(INF) && !player.currentChallenge.includes("post")) || (player.currentChallenge !== "" && player.money.gte(player.challengeTarget))
 	//crunch stuff is whether we are completing a non NG-(4+) NC/IC
 	if (!crunchStuff) {
 		updateChallenges()

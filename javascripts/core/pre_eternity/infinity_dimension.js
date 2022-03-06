@@ -108,7 +108,7 @@ function getInfDimPathIDMult(tier){
 	let mult = E(1)
 	if (hasTimeStudy(72) && tier == 4) mult = mult.times(tmp.sacPow.pow(0.04).max(1).min("1e30000"))
 	if (hasTimeStudy(82)) mult = mult.times(Decimal.pow(1.0000109, Math.pow(getTotalDBs(), 2)).min(player.meta == undefined ? 1 / 0 : '1e80000'))
-	if (hasTimeStudy(92)) mult = mult.times(Decimal.pow(2, 600 / Math.max(player.bestEternity, 20)))
+	if (hasTimeStudy(92)) mult = mult.times(pow2(600 / Math.max(player.bestEternity, 20)))
 	if (hasTimeStudy(162)) mult = mult.times(pow10((inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1)))
 	return mult
 }
@@ -135,7 +135,7 @@ function infDimensionPower(tier) {
 	let mult = getStartingIDPower(tier)
   	mult = mult.times(infDimPow)
 
-  	if (inNGM(5)) mult = mult.times(Math.pow(10,8)) //Todo: figure out what to do with this value
+  	if (inNGM(5)) mult = mult.times(m_pow10(8)) //Todo: figure out what to do with this value
 	if (hasPU(32)) mult = mult.times(puMults[32]()) 
 
   	if (inNGM(5) && tier == 2) mult = mult.pow(puMults[13](hasPU(13, true)))
@@ -292,7 +292,7 @@ function getInfinityPowerEffect() {
 	log *= tmp.infPowExp 
 	if (inNGM(5)) {
 		if (log > 10) log = Math.pow(log * 200 - 1e3, 1/3)
-		if (!onPostBreak() && log > Math.log10(Number.MAX_VALUE)) return E(Number.MAX_VALUE)
+		if (!onPostBreak() && log > Math.log10(INF)) return E(INF)
 	}
 	return pow10(log)
 }

@@ -4,7 +4,7 @@ function startChallenge(name) {
 	if (name.includes("post")) {
 		if (player.postChallUnlocked < checkICID(name)) return
 		var target = getGoal(name)
-	} else var target = E(Number.MAX_VALUE)
+	} else var target = E(INF)
 	if (player.options.challConf && name != "") if (!confirm("You will start over with just your Infinity upgrades, and achievements. You need to reach " + (name.includes("post") ? "a set goal" : "infinity") + " with special conditions. The 4th Infinity upgrade column doesn't work on challenges.")) return
 	if (player.tickspeedBoosts != undefined) player.tickspeedBoosts = 0
 	if (name == "postc1" && player.currentEternityChall != "" && QCs.in(4) && QCs.in(6)) giveAchievement("The Ultimate Challenge")
@@ -65,10 +65,10 @@ function startChallenge(name) {
 function startNormalChallenge(x) {
 	if (x == 7) {
 		if (player.infinitied < 1 && player.eternities < 1 && !quantumed) return
-		startChallenge("challenge7", Number.MAX_VALUE)
+		startChallenge("challenge7", INF)
 	}
 	if (tmp.ngmX > 3) galacticSacrifice(false, true, x)
-	else startChallenge("challenge" + x, Number.MAX_VALUE)
+	else startChallenge("challenge" + x, INF)
 }
 
 function inNC(x, n) {

@@ -51,7 +51,7 @@ function getQuantumReq(base) {
 		if (QCs.inAny()) return QCs.getGoalMA()
 		if (enB.active("pos", 4)) exp /= enB_tmp.eff.pos4
 	}
-	return Decimal.pow(Number.MAX_VALUE, exp)
+	return pow_inf(exp)
 }
 
 function isQuantumReached() {
@@ -76,7 +76,7 @@ function quarkGain(base) {
 	let ma = getQuantumReqSource().max(1)
 	let maReq = getQuantumReq()
 
-	if (!tmp.ngp3) return pow10(ma.log(10) / Math.log10(Number.MAX_VALUE) - 1).floor()
+	if (!tmp.ngp3) return pow10(ma.log(10) / Math.log10(INF) - 1).floor()
 
 	let log = Math.max(ma.div(maReq).log(2) * 5 / 8192, 0)
 	log = Math.pow(log + 1, 3) - 1
@@ -102,7 +102,7 @@ function quarkGainNextAt(qk) {
 	if (qk > 3 && PCs.unl()) qk = Math.pow(qk / 3, 1 / PCs_tmp.eff2) * 3
 	qk = Math.pow(qk + 1, 1 / 3) - 1
 
-	return Decimal.pow(2, qk * 8192 / 5).times(getQuantumReq())
+	return pow2(qk * 8192 / 5).times(getQuantumReq())
 }
 
 function toggleQuantumConf() {
@@ -154,27 +154,27 @@ function doQuantumProgress() {
 	var first = isQuantumFirst()
 	var name = ""
 
-	if (!first && quarkGain().gte(Number.MAX_VALUE)) {
+	if (!first && quarkGain().gte(INF)) {
 		if (fluc.unl() && pH.can('fluctuate')) {
 			var feLog = fluc.gain(true).log(2)
-			var feNext = Math.pow(2, Math.floor(Math.log2(feLog) + 1))
+			var feNext = m_pow2(Math.floor(Math.log2(feLog) + 1))
 			percentage = feLog / feNext
-			name = "Percentage until " + shorten(Decimal.pow(2, feNext)) + " FE"
+			name = "Percentage until " + shorten(pow2(feNext)) + " FE"
 			className = "quantumProgress"
 		} else {
 			var fluctuate = pow10(fluc.req())
 			percentage = player.money.log(fluctuate)
-			name = "Percentage until " + (fluc.unl() ? "next Fluctuant Energy" : "") + " (" + shortenCosts(fluctuate) + " antimatter)"
+			name = "Percentage until " + (fluc.unl() ? "next Fluctuant Energy" : "") + " (" + shortenInt(fluctuate) + " antimatter)"
 			className = "quantumProgress"
 		}
 	} else if (!first && quarkGain().gte(256)) {
 		var qkLog = quarkGain().log(2)
-		var qkNext = Math.pow(2, Math.floor(Math.log2(qkLog) + 1))
+		var qkNext = m_pow2(Math.floor(Math.log2(qkLog) + 1))
 		percentage = qkLog / qkNext
-		name = "Percentage until " + shorten(Decimal.pow(2, qkNext)) + " aQ"
+		name = "Percentage until " + shorten(pow2(qkNext)) + " aQ"
 		className = "quantumProgress"
 	} else if (!first && pH.can("quantum")) {
-		var qkNext = Math.pow(2, Math.floor(quarkGain().log(2) + 1))
+		var qkNext = m_pow2(Math.floor(quarkGain().log(2) + 1))
 		var goal = quarkGainNextAt(qkNext)
 		percentage = getQuantumReqSource().log(goal)
 		name = "Percentage until " + shorten(goal) + " MA (" + shortenDimensions(qkNext) + " aQ)"

@@ -72,8 +72,8 @@ function maxHighestTD() {
 }
 
 function getMaxTDCost() {
-	if (!hasAch("r36")) return Number.MAX_VALUE
-	let x = Decimal.pow(Number.MAX_VALUE, 10)
+	if (!hasAch("r36")) return INF
+	let x = pow_inf(10)
 
 	if (player.currentChallenge == "postcngm3_1") x = E(1e60)
 	else if (player.currentChallenge != "") x = pow10(1000)

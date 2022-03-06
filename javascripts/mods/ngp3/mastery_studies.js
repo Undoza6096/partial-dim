@@ -101,7 +101,7 @@ var mTs = {
 		},
 		14() {
 			if (tmp.bgMode) return getFullExpansion(mTs.ecReqNumsStored[14]) + "% replicate chance"
-			return shortenCosts(mTs.ecReqNumsStored[14]) + " replicantis"
+			return shortenInt(mTs.ecReqNumsStored[14]) + " replicantis"
 		}
 	},
 

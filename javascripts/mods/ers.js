@@ -41,7 +41,7 @@ function updateGalaxyControl() {
 }
 
 function setReplicantiNewGalaxyStrength() {
-	player.replicanti.newLimit = Decimal.pow(2, Math.pow(2, parseFloat(el("galStrength").value) * 10))
+	player.replicanti.newLimit = pow2(m_pow2(parseFloat(el("galStrength").value) * 10))
 	el("replLimit").value = formatValue("Scientific", player.replicanti.newLimit, 2, 0)
 }
 

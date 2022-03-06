@@ -748,7 +748,7 @@ var enB = {
 				return formatReductionPercentage(x, 2, 3) + "%"
 			},
 			dispFull(x) {
-				return "3x TP upgrade scales " + this.disp(x) + " slower after " + shortenCosts(1e100) + " DT."
+				return "3x TP upgrade scales " + this.disp(x) + " slower after " + shortenInt(1e100) + " DT."
 			}
 		},
 		4: {
@@ -830,7 +830,7 @@ var enB = {
 				return "^" + x.toFixed(3)
 			},
 			dispFull(x) {
-				return "TP formula upgrade scales at " + this.disp(x) + " after " + shortenCosts(1e100) + " DT."
+				return "TP formula upgrade scales at " + this.disp(x) + " after " + shortenInt(1e100) + " DT."
 			}
 		},
 		8: {
@@ -982,7 +982,7 @@ var enB = {
 			var scaling = PCs.milestoneDone(42) ? Math.sqrt(1 - (PCs_save.lvl - 1) / 28) : 1
 			var req = this[x].chargeReq *
 				Math.pow(1.5, Math.max((pos_tmp.cloud && pos_tmp.cloud.total) || 0, 2) * scaling) *
-				Math.pow(2, (lvl - this[x].tier))
+				m_pow2((lvl - this[x].tier))
 			if (hasAch("ng3p28")) req /= Math.sqrt(this[x].chargeReq)
 			if (hasAch("ng3pr12")) req *= 0.8
 			if (hasAch("ng3pr12")) req -= 2
@@ -1184,7 +1184,7 @@ var enB = {
 				return Math.pow(x, 2.5)
 			},
 			disp(x) {
-				return formatValue(player.options.notation, x, 2, 3) + "x"
+				return formatQuick(x, 2, 3) + "x"
 			},
 			dispFull(x) {
 				return "Tachyon particles speed up " + enB.name("pos", 2) + "  production by " + this.disp(x) + "."

@@ -149,7 +149,7 @@ function doQuantumResetStuff(layer = 5, bigRip, isQC, qcData){
 	player.etercreq = 0
 	player.eternityChallUnlocked = 0
 	player.currentEternityChall = ""
-	player.eternityChallGoal = E(Number.MAX_VALUE)
+	player.eternityChallGoal = E(INF)
 
 	player.autoIP = E(0)
 	player.autoTime = 1e300

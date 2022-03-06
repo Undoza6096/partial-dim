@@ -89,7 +89,7 @@ var QCs = {
 			desc: "TT cost multipliers are multiplied by 3.5x.",
 			goal: () => mTs.bought >= 10,
 			goalDisp: () => getFullExpansion(10) + " bought mastery studies",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.1),
+			goalMA: pow_inf(2.1),
 			hint: "",
 
 			rewardDesc: (x) => "Unlock Replicanti Compressors, but there is a limit on Replicantis. Compressors greatly speed up Replicanti Slowdown!",
@@ -164,7 +164,7 @@ var QCs = {
 				let data = {
 					lim: pow10(6e6),
 
-					speedMult: Decimal.pow(2, -boosts),
+					speedMult: pow2(-boosts),
 					scalingMult: 1,
 					scalingExp: 1 / (1 + boosts / 20),
 
@@ -177,7 +177,7 @@ var QCs = {
 				//Quantum - Paired Challenges
 				if (PCs.milestoneDone(11)) {
 					let pc11 = 0.2 + (PCs_save.lvl - 1) / 35
-					data.lim = data.lim.pow(Math.pow(2, -pc11))
+					data.lim = data.lim.pow(m_pow2(-pc11))
 					data.speedMult = data.speedMult.pow(1 - pc11)
 					data.scalingExp = 1 / (1 + boosts / (20 + pc11 * 5))
 					data.effMult = this.eff(eff, pc11)
@@ -306,8 +306,8 @@ var QCs = {
 			unl: () => true,
 			desc: "You must disable a tier from Positronic Cloud, but some Quantum content are changed/disabled.",
 			goal: () => pos_save.eng.gte(7),
-			goalDisp: () => shortenCosts(7) + " Positronic Charge",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.4),
+			goalDisp: () => shortenInt(7) + " Positronic Charge",
+			goalMA: pow_inf(2.4),
 			hint: "",
 
 			rewardDesc: (x) => "Quantum Power boosts color charge by " + shorten(x) + "x.",
@@ -316,7 +316,7 @@ var QCs = {
 				return str.div(3).add(1).pow((enB.glu.boosterExp() || 1) / 6)
 			},
 
-			perkDesc: (x) => "Mastered Entangled Boosts are 50% stronger, but mastery requires " + shortenCosts(500) + " Quantum Power. Also, they are always active.",
+			perkDesc: (x) => "Mastered Entangled Boosts are 50% stronger, but mastery requires " + shortenInt(500) + " Quantum Power. Also, they are always active.",
 			perkEff() {
 				return 1
 			},
@@ -345,8 +345,8 @@ var QCs = {
 			unl: () => true,
 			desc: "Meta Dimensions only work, but they produce antimatter and Infinity Points instead. Dilating sucessfully reduces the production, and Meta Accelerator boosts are disabled.",
 			goal: () => player.dilation.tachyonParticles.gte(3e4),
-			goalDisp: () => shortenCosts(3e4) + " Tachyon Particles",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 0.2),
+			goalDisp: () => shortenInt(3e4) + " Tachyon Particles",
+			goalMA: pow_inf(0.2),
 			hint: "Try not to automate dilation, and also not to dilate time frequently.",
 
 			rewardDesc: (x) => "You sacrifice 30% of Meta Dimension Boosts instead of 25%.",
@@ -373,7 +373,7 @@ var QCs = {
 			desc: "You must disable one type of Galaxies. Changing it performs a forced Eternity reset.",
 			goal: () => player.dilation.freeGalaxies >= 2800,
 			goalDisp: () => getFullExpansion(2800) + " Tachyonic Galaxies",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.4),
+			goalMA: pow_inf(2.4),
 			hint: "Test every single combination of this exclusion, and try to minimize galaxies.",
 
 			rewardDesc: (x) => "Replicated Galaxies contribute to Positronic Charge.",
@@ -434,8 +434,8 @@ var QCs = {
 			unl: () => true,
 			desc: "Replicanti effects are disabled, but they generate energy. Replicate interval gets stronger over time since Eternity.",
 			goal: () => player.eternityPoints.gte(pow10(2.8e6)),
-			goalDisp: () => shortenCosts(pow10(2.8e6)) + " Eternity Points",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 1.7),
+			goalDisp: () => shortenInt(pow10(2.8e6)) + " Eternity Points",
+			goalMA: pow_inf(1.7),
 			hint: "Adjust your auto-Eternity time to maximize your production.",
 
 			rewardDesc: (x) => "Sacrificed things are stronger for Positrons, but you sacrifice less galaxies.",
@@ -485,8 +485,8 @@ var QCs = {
 			unl: () => true,
 			desc: "There are Nullons that speed up Replicanti Slowdown. (less as you have more) Eternitying loses some Nullons, and dilating reduces the production.",
 			goal: () => QCs_save.qc1.boosts >= 3 || (player.replicanti.amount.e >= 4.5e6 && QCs_save.qc1.boosts == 2),
-			goalDisp: () => shortenCosts(pow10(4.5e6)) + " Replicantis + " + getFullExpansion(2) + " Compressors",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.45),
+			goalDisp: () => shortenInt(pow10(4.5e6)) + " Replicantis + " + getFullExpansion(2) + " Compressors",
+			goalMA: pow_inf(2.45),
 			hint: "Do long Eternity runs.",
 
 			rewardDesc: (x) => "Replicantis also produce Replicanti Energy; but also boosted by time since Eternity. (" + shorten(QCs_tmp.rewards[6]) + "x)",
@@ -519,7 +519,7 @@ var QCs = {
 			desc: "You can’t fill the rows in Mastery Studies except singles. MD and TT productions are reduced by ^0.95.",
 			goal: () => player.timestudy.theorem >= 5e85,
 			goalDisp: () => shortenDimensions(5e85) + " Time Theorems",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.3),
+			goalMA: pow_inf(2.3),
 			hint: "Do not buy MS22 and MS53/54.",
 
 			rewardDesc: (x) => "Meta Accelerator accelerates 20% faster, and unlock Paired Challenges.",
@@ -539,7 +539,7 @@ var QCs = {
 			desc: "All Entangled Boosts are anti'd. You have to setup a cycle of 2 entanglements, and there's a 5-second timer that constantly switches your gluon kind.",
 			goal: () => enB.glu.boosterEff() >= 220,
 			goalDisp: "220 Quantum Power",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.1),
+			goalMA: pow_inf(2.1),
 			hint: "Avoid the GB gluon kind.",
 
 			rewardDesc: (x) => "Unlock the fourth column of Paired Challenges.",

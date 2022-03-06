@@ -54,7 +54,7 @@ function updateBAMAmount(diff = 0) {
 	let data = player.ghostify.bl
 	var newBA = data.am
 	var baAdded = diff ? getBosonicAMProduction().times(diff) : 0
-	if (tmp.badm.start !== undefined && data.am.gt(tmp.badm.start) && tmp.badm.postDim <= Number.MAX_VALUE) data.am = tmp.badm.preDim.times(tmp.badm.start)
+	if (tmp.badm.start !== undefined && data.am.gt(tmp.badm.start) && tmp.badm.postDim <= INF) data.am = tmp.badm.preDim.times(tmp.badm.start)
 	updateBosonicAMDimReturnsTemp()
 	newBA = data.am.add(baAdded)
 	if (newBA.gt(tmp.badm.start)) {
@@ -111,9 +111,9 @@ function bosonicTick(diff) {
 			lData.zNeProgress = lData.zNeProgress.add(apDiff.times(getOscillateGainSpeed()))
 			if (lData.zNeProgress.gte(1)) {
 				let oscillated = Math.floor(lData.zNeProgress.add(1).log(2))
-				lData.zb = lData.zb.add(Decimal.pow(Math.pow(2, 0.75), oscillated).sub(1).div(Math.pow(2, 0.75)-1).times(lData.zNeReq.pow(0.75)))
-				lData.zNeProgress = lData.zNeProgress.sub(Decimal.pow(2,oscillated).sub(1).min(lData.zNeProgress)).div(Decimal.pow(2, oscillated))
-				lData.zNeReq = lData.zNeReq.times(Decimal.pow(2,oscillated))
+				lData.zb = lData.zb.add(Decimal.pow(m_pow2(0.75), oscillated).sub(1).div(m_pow2(0.75)-1).times(lData.zNeReq.pow(0.75)))
+				lData.zNeProgress = lData.zNeProgress.sub(pow2(oscillated).sub(1).min(lData.zNeProgress)).div(pow2(oscillated))
+				lData.zNeReq = lData.zNeReq.times(pow2(oscillated))
 				lData.zNeGen = (lData.zNeGen+oscillated-1)%3+1
 			}
 		}
@@ -525,7 +525,7 @@ var bEn = {
 	effectDescs: {
 		12(x) {
 			x = x.times(getBosonicFinalSpeed())
-			if (x.lt(1) && x.gt(0)) return x.m.toFixed(2) + "/" + shortenCosts(pow10(-x.e)) + " seconds"
+			if (x.lt(1) && x.gt(0)) return x.m.toFixed(2) + "/" + shortenInt(pow10(-x.e)) + " seconds"
 			return shorten(x) + "/second"
 		},
 		14(x) {

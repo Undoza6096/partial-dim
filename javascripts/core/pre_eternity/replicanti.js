@@ -47,7 +47,7 @@ function replicantiIncrease(diff) {
 }
 
 function getReplicantiLimit(cap = false) {
-	let lim = player.boughtDims ? player.replicanti.limit : E(Number.MAX_VALUE)
+	let lim = player.boughtDims ? player.replicanti.limit : E(INF)
 	let limBroke = isReplicantiLimitBroken()
 
 	if (cap) {
@@ -233,7 +233,7 @@ function replicantiGalaxy() {
 	if (!canGetReplicatedGalaxy()) return
 	if (player.galaxyMaxBulk) player.replicanti.galaxies = maxGal
 	else player.replicanti.galaxies++
-	if (!tmp.ngp3 || !hasAch("ngpp16")) player.replicanti.amount = Decimal.div(hasAch("r126") ? player.replicanti.amount : 1, Number.MAX_VALUE).max(1)
+	if (!tmp.ngp3 || !hasAch("ngpp16")) player.replicanti.amount = Decimal.div(hasAch("r126") ? player.replicanti.amount : 1, INF).max(1)
 	galaxyReset(0)
 }
 
@@ -336,8 +336,8 @@ function getReplicantiIntervalMult() {
 	if (hasTS(62)) interval /= tsMults[62]()
 	if (hasTS(213)) interval /= tsMults[213]()
 
-	if (player.replicanti.amount.gt(Number.MAX_VALUE) || hasTS(133)) interval *= 10
-	if (player.replicanti.amount.lt(Number.MAX_VALUE) && hasAch("r134")) interval /= 2
+	if (player.replicanti.amount.gt(INF) || hasTS(133)) interval *= 10
+	if (player.replicanti.amount.lt(INF) && hasAch("r134")) interval /= 2
 
 	interval = E(interval)
 	if (player.exdilation != undefined) interval = interval.div(getBlackholePowerEffect().pow(1/3))
@@ -365,7 +365,7 @@ function getReplicantiFinalInterval() {
 }
 
 function getReplScaleStart() {
-	return Number.MAX_VALUE
+	return INF
 }
 
 function getReplSpeed() {
@@ -557,9 +557,9 @@ function notContinuousReplicantiUpdating() {
 	var ticksLeft = ticks
 	var ticksPerTick = Math.ceil(ticks / 10)
 
-	while (player.replicanti.amount.lt(Number.MAX_VALUE) && ticksLeft > 0) {
+	while (player.replicanti.amount.lt(INF) && ticksLeft > 0) {
 		if (chance == 1) {
-			player.replicanti.amount = player.replicanti.amount.times(Decimal.pow(2, ticksLeft * Math.log2(chance + 1))).round()
+			player.replicanti.amount = player.replicanti.amount.times(pow2(ticksLeft * Math.log2(chance + 1))).round()
 			ticksLeft = 0
 		} else if (player.replicanti.amount.lte(100)) {
 			runRandomReplicanti(chance) //chance should be a decimal
@@ -587,7 +587,7 @@ function continuousReplicantiUpdating(diff){
 }
 
 function useContinuousRep() {
-	return replicantiTicks > 1e3 || Decimal.gt(tmp.rep.chance, 1) || tmp.rep.interval.lt(0.1) || getReplicantiLimit(true).gt(Number.MAX_VALUE)
+	return replicantiTicks > 1e3 || Decimal.gt(tmp.rep.chance, 1) || tmp.rep.interval.lt(0.1) || getReplicantiLimit(true).gt(INF)
 }
 
 function handleReplTabs() {

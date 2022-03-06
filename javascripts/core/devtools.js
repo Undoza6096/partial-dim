@@ -147,7 +147,7 @@ dev.resetGhostify = function() {
 dev.updateCosts = function() {
 	for (var i = 1; i < 9; i++) {
 		var dim = player["timeDimension"+i]
-		if (dim.cost.gte(Number.MAX_VALUE)) {
+		if (dim.cost.gte(INF)) {
 			dim.cost = Decimal.pow(timeDimCostMults[i]*1.5, dim.bought).times(timeDimStartCosts[i])
 		}
 		if (dim.cost.gte("1e1300")) {
@@ -163,7 +163,7 @@ dev.testTDCosts = function() {
 	for (var i=1; i<9; i++) {
 		var timeDimStartCosts = [null, 1, 5, 100, 1000, "1e2350", "1e2650", "1e2900", "1e3300"]
 		var dim = player["timeDimension"+i]
-		if (dim.cost.gte(Number.MAX_VALUE)) {
+		if (dim.cost.gte(INF)) {
 			dim.cost = Decimal.pow(timeDimCostMults[i]*1.5, dim.bought).times(timeDimStartCosts[i])
 		}
 		if (dim.cost.gte("1e1300")) {

@@ -64,7 +64,7 @@ let fluc = {
 	},
 	req(x) {
 		if (!x) x = fluc_save.energy
-		return pow10(Math.pow(10, 13.5 + x / 20))
+		return d_pow10(13.5 + x / 20)
 	},
 	reset(auto, force) {
 		if (!force) {
@@ -140,7 +140,7 @@ let fluc = {
 	updateHeader() {
 		let gain = fluc.gain()
 		el("fluctuantEnergy").textContent = getFullExpansion(fluc_save.energy)
-		el("fluc_gain").textContent = gain ? "(+" + getFullExpansion(gain) + " Fluctuant Energy: Next at " + shortenCosts(fluc.req(fluc_save.energy + gain)) + ")" : ""
+		el("fluc_gain").textContent = gain ? "(+" + getFullExpansion(gain) + " Fluctuant Energy: Next at " + shortenInt(fluc.req(fluc_save.energy + gain)) + ")" : ""
 
 		//Temp: Quantum Field is not ready!
 		el("unknown_unl").style.display = fluc_save.energy >= 11 ? "none" : ""

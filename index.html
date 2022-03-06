@@ -55,10 +55,6 @@
 			</button>
 		</div>
 		<div style="position: relative">
-			<div id="sgEmpty"></div>
-			<button id="sgReset" class="storebtn" onclick="ngSg.reset()">See beyond the event horizon... I want to go Singularity.</button>
-		</div>
-		<div style="position: relative">
 			<div id="irEmpty"></div>
 			<button id="irReset" class="storebtn" onclick="showTab('irTab')">A new rift has formed... Enter the Interreality.</button>
 		</div>
@@ -139,7 +135,6 @@
 			<button id="repMajorBtn" style="font-family: var(--font); font-size: 20px; display: none" class="infinitybtn" onclick="showTab('repMajor')">Replicantis</button>
 			<button id="eternitystorebtn" style="font-family: var(--font); font-size: 20px; display: none" class="eternitytabbtn" onclick="showTab('eternitystore')">Eternity</button>
 			<button id="irTabBtn" style="font-family: var(--font); font-size: 20px; display: none" class="interrealitybtn" onclick='showTab("irTab")'>Interreality</button>
-			<button id="sgTabBtn" style="font-family: var(--font); font-size: 20px; display: none" class="singularitybtn" onclick='showTab("sgTab")'>Singularity</button>
 			<button id="quantumtabbtn" style="font-family: var(--font); font-size: 20px; display: none" class="quantumbtn" onclick='showTab("quantumtab")'>Quantum</button>
 			<button id="fluctuateBtn" style="font-family: var(--font); font-size: 20px; display: none" class="fluctuatebtn" onclick='showTab("flucTab")'>Fluctuate</button>
 			<button id="ghostifytabbtn" style="font-family: var(--font); font-size: 20px" class="ghostifybtn" onclick='showTab("ghostify")'>Ghostify</button>
@@ -5620,12 +5615,6 @@
 			<button class="storebtn longbtn" id='ngpBtn' style="font-size: 15px" onclick="toggle_mod('ngp')" style="display: inline" ach-tooltip="Make this game faster and start at Time Dilation.">NG+: OFF</button>
 			<button class="storebtn longbtn" id='aauBtn' style="font-size: 15px" onclick="toggle_mod('aau')" style="display: inline" ach-tooltip="Start with all achievements unlocked.">AAU: OFF</button>
 			<button class="storebtn longbtn" id='lsBtn' style="font-size: 15px" onclick="toggle_mod('ls')" style="display: inline" ach-tooltip="Allows you to tweak the game speed and speed up some mechanics.">Light Speed: OFF</button>
-			<!--
-			<button class="storebtn longbtn" id='ngprwBtn' style="font-size: 15px" onclick="toggle_mod('ngprw')" style="display: inline">NG+ Reworked: OFF</button>
-			<br>
-			Reset Mode #<input id='ngpLayer' type="number" onchange="changeNGPLayer()" min=0 value=0>
-			<br><br>
-			-->
 			<button class="storebtn longbtn" id='ezBtn' style="font-size: 15px" onclick="toggle_mod('ez')" style="display: inline" ach-tooltip="Makes this game faster by removing some timewalls.">Barrier-Easing: OFF</button>
 			<br><br>
 			<b>Buffed Mods</b><br>
@@ -5633,12 +5622,6 @@
 			<button class="storebtn longbtn" id='arrowsBtn' style="font-size: 15px" onclick="toggle_mod('arrows')" style="display: inline" ach-tooltip="A original mod that starts buffed mods.">NG↑: Linear (↑⁰)</button>
 			<button class="storebtn longbtn" id='ngumuBtn' style="font-size: 15px" onclick="toggle_mod('ngumu')" style="display: inline" ach-tooltip="A mod which buffs some boosts to NG Update Prime.">NGUd*': OFF</button>
 			<button class="storebtn longbtn" id='nguepBtn' style="font-size: 15px" onclick="toggle_mod('nguep')" style="display: inline" ach-tooltip="A mod which greatly buffs some boosts to NG Update Prime.">NGUd↑': Linear' (↑⁰')</button>
-			<br><br>
-			<b>Respecced Mods</b><br>
-			<button class="storebtn longbtn" id='rsBtn' style="font-size: 15px" onclick="toggle_mod('rs')" style="display: inline">Respecced: OFF</button>
-			<!--
-			<button class="storebtn longbtn" id='usBtn' style="font-size: 15px" onclick="toggle_mod('us')" style="display: inline" ach-tooltip="A mod which rewrites almost all mechanics from base game.">Upsided: OFF</button>
-			-->
 			<br><br>
 			<b>Timewally Mods</b><br>
 			<button class="storebtn longbtn" id='ngmBtn' style="font-size: 15px" onclick="toggle_mod('ngm')" style="display: inline">NG-: OFF</button>
@@ -5917,12 +5900,10 @@
 <script type="text/javascript" src="javascripts/mods/ngmmm.js"></script>
 <script type="text/javascript" src="javascripts/mods/ngm4.js"></script>
 <script type="text/javascript" src="javascripts/mods/ngm5.js"></script>
-<script type="text/javascript" src="javascripts/mods/ngprw.js"></script>
 <script type="text/javascript" src="javascripts/mods/ngud.js"></script>
 <script type="text/javascript" src="javascripts/mods/ngudp.js"></script>
 <script type="text/javascript" src="javascripts/mods/ngusp.js"></script>
 <script type="text/javascript" src="javascripts/mods/quantum.js"></script>
-<script type="text/javascript" src="javascripts/mods/singularity.js"></script>
 
 
 <script type="text/javascript" src="javascripts/convert.js"></script>

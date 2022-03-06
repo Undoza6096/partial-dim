@@ -662,7 +662,7 @@ function maxGHPMult() {
 	el("ghpMultUpgCost").textContent = shortenDimensions(getGHPMultCost())
 
 	player.ghostify.automatorGhosts[15].a = player.ghostify.automatorGhosts[15].a.times(Decimal.pow(5, totalBought))
-	el("autoGhost15a").value = formatValue("Scientific", player.ghostify.automatorGhosts[15].a, 2, 1)
+	el("autoGhost15a").value = formatSci(player.ghostify.automatorGhosts[15].a, 1)
 }
 
 function setupAutomaticGhostsData() {
@@ -716,7 +716,7 @@ function updateAutoGhosts(load) {
 		el("autoGhost13t").value = data[13].t
 		el("autoGhost13u").value = data[13].u
 		el("autoGhost13o").value = data[13].o
-		el("autoGhost15a").value = formatValue("Scientific", data[15].a, 2, 1)
+		el("autoGhost15a").value = formatSci(data[15].a)
 		el("autoGhost17s").value = data[17].s || 60
 		el("autoGhost22t").value = data[22].time
 		el("autoGhost24i").value = data[24].i
@@ -1052,7 +1052,7 @@ var ngp3Features = {
 	},
 	ms: {
 		name: "Mastery Studies",
-		threshold: () => "Get " + shortenCosts(1e100) + " DT upgrade from Time Dilation",
+		threshold: () => "Get " + shortenInt(1e100) + " DT upgrade from Time Dilation",
 		next: "qu",
 		tab() {
 			showTab("eternitystore")
@@ -1104,7 +1104,7 @@ var ngp3Features = {
 	},
 	fl: {
 		name: "Fluctuate",
-		threshold: () => "Get " + shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
+		threshold: () => "Get " + shortenInt(d_pow10(13.5)) + " antimatter",
 		next: "qf",
 		tab() {
 			showTab("flucTab")
@@ -1175,7 +1175,7 @@ var ngp3Welcomes = {
 		0.61: "<b class='lime'>Strings, again!</b> Yes, I decided to rework Strings for better balancing and less confusion. This also removes Nerfed modifier and reworks Entangled Boosters and Perks.",
 		0.611: "<b class='lime'>PC8 combinations!</b> Due to a severe bug for QC8, I am releasing an extra update, which PC8 combinations are slightly easier! (+ some String-era buffs)",
 		0.62: () => "<b class='green'>Mostly Paired Challenges + Strings!</b> Yep. This update reworks the gameplay of Paired Challenges and Strings. Any suggestion is welcomed in Discord, and I will implement yours if accepted.",
-		0.7: () => "<b class='green flucEne'>A new layer: Fluctuate!</b> Welcome to the new era of NG+3! Can you reach " + shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter to get there?"
+		0.7: () => "<b class='green flucEne'>A new layer: Fluctuate!</b> Welcome to the new era of NG+3! Can you reach " + shortenInt(d_pow10(13.5)) + " antimatter to get there?"
 	},
 	verbs: {
 		0.61: "reworks",
@@ -1183,11 +1183,11 @@ var ngp3Welcomes = {
 		0.62: "rebalances",
 	},
 	goals: {
-		0.5: () => getFullExpansion(8) + " PC combinations + " + shortenCosts(pow10(1e13)) + " antimatter",
-		0.6: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
-		0.61: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
-		0.611: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
-		0.62: () => shortenCosts(pow10(Math.pow(10, 13.5))) + " antimatter",
+		0.5: () => getFullExpansion(8) + " PC combinations + " + shortenInt(pow10(1e13)) + " antimatter",
+		0.6: () => shortenInt(d_pow10(13.5)) + " antimatter",
+		0.61: () => shortenInt(d_pow10(13.5)) + " antimatter",
+		0.611: () => shortenInt(d_pow10(13.5)) + " antimatter",
+		0.62: () => shortenInt(d_pow10(13.5)) + " antimatter",
 		0.7: () => "<b class='flucEne'>" + getFullExpansion(12) + " Fluctuant Energy</b>",
 	}
 }
@@ -1226,7 +1226,7 @@ function endGoalAfterStrings(x, slog = 0) {
 	} else {
 		let dExp = dMult * Math.pow(tBase, tExp)
 		let r = dExp
-		if (slog < 2) r = Math.pow(10, r)
+		if (slog < 2) r = m_pow10(r)
 		if (slog < 1) r = pow10(r)
 		return r
 	}

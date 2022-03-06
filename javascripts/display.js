@@ -52,7 +52,7 @@ function dimensionTabDisplay(){
 		var name = TIER_NAMES[tier];
 		if (shown) {
 			el(tier + "Row").style.display = ""
-			el("D" + tier).childNodes[0].nodeValue = DISPLAY_NAMES[tier] + " Dimension x" + formatValue(player.options.notation, getDimensionFinalMultiplier(tier), 2, 1)
+			el("D" + tier).childNodes[0].nodeValue = DISPLAY_NAMES[tier] + " Dimension x" + shortenMoney(getDimensionFinalMultiplier(tier))
 			el("A" + tier).textContent = getDimensionDescription(tier)
 		}
 	}
@@ -60,7 +60,7 @@ function dimensionTabDisplay(){
 	setAndMaybeShow("mp10d", aarMod.newGameMult || (shiftDown && pos.unl()), function() {
 		let pow = getDimensionPowerMultiplier("non-random")
 		return 'Multiplier per 10 Dimensions: ' + shorten(pow) + 'x' +
-			(shiftDown ? ", " + shortenCosts(pow.pow(player.firstBought / 10)) + "x to First Dimensions" : "")
+			(shiftDown ? ", " + shortenInt(pow.pow(player.firstBought / 10)) + "x to First Dimensions" : "")
 	})
 
 	dimShiftDisplay()
@@ -82,7 +82,7 @@ function tickspeedDisplay(){
 		else label = 'reduce the tick interval by ' + ((1 - multNum) * 100).toFixed(e) + '%'
 		labels.push(label)
 
-		if (isIC3Trapped()) labels.push("multiply all Dimensions by " + formatValue(player.options.notation, getIC3Mult(), 2, 4) + "x")
+		if (isIC3Trapped()) labels.push("multiply all Dimensions by " + formatQuick(getIC3Mult(), 2, 4) + "x")
 
 		el("tickLabel").innerHTML = wordizeList(labels, true) + "."
 
@@ -215,7 +215,7 @@ function dilationStatsDisplay(){
 }
 
 function scienceNumberDisplay(){
-	var scale1 = [2.82e-45,1e-42,7.23e-30,5e-21,9e-17,6.2e-11,5e-8,3.555e-6,7.5e-4,1,2.5e3,2.6006e6,3.3e8,5e12,4.5e17,1.08e21,1.53e24,1.41e27,5e32,8e36,1.7e45,1.7e48,3.3e55,3.3e61,5e68,1e73,3.4e80,1e113,Number.MAX_VALUE,E("1e65000")];
+	var scale1 = [2.82e-45,1e-42,7.23e-30,5e-21,9e-17,6.2e-11,5e-8,3.555e-6,7.5e-4,1,2.5e3,2.6006e6,3.3e8,5e12,4.5e17,1.08e21,1.53e24,1.41e27,5e32,8e36,1.7e45,1.7e48,3.3e55,3.3e61,5e68,1e73,3.4e80,1e113,INF,E("1e65000")];
 	var scale2 = [" protons."," nucleui."," Hydrogen atoms."," viruses."," red blood cells."," grains of sand."," grains of rice."," teaspoons."," wine bottles."," fridge-freezers."," Olympic-sized swimming pools."," Great Pyramids of Giza."," Great Walls of China."," large asteroids.",
 		      " dwarf planets."," Earths."," Jupiters."," Suns."," red giants."," hypergiant stars."," nebulas."," Oort clouds."," Local Bubbles."," galaxies."," Local Groups."," Sculptor Voids."," observable universes."," Dimensions.", " Infinity Dimensions.", " Time Dimensions."];
 	var id = 0;
@@ -225,23 +225,23 @@ function scienceNumberDisplay(){
 			while (player.money.times(4.22419e-105).gt(scale1[id])) id++;
 			if (id > 0) id--;
 		}
-		if (id >= 7 && id < 11) el("infoScale").textContent = "If every antimatter were a planck volume, you would have enough to fill " + formatValue(player.options.notation, player.money * 4.22419e-105 / scale1[id], 2, 1) + scale2[id];
-		else el("infoScale").textContent = "If every antimatter were a planck volume, you would have enough to make " + formatValue(player.options.notation, player.money.times(4.22419e-105).dividedBy(scale1[id]), 2, 1) + scale2[id];
+		if (id >= 7 && id < 11) el("infoScale").textContent = "If every antimatter were a planck volume, you would have enough to fill " + shortenMoney(player.money * 4.22419e-105 / scale1[id]) + scale2[id];
+		else el("infoScale").textContent = "If every antimatter were a planck volume, you would have enough to make " + shortenMoney(player.money.times(4.22419e-105).dividedBy(scale1[id])) + scale2[id];
 	} else { //does this part work correctly? i doubt it does
-		if (player.money.lt(2.82e9)) el("infoScale").textContent = "If every antimatter were " + formatValue(player.options.notation, 2.82e9 / player.money, 2, 1) + " attometers cubed, you would have enough to make a proton."
-		else if (player.money.lt(2.82e18)) el("infoScale").textContent = "If every antimatter were " + formatValue(player.options.notation, 2.82e18 / player.money, 2, 1) + " zeptometers cubed, you would have enough to make a proton."
-		else if (player.money.lt(2.82e27)) el("infoScale").textContent = "If every antimatter were " + formatValue(player.options.notation, 2.82e27 / player.money, 2, 1) + " yoctometers cubed, you would have enough to make a proton."
-		else el("infoScale").textContent = "If every antimatter were " + formatValue(player.options.notation, (2.82e-45 / 4.22419e-105 / player.money), 2, 1) + " planck volumes, you would have enough to make a proton."
+		if (player.money.lt(2.82e9)) el("infoScale").textContent = "If every antimatter were " + shortenMoney(2.82e9 / player.money) + " attometers cubed, you would have enough to make a proton."
+		else if (player.money.lt(2.82e18)) el("infoScale").textContent = "If every antimatter were " + shortenMoney(2.82e18 / player.money) + " zeptometers cubed, you would have enough to make a proton."
+		else if (player.money.lt(2.82e27)) el("infoScale").textContent = "If every antimatter were " + shortenMoney(2.82e27 / player.money) + " yoctometers cubed, you would have enough to make a proton."
+		else el("infoScale").textContent = "If every antimatter were " + shortenMoney((2.82e-45 / 4.22419e-105 / player.money)) + " planck volumes, you would have enough to make a proton."
 	}
 }
 
 function infinityRespecedInfinityDisplay(){
-	if (setUnlocks.length > player.setsUnlocked) el("nextset").textContent = "Next set unlocks at " + formatValue(player.options.notation, setUnlocks[player.setsUnlocked], 2, 0, true) + "."
+	if (setUnlocks.length > player.setsUnlocked) el("nextset").textContent = "Next set unlocks at " + formatQuick(setUnlocks[player.setsUnlocked], 2, 0, true) + "."
 	el("infi1pow").textContent = getFullExpansion(player.infinityUpgradesRespecced[1] * 10)
-	el("infi1cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[1]))
+	el("infi1cost").textContent = shortenInt(pow10(player.infinityUpgradesRespecced[1]))
 	el("infi1").className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[1])) ? "infinistorebtnlocked" : "infinimultbtn"
-	el("infi3pow").textContent = formatValue(player.options.notation, getLimit(), 2, 0, true)
-	el("infi3cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[3]))
+	el("infi3pow").textContent = formatQuick(getLimit(), 2, 0, true)
+	el("infi3cost").textContent = shortenInt(pow10(player.infinityUpgradesRespecced[3]))
 	el("infi3").className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[3])) ? "infinistorebtnlocked" : "infinimultbtn"
 }
 
@@ -257,19 +257,19 @@ function infinityUpgradesDisplay(){
 	let infiCol1And2Middle = tmp.ngC ? " and Tickspeed " : ""
 
 	el("infi11desc").innerHTML = "Normal Dimensions gain a multiplier based on time played" + (tmp.ngC ? " and antimatter" : "") + "<br>Currently: " + shorten(infUpg11Pow()) + "x"
-	el("infi12desc").innerHTML = "First and Eighth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
-	el("infi13desc").innerHTML = "Third and Sixth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
-	el("infi22desc").innerHTML = "Second and Seventh Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
-	el("infi23desc").innerHTML = "Fourth and Fifth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x"
+	el("infi12desc").innerHTML = "First and Eighth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatQuick(dimMults(), 1, 1) + "x"
+	el("infi13desc").innerHTML = "Third and Sixth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatQuick(dimMults(), 1, 1) + "x"
+	el("infi22desc").innerHTML = "Second and Seventh Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatQuick(dimMults(), 1, 1) + "x"
+	el("infi23desc").innerHTML = "Fourth and Fifth Dimensions" + infiCol1And2Middle + " gain a multiplier based on your Infinities<br>Currently: " + formatQuick(dimMults(), 1, 1) + "x"
 	el("infi31desc").innerHTML = "Normal Dimensions gain a multiplier based on time spent in this Infinity" + (tmp.ngC ? " and total antimatter" : "") + "<br>Currently: " + shorten(infUpg13Pow()) + "x"
-	var infi32middle = player.infinityPoints.lt(pow10(1e10)) ? " <br> Currently: " + formatValue(player.options.notation, getUnspentBonus(), 2, 2) + "x" : ""
+	var infi32middle = player.infinityPoints.lt(pow10(1e10)) ? " <br> Currently: " + formatQuick(getUnspentBonus(), 2, 2) + "x" : ""
 	el("infi32desc").innerHTML = "1st Dimension gets a multiplier based on unspent IP " + infi32middle
 }
 
 function preBreakUpgradeDisplay(){
 	if (canBuyIPMult()) el("infiMult").className = "infinimultbtn"
 	else el("infiMult").className = "infinistorebtnlocked"
-	var infiMultEnding = player.infinityPoints.lt(pow10(1e10)) ? "<br>Currently: " + shorten(getIPMult()) + "x<br>Cost: " + shortenCosts(player.infMultCost) + " IP" : ""
+	var infiMultEnding = player.infinityPoints.lt(pow10(1e10)) ? "<br>Currently: " + shorten(getIPMult()) + "x<br>Cost: " + shortenInt(player.infMultCost) + " IP" : ""
 	el("infiMult").innerHTML = "You get " + (Math.round(getIPMultPower() * 100) / 100) + "x more IP." + infiMultEnding
 	el("nextset").textContent = ""
 	if (player.infinityUpgradesRespecced != undefined) {
@@ -294,7 +294,7 @@ function preBreakUpgradeDisplay(){
 		el("lockedset1").style.display = ""
 		for (let u = 4; u < 7; u++) {
 			el("infi" + u + "pow").textContent = u == 5 ? getInfUpgPow(5).toFixed(2) : getFullExpansion(getInfUpgPow(u))
-			el("infi" + u + "cost").textContent = shortenCosts(pow10(player.infinityUpgradesRespecced[u] + powAdds[u]))
+			el("infi" + u + "cost").textContent = shortenInt(pow10(player.infinityUpgradesRespecced[u] + powAdds[u]))
 			el("infi" + u).className = player.infinityPoints.lt(pow10(player.infinityUpgradesRespecced[u] + powAdds[u])) ? "infinistorebtnlocked" : "infinimultbtn"
 		}	
 	}
@@ -430,20 +430,20 @@ function breakInfinityUpgradeDisplay(){
 	if (player.infinityUpgrades.includes("autoBuyerUpgrade")) el("postinfi33").className = "infinistorebtnbought"
 	else if (player.infinityPoints.gte(1e15)) el("postinfi33").className = "infinistorebtn1"
 	else el("postinfi33").className = "infinistorebtnlocked"
-	el("postinfi11").innerHTML = "Normal Dimensions gain a multiplier based on total antimatter produced<br>Currently: " + shorten(tmp.postinfi11) + "x<br>Cost: "+shortenCosts(1e4)+" IP"
-	el("postinfi21").innerHTML = "Normal Dimensions gain a multiplier based on current antimatter<br>Currently: " + shorten(tmp.postinfi21) + "x<br>Cost: "+shortenCosts(5e4)+" IP"
-	if (player.tickSpeedMultDecrease > 2) el("postinfi31").innerHTML = "Reduce the tickspeed cost multiplier increase post-" + shorten(Number.MAX_VALUE) + ".<br>" + player.tickSpeedMultDecrease+"x -> "+(player.tickSpeedMultDecrease-1)+"x<br>Cost: "+shortenDimensions(player.tickSpeedMultDecreaseCost) +" IP"
-	else el("postinfi31").innerHTML = "Reduce the tickspeed cost multiplier increase post-" + shorten(Number.MAX_VALUE) + ".<br>" + player.tickSpeedMultDecrease.toFixed(player.tickSpeedMultDecrease < 2 ? 2 : 0)+"x"
-	el("postinfi22").innerHTML = "Normal Dimensions gain a multiplier based on achievements " + (tmp.ngmX >= 4 ? "and purchased GP upgrades " : "") + "<br>Currently: " + shorten(achievementMult) + "x<br>Cost: " + shortenCosts(1e6) + " IP"
-	el("postinfi12").innerHTML = "Normal Dimensions gain a multiplier based on your Infinities <br>Currently: "+shorten(getInfinitiedMult())+"x<br>Cost: " + shortenCosts(1e5) + " IP"
-	el("postinfi41").innerHTML = "Galaxies are " + Math.round(getPostGalaxyEff() * 100 - 100) + "% stronger <br>Cost: "+shortenCosts(5e11)+" IP"
-	el("postinfi32").innerHTML = "Normal Dimensions gain a multiplier based on your slowest Normal Challenge time<br>Currently: "+shorten(worstChallengeBonus)+"x<br>Cost: " + shortenCosts(1e7) + " IP"
-	el("postinfi13").innerHTML = "You generate Infinities based on your fastest Infinity.<br>1 Infinity every " + timeDisplay(player.bestInfinityTime * 5) + " <br>Cost: " + shortenCosts(2e7) + " IP"
-	el("postinfi23").innerHTML = "Unlock the option to bulk buy Dimension" + (player.tickspeedBoosts == undefined ? "" : " and Tickspeed") + " Boosts <br>Cost: " + shortenCosts(player.tickspeedBoosts != undefined ? 2e4 : inNGM(2) ? 5e6 : 5e9) + " IP"
-	el("postinfi33").innerHTML = "Autobuyers work twice as fast <br>Cost: " + shortenCosts(1e15) + " IP"
-	if (player.dimensionMultDecrease > 3) el("postinfi42").innerHTML = "Reduce the Dimension  cost multiplier increase post-" + shorten(Number.MAX_VALUE) + ".<br>" + player.dimensionMultDecrease + "x -> " + (player.dimensionMultDecrease - 1) + "x<br>Cost: " + shorten(player.dimensionMultDecreaseCost) +" IP"
-	else el("postinfi42").innerHTML = "Reduce the Dimension cost multiplier increase post-" + shorten(Number.MAX_VALUE) + ".<br>"+player.dimensionMultDecrease.toFixed(ECComps("eterc6") % 5 > 0 ? 1 : 0) + "x"
-	el("offlineProd").innerHTML = "Generate " + player.offlineProd + "% > " + Math.max(Math.max(5, player.offlineProd + 5), Math.min(50, player.offlineProd + 5)) + "% of your best IP/min from the last 10 Infinities, works offline<br>Currently: " + shortenMoney(bestRunIppm.times(player.offlineProd / 100)) + "IP/min<br> Cost: " + shortenCosts(player.offlineProdCost) + " IP"
+	el("postinfi11").innerHTML = "Normal Dimensions gain a multiplier based on total antimatter produced<br>Currently: " + shorten(tmp.postinfi11) + "x<br>Cost: "+shortenInt(1e4)+" IP"
+	el("postinfi21").innerHTML = "Normal Dimensions gain a multiplier based on current antimatter<br>Currently: " + shorten(tmp.postinfi21) + "x<br>Cost: "+shortenInt(5e4)+" IP"
+	if (player.tickSpeedMultDecrease > 2) el("postinfi31").innerHTML = "Reduce the tickspeed cost multiplier increase post-" + shorten(INF) + ".<br>" + player.tickSpeedMultDecrease+"x -> "+(player.tickSpeedMultDecrease-1)+"x<br>Cost: "+shortenDimensions(player.tickSpeedMultDecreaseCost) +" IP"
+	else el("postinfi31").innerHTML = "Reduce the tickspeed cost multiplier increase post-" + shorten(INF) + ".<br>" + player.tickSpeedMultDecrease.toFixed(player.tickSpeedMultDecrease < 2 ? 2 : 0)+"x"
+	el("postinfi22").innerHTML = "Normal Dimensions gain a multiplier based on achievements " + (tmp.ngmX >= 4 ? "and purchased GP upgrades " : "") + "<br>Currently: " + shorten(achievementMult) + "x<br>Cost: " + shortenInt(1e6) + " IP"
+	el("postinfi12").innerHTML = "Normal Dimensions gain a multiplier based on your Infinities <br>Currently: "+shorten(getInfinitiedMult())+"x<br>Cost: " + shortenInt(1e5) + " IP"
+	el("postinfi41").innerHTML = "Galaxies are " + Math.round(getPostGalaxyEff() * 100 - 100) + "% stronger <br>Cost: "+shortenInt(5e11)+" IP"
+	el("postinfi32").innerHTML = "Normal Dimensions gain a multiplier based on your slowest Normal Challenge time<br>Currently: "+shorten(worstChallengeBonus)+"x<br>Cost: " + shortenInt(1e7) + " IP"
+	el("postinfi13").innerHTML = "You generate Infinities based on your fastest Infinity.<br>1 Infinity every " + timeDisplay(player.bestInfinityTime * 5) + " <br>Cost: " + shortenInt(2e7) + " IP"
+	el("postinfi23").innerHTML = "Unlock the option to bulk buy Dimension" + (player.tickspeedBoosts == undefined ? "" : " and Tickspeed") + " Boosts <br>Cost: " + shortenInt(player.tickspeedBoosts != undefined ? 2e4 : inNGM(2) ? 5e6 : 5e9) + " IP"
+	el("postinfi33").innerHTML = "Autobuyers work twice as fast <br>Cost: " + shortenInt(1e15) + " IP"
+	if (player.dimensionMultDecrease > 3) el("postinfi42").innerHTML = "Reduce the Dimension  cost multiplier increase post-" + shorten(INF) + ".<br>" + player.dimensionMultDecrease + "x -> " + (player.dimensionMultDecrease - 1) + "x<br>Cost: " + shorten(player.dimensionMultDecreaseCost) +" IP"
+	else el("postinfi42").innerHTML = "Reduce the Dimension cost multiplier increase post-" + shorten(INF) + ".<br>"+player.dimensionMultDecrease.toFixed(ECComps("eterc6") % 5 > 0 ? 1 : 0) + "x"
+	el("offlineProd").innerHTML = "Generate " + player.offlineProd + "% > " + Math.max(Math.max(5, player.offlineProd + 5), Math.min(50, player.offlineProd + 5)) + "% of your best IP/min from the last 10 Infinities, works offline<br>Currently: " + shortenMoney(bestRunIppm.times(player.offlineProd / 100)) + "IP/min<br> Cost: " + shortenInt(player.offlineProdCost) + " IP"
 	if (player.offlineProd == 50) el("offlineProd").innerHTML = "Generate " + player.offlineProd + "% of your best IP/min from the last 10 Infinities, works offline<br>Currently: " + shortenMoney(bestRunIppm.times(player.offlineProd / 100)) + " IP/min"
 }
 
@@ -464,9 +464,9 @@ function breakNGm2UpgradeColumnDisplay(){
 	if (player.extraDimPowerIncrease >= 40) el("postinfi04").className = "infinistorebtnbought"
 	else if (player.infinityPoints.gte(player.dimPowerIncreaseCost)) el("postinfi04").className = "infinimultbtn"
 	else el("postinfi04").className = "infinistorebtnlocked"
-	el("postinfi01").innerHTML = "Multiplier to Galaxy points based on infinities<br>Currently: "+shorten(getPost01Mult())+"x<br>Cost: "+shortenCosts(player.tickspeedBoosts==undefined?1e3:1e4)+" IP"
-	el("postinfi02").innerHTML = "Dimension Boost cost increases by 1 less<br>Currently: " + roundedDBCostIncrease(0) + (player.infinityUpgrades.includes("dimboostCost") ? "" : " -> " + (roundedDBCostIncrease(-1))) + "<br>Cost: " + shortenCosts(player.tickspeedBoosts == undefined ? 2e4 : 1e5) + " IP"
-	el("postinfi03").innerHTML = "Galaxy cost increases by 5 less<br>Currently: " + Math.round(getGalaxyReqMultiplier() * 10) / 10 + (player.infinityUpgrades.includes("galCost") ? "" : " -> " + Math.round(getGalaxyReqMultiplier() * 10 - 50) / 10 + "<br>Cost: " + shortenCosts(5e5) + " IP")
+	el("postinfi01").innerHTML = "Multiplier to Galaxy points based on infinities<br>Currently: "+shorten(getPost01Mult())+"x<br>Cost: "+shortenInt(player.tickspeedBoosts==undefined?1e3:1e4)+" IP"
+	el("postinfi02").innerHTML = "Dimension Boost cost increases by 1 less<br>Currently: " + roundedDBCostIncrease(0) + (player.infinityUpgrades.includes("dimboostCost") ? "" : " -> " + (roundedDBCostIncrease(-1))) + "<br>Cost: " + shortenInt(player.tickspeedBoosts == undefined ? 2e4 : 1e5) + " IP"
+	el("postinfi03").innerHTML = "Galaxy cost increases by 5 less<br>Currently: " + Math.round(getGalaxyReqMultiplier() * 10) / 10 + (player.infinityUpgrades.includes("galCost") ? "" : " -> " + Math.round(getGalaxyReqMultiplier() * 10 - 50) / 10 + "<br>Cost: " + shortenInt(5e5) + " IP")
 	el("postinfi04").innerHTML = "Further increase all dimension multipliers<br>x^" + galMults.u31().toFixed(2) + (player.extraDimPowerIncrease < 40 ? " -> x^" + ((galMults.u31() + 0.02).toFixed(2)) + "<br>Cost: " + shorten(player.dimPowerIncreaseCost) + " IP" : "")
 }
 
@@ -484,14 +484,14 @@ function breakNGm2UpgradeRow5Display(){
 	if (player.infinityUpgrades.includes("postinfi53")) el("postinfi53").className = "infinistorebtnbought"
 	else if (player.infinityPoints.gte(player.tickspeedBoosts == undefined ? 1e37 : 1e29)) el("postinfi53").className = "infinistorebtn1"
 	else el("postinfi53").className = "infinistorebtnlocked"
-	el("postinfi50").innerHTML = "Dimension Boost cost increases by 0.5 less.<br>Currently: " + E(getDimboostCostIncrease()).toFixed(2) + (player.infinityUpgrades.includes("postinfi50") ? "" : " -> " + (E(getDimboostCostIncrease() - .5).toFixed(2))) + "<br>Cost: " + shortenCosts(player.tickspeedBoosts==undefined ? 1e25 : 1e18) + " IP"
-	el("postinfi51").innerHTML = "Galaxies are " + (player.tickspeedBoosts ? 15 : 20) + "% more stronger.<br>Cost: " + shortenCosts(player.tickspeedBoosts == undefined ? 1e29 : 1e20) + " IP"
+	el("postinfi50").innerHTML = "Dimension Boost cost increases by 0.5 less.<br>Currently: " + E(getDimboostCostIncrease()).toFixed(2) + (player.infinityUpgrades.includes("postinfi50") ? "" : " -> " + (E(getDimboostCostIncrease() - .5).toFixed(2))) + "<br>Cost: " + shortenInt(player.tickspeedBoosts==undefined ? 1e25 : 1e18) + " IP"
+	el("postinfi51").innerHTML = "Galaxies are " + (player.tickspeedBoosts ? 15 : 20) + "% more stronger.<br>Cost: " + shortenInt(player.tickspeedBoosts == undefined ? 1e29 : 1e20) + " IP"
 	let inf52text = ''
 	if (player.tickspeedBoosts == undefined){
-		inf52text = "Galaxy cost increases by 3 less.<br>Currently: " + Math.round(getGalaxyReqMultiplier() * 10) / 10 + (player.infinityUpgrades.includes("postinfi52") ? "" : " -> " + Math.round(getGalaxyReqMultiplier() * 10 - 30) / 10) + "<br>Cost: " + shortenCosts(1e33) + " IP"
-	} else inf52text = "Decrease tickspeed boost cost multiplier to 3.<br>Cost: " + shortenCosts(1e25) + " IP"
+		inf52text = "Galaxy cost increases by 3 less.<br>Currently: " + Math.round(getGalaxyReqMultiplier() * 10) / 10 + (player.infinityUpgrades.includes("postinfi52") ? "" : " -> " + Math.round(getGalaxyReqMultiplier() * 10 - 30) / 10) + "<br>Cost: " + shortenInt(1e33) + " IP"
+	} else inf52text = "Decrease tickspeed boost cost multiplier to 3.<br>Cost: " + shortenInt(1e25) + " IP"
 	el("postinfi52").innerHTML = inf52text
-	el("postinfi53").innerHTML = "Divide all Infinity Dimension cost multipliers by 50" + (tmp.ngmX >= 4 ? ", free tickspeed upgrades multiply GP gain and IC completions boost Time Dimension Cost limit" : "") + ".<br>Cost: "+shortenCosts(player.tickspeedBoosts == undefined ? 1e37 : 1e29) + " IP"
+	el("postinfi53").innerHTML = "Divide all Infinity Dimension cost multipliers by 50" + (tmp.ngmX >= 4 ? ", free tickspeed upgrades multiply GP gain and IC completions boost Time Dimension Cost limit" : "") + ".<br>Cost: "+shortenInt(player.tickspeedBoosts == undefined ? 1e37 : 1e29) + " IP"
 }
 
 function breakNGm2UpgradeRow6Display(){
@@ -508,10 +508,10 @@ function breakNGm2UpgradeRow6Display(){
 	if (player.infinityUpgrades.includes("postinfi63")) el("postinfi63").className = "infinistorebtnbought"
 	else if (player.infinityPoints.gte("1e2000")) el("postinfi63").className = "infinistorebtn1"
 	else el("postinfi63").className = "infinistorebtnlocked"
-	el("postinfi60").innerHTML = "You gain more " + (player.tickspeedBoosts ? "Galaxy Points" : "antimatter") + " based on your galaxies." + (player.tickspeedBoosts ? "" : "<br>Currently: " + shorten(getNewB60Mult()) + "x") + "<br>Cost: " + shortenCosts(1e50) + " IP"
-	el("postinfi61").innerHTML = "g11 formula is better.<br>Cost: " + shortenCosts(E("1e450")) + " IP"
-	el("postinfi62").innerHTML = "Dimension Boosts make g13 stronger.<br>Cost: " + shortenCosts(E("1e700")) + " IP"
-	el("postinfi63").innerHTML = "Unlock 2 new rows of Galaxy Point upgrades.<br>Cost: " + shortenCosts(E("1e2000")) + " IP"
+	el("postinfi60").innerHTML = "You gain more " + (player.tickspeedBoosts ? "Galaxy Points" : "antimatter") + " based on your galaxies." + (player.tickspeedBoosts ? "" : "<br>Currently: " + shorten(getNewB60Mult()) + "x") + "<br>Cost: " + shortenInt(1e50) + " IP"
+	el("postinfi61").innerHTML = "g11 formula is better.<br>Cost: " + shortenInt(E("1e450")) + " IP"
+	el("postinfi62").innerHTML = "Dimension Boosts make g13 stronger.<br>Cost: " + shortenInt(E("1e700")) + " IP"
+	el("postinfi63").innerHTML = "Unlock 2 new rows of Galaxy Point upgrades.<br>Cost: " + shortenInt(E("1e2000")) + " IP"
 }
 
 function INFINITYUPGRADESDisplay(){
@@ -552,7 +552,7 @@ function eternityUpgradesDisplay(){
 function uponDilationDisplay(){
 	let gain = getTPGain()
 	let msg = "Disable dilation."
-	if (player.infinityPoints.lt(Number.MAX_VALUE)) {}
+	if (player.infinityPoints.lt(INF)) {}
 	else if (player.dilation.totalTachyonParticles.gt(gain)) msg += "<br>" + getReqForTPGainDisp()
 	else msg += " (+" + shortenMoney(gain.sub(player.dilation.totalTachyonParticles)) + " TP)"
 	el("enabledilation").innerHTML = msg
@@ -566,7 +566,7 @@ function exdilationDisplay(){
 	} else {
 		let req = getExdilationReq()
 		el("reversedilation").className = "eternityupbtnlocked"
-		el("reversedilation").textContent = "Get "+(player.eternityPoints.lt(req.ep)?shortenCosts(E(req.ep))+" EP and ":"")+shortenCosts(req.dt)+" dilated time to reverse dilation."
+		el("reversedilation").textContent = "Get "+(player.eternityPoints.lt(req.ep)?shortenInt(E(req.ep))+" EP and ":"")+shortenInt(req.dt)+" dilated time to reverse dilation."
 	}
 }
 
@@ -605,7 +605,7 @@ function ETERNITYSTOREDisplay(){
 	if (el("blackhole").style.display == "block") {
 		if (el("blackholediv").style.display == "inline-block") updateBlackhole()
 		if (el("blackholeunlock").style.display == "inline-block") {
-			el("blackholeunlock").innerHTML = "Unlock the black hole<br>Cost: " + shortenCosts(E('1e4000')) + " EP"
+			el("blackholeunlock").innerHTML = "Unlock the black hole<br>Cost: " + shortenInt(E('1e4000')) + " EP"
 			el("blackholeunlock").className = (player.eternityPoints.gte("1e4000")) ? "storebtn" : "unavailablebtn"
 		}
 	}
@@ -649,7 +649,7 @@ function replicantiDisplay() {
 		repModDisplay()
 	} else {
 		let cost = getReplUnlCost()
-		el("replicantiunlock").innerHTML = "Unlock Replicantis<br>Cost: " + shortenCosts(cost) + " IP"
+		el("replicantiunlock").innerHTML = "Unlock Replicantis<br>Cost: " + shortenInt(cost) + " IP"
 		el("replicantiunlock").className = player.infinityPoints.gte(cost) ? "storebtn" : "unavailablebtn"
 	}
 }
@@ -661,14 +661,14 @@ function repApproxDisplay() {
 			"Replicanti increases by " + (tmp.rep.est < Math.log10(2) ? "x2.00 per " + timeDisplayShort(Math.log10(2) / tmp.rep.est * 10) : (tmp.rep.est.gte(1e4) ? shorten(tmp.rep.est) + " OoMs" : "x" + shorten(pow10(tmp.rep.est.toNumber()))) + " per second") + ".<br>" +
 			"Replicate interval slows down by " + tmp.rep.speeds.inc.toFixed(3) + "x per " + getFullExpansion(Math.floor(tmp.rep.speeds.exp)) + " OoMs.<br>" +
 			(shiftDown && hasDilationUpg("ngpp2") ? "(2x slower per " + getFullExpansion(Math.floor(getRepSlowdownBase2(tmp.rep.speeds.exp))) + " OoMs)" : "") :
-		"Approximately "+ timeDisplay(Math.max((Math.log(Number.MAX_VALUE) - tmp.rep.ln) / tmp.rep.est.toNumber(), 0) * 10 * tmp.ec12Mult) + " until " + shorten(Number.MAX_VALUE) + " Replicantis."
+		"Approximately "+ timeDisplay(Math.max((Math.log(INF) - tmp.rep.ln) / tmp.rep.est.toNumber(), 0) * 10 * tmp.ec12Mult) + " until " + shorten(INF) + " Replicantis."
 	el("replicantibaseinterval").innerHTML = ECComps("eterc14") && shiftDown ? "<br>The base interval was " + timeDisplayShort(Decimal.div(10, tmp.rep.baseBaseEst), true, 2) + (tmp.rep.intBoost.neq(1) ? ", which is slowed down by " + shorten(tmp.rep.intBoost.pow(-1)) + "x to " + timeDisplayShort(Decimal.div(10, tmp.rep.baseEst), true, 2) + "." : "") : ""
 }
 
 function repChanceDisplay() {
 	//CHANCE
 	let chance = tmp.rep.chance
-	let chanceDisplayEnding = (isChanceAffordable() && player.infinityPoints.lt(pow10(1e10)) ? "<br>+1% Cost: " + shortenCosts(getRepChanceCost()) + " IP" : "")
+	let chanceDisplayEnding = (isChanceAffordable() && player.infinityPoints.lt(pow10(1e10)) ? "<br>+1% Cost: " + shortenInt(getRepChanceCost()) + " IP" : "")
 	el("replicantichance").innerHTML = "Replicate " + (tmp.rep.freq ? "amount: " + shorten(tmp.rep.freq) + "x" : "chance: " + formatPercentage(chance, 0) + "%") + chanceDisplayEnding
 	el("replicantichance").className = (player.infinityPoints.gte(getRepChanceCost()) && isChanceAffordable()) ? "storebtn" : "unavailablebtn"
 }
@@ -680,7 +680,7 @@ function repIntervalDisplay() {
 	el("replicantiinterval").innerHTML = "Interval: " + timeDisplayShort(interval, true, 3) +
 		(isIntervalAffordable() && player.infinityPoints.lt(pow10(1e10)) ?
 			"<br> -> " + timeDisplayShort(interval.times(getReplicantiBaseInterval(baseInt, 1).div(getReplicantiBaseInterval(baseInt))), true, 3) + 
-			" Cost: " + shortenCosts(replicantiIntervalCost(baseInt)) + " IP"
+			" Cost: " + shortenInt(replicantiIntervalCost(baseInt)) + " IP"
 		: "")
 	el("replicantiinterval").className = (player.infinityPoints.gte(player.replicanti.intervalCost) && isIntervalAffordable()) ? "storebtn" : "unavailablebtn"
 }
@@ -691,11 +691,11 @@ function repGalDisplay() {
 	let replGalOver = getMaxRG() - replGal
 	let replGalScale = replGal >= (tmp.ngC ? 250 : 400) ? 2 : replGal >= 100 ? 1 : 0
 	let replGalName = (replGalScale ? getGalaxyScaleName(replGalScale) : "Max ") + "Replicated Galaxies"
-	let replGalCostPortion = player.infinityPoints.lt(pow10(1e10)) && player.replicanti.galCost.lt(1/0) ? "<br>+1 Cost: " + shortenCosts(getRGCost()) + " IP" : ""
+	let replGalCostPortion = player.infinityPoints.lt(pow10(1e10)) && player.replicanti.galCost.lt(1/0) ? "<br>+1 Cost: " + shortenInt(getRGCost()) + " IP" : ""
 	el("replicantimax").innerHTML = replGalName + ": " + getFullExpansion(replGal) + (replGalOver > 0 ? "+" + getFullExpansion(replGalOver) : "") + replGalCostPortion
 	el("replicantireset").innerHTML = (
 		hasAch("ngpp16") ? "Get "
-		: (aarMod.ngp3c && ETER_UPGS.has(6)) ? "Divide replicanti amount by " + shorten(Number.MAX_VALUE) + ", but get "
+		: (aarMod.ngp3c && ETER_UPGS.has(6)) ? "Divide replicanti amount by " + shorten(INF) + ", but get "
 		: "Reset replicanti amount, but get "
 	) + "1 free galaxy.<br>" +
 		getFullExpansion(player.replicanti.galaxies) +
@@ -719,24 +719,24 @@ function initialTimeStudyDisplay(){
 
 	el("11desc").textContent = "Currently: " + shortenMoney(tsMults[11]()) + "x"
 	el("32desc").textContent = "You gain " + getFullExpansion(Math.ceil(tsMults[32]())) + "x more Infinities (based on Dimension Boosts)"
-	el("51desc").textContent = "You gain " + shortenCosts(aarMod.newGameExpVersion ? 1e30 : 1e15) + "x more IP"
+	el("51desc").textContent = "You gain " + shortenInt(aarMod.newGameExpVersion ? 1e30 : 1e15) + "x more IP"
 	el("71desc").textContent = "Currently: " + shortenMoney(tmp.sacPow.pow(0.25).max(1).min("1e210000")) + "x"
 	el("72desc").textContent = "Currently: " + shortenMoney(tmp.sacPow.pow(0.04).max(1).min("1e30000")) + "x"
 	el("73desc").textContent = "Currently: " + shortenMoney(tmp.sacPow.pow(0.005).max(1).min("1e1300")) + "x"
 	el("82desc").textContent = "Currently: " + shortenMoney(Decimal.pow(1.0000109, Decimal.pow(getTotalDBs(), 2)).min(player.meta==undefined?1/0:'1e80000')) + "x"
 	el("83desc").textContent = "Currently: " + shorten(tsMults[83]().pow(dbExp)) + "x"
 	el("91desc").textContent = "Currently: " + shortenMoney(pow10(Math.min(player.thisEternity, 18000)/60)) + "x"
-	el("92desc").textContent = "Currently: " + shortenMoney(Decimal.pow(2, 600/Math.max(player.bestEternity, 20))) + "x"
+	el("92desc").textContent = "Currently: " + shortenMoney(pow2(600/Math.max(player.bestEternity, 20))) + "x"
 	el("93desc").textContent = "Currently: " +  shortenMoney(Decimal.pow(player.totalTickGained, 0.25).max(1)) + "x"
 	el("121desc").textContent = "Currently: " + (tmp.ngp3_boost && hasAch("ngpp11") ? 50 : (253 - averageEp.dividedBy(player.epmult).dividedBy(10).min(248).max(3))/5).toFixed(1) + "x"
 	el("123desc").textContent = "Currently: " + Math.sqrt(1.39*player.thisEternity/10).toFixed(1) + "x"
 	el("141desc").textContent = "Currently: " + shorten(tsMults[141]()) + "x"
-	el("142desc").textContent = "You gain " + shortenCosts(1e25) + "x more IP"
+	el("142desc").textContent = "You gain " + shortenInt(1e25) + "x more IP"
 	el("143desc").textContent = "Currently: " + shortenMoney(Decimal.pow(15, Math.log(player.thisInfinityTime)*Math.pow(player.thisInfinityTime, 0.125))) + "x"
-	el("151desc").textContent = shortenCosts(1e4) + "x multiplier on all Time Dimensions"
-	el("161desc").textContent = shortenCosts(pow10((inNGM(2) ? 6660 : 616) *  ( aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all normal dimensions"
-	el("162desc").textContent = shortenCosts(pow10((inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all Infinity dimensions"
-	el("192desc").textContent = aarMod.ngp3c ? "The Replicanti limit is multiplied by your Time Shards." : "You can get beyond " + shortenMoney(Number.MAX_VALUE) + " replicantis, but the interval is increased the more you have"
+	el("151desc").textContent = shortenInt(1e4) + "x multiplier on all Time Dimensions"
+	el("161desc").textContent = shortenInt(pow10((inNGM(2) ? 6660 : 616) *  ( aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all normal dimensions"
+	el("162desc").textContent = shortenInt(pow10((inNGM(2) ? 234 : 11) * (aarMod.newGameExpVersion ? 5 : 1))) + "x multiplier on all Infinity dimensions"
+	el("192desc").textContent = aarMod.ngp3c ? "The Replicanti limit is multiplied by your Time Shards." : "You can get beyond " + shortenMoney(INF) + " replicantis, but the interval is increased the more you have"
 	el("193desc").textContent = "Currently: " + shortenMoney(Decimal.pow(1.03, Decimal.min(1e7, Decimal.div(getEternitied(), tmp.ngC ? 1e6 : 1))).min("1e13000")) + "x"
 	el("212desc").textContent = "Currently: " + ((tsMults[212]() - 1) * 100).toFixed(2) + "%"
 	el("214desc").textContent = "Currently: " + shortenMoney(((tmp.sacPow.pow(8)).min("1e46000").times(tmp.sacPow.pow(1.1)).div(tmp.sacPow)).max(1).min(E("1e125000"))) + "x"
@@ -749,7 +749,7 @@ function initialTimeStudyDisplay(){
 	el("232desc").textContent = "Currently: " + formatPercentage(tsMults[232]() - 1) + "%"
 	el("233desc").textContent = "Currently: " + shorten(tsMults[233]()) + "x"
 
-	el("metaCost").textContent = shortenCosts(getMetaUnlCost())
+	el("metaCost").textContent = shortenInt(getMetaUnlCost())
 }
 
 function eternityChallengeUnlockDisplay(){
@@ -766,13 +766,13 @@ function eternityChallengeUnlockDisplay(){
 	else el("ec5unl").innerHTML = "Eternity Challenge 5<span>Cost: 130 Time Theorems"
 	if (player.etercreq !== 6) el("ec6unl").innerHTML = "Eternity Challenge 6<span>Requirement: "+(40+(ECComps("eterc6")*5))+" replicanti galaxies<span>Cost: 85 Time Theorems"
 	else el("ec6unl").innerHTML = "Eternity Challenge 6<span>Cost: 85 Time Theorems"
-	if (player.etercreq !== 7) el("ec7unl").innerHTML = "Eternity Challenge 7<span>Requirement: "+shortenCosts(E("1e500000").times(E("1e300000").pow(ECComps("eterc7"))))+" antimatter <span>Cost: 115 Time Theorems"
+	if (player.etercreq !== 7) el("ec7unl").innerHTML = "Eternity Challenge 7<span>Requirement: "+shortenInt(E("1e500000").times(E("1e300000").pow(ECComps("eterc7"))))+" antimatter <span>Cost: 115 Time Theorems"
 	else el("ec7unl").innerHTML = "Eternity Challenge 7<span>Cost: 115 Time Theorems"
-	if (player.etercreq !== 8) el("ec8unl").innerHTML = "Eternity Challenge 8<span>Requirement: "+shortenCosts(E("1e4000").times(E("1e1000").pow(ECComps("eterc8"))))+" IP <span>Cost: 115 Time Theorems"
+	if (player.etercreq !== 8) el("ec8unl").innerHTML = "Eternity Challenge 8<span>Requirement: "+shortenInt(E("1e4000").times(E("1e1000").pow(ECComps("eterc8"))))+" IP <span>Cost: 115 Time Theorems"
 	else el("ec8unl").innerHTML = "Eternity Challenge 8<span>Cost: 115 Time Theorems"
-	if (player.etercreq !== 9) el("ec9unl").innerHTML = "Eternity Challenge 9<span>Requirement: "+shortenCosts(E("1e17500").times(E("1e2000").pow(ECComps("eterc9"))))+" infinity power<span>Cost: 415 Time Theorems"
+	if (player.etercreq !== 9) el("ec9unl").innerHTML = "Eternity Challenge 9<span>Requirement: "+shortenInt(E("1e17500").times(E("1e2000").pow(ECComps("eterc9"))))+" infinity power<span>Cost: 415 Time Theorems"
 	else el("ec9unl").innerHTML = "Eternity Challenge 9<span>Cost: 415 Time Theorems"
-	if (player.etercreq !== 10) el("ec10unl").innerHTML = "Eternity Challenge 10<span>Requirement: "+shortenCosts(E("1e100").times(E("1e20").pow(ECComps("eterc10"))))+" EP<span>Cost: 550 Time Theorems"
+	if (player.etercreq !== 10) el("ec10unl").innerHTML = "Eternity Challenge 10<span>Requirement: "+shortenInt(E("1e100").times(E("1e20").pow(ECComps("eterc10"))))+" EP<span>Cost: 550 Time Theorems"
 	else el("ec10unl").innerHTML = "Eternity Challenge 10<span>Cost: 550 Time Theorems"
 
 	el("ec11unl").innerHTML = "Eternity Challenge 11<span>Requirement: Use only the Normal Dimension path<span>Cost: 1 Time Theorem"
@@ -877,7 +877,7 @@ function ECCompletionsDisplay(){
 
 function ECchallengePortionDisplay(){
 	let ec12TimeLimit = Math.round(getEC12TimeLimit() * 10) / 100
-	for (var c=1;c<15;c++) el("eterc"+c+"goal").textContent = "Goal: "+shortenCosts(getECGoal("eterc"+c))+" IP"+(c==12?" in "+ec12TimeLimit+" second"+(ec12TimeLimit==1?"":"s")+" or less.":c==4?" in "+Math.max((16-(ECComps("eterc4")*4)),0)+" infinities or less.":"")
+	for (var c=1;c<15;c++) el("eterc"+c+"goal").textContent = "Goal: "+shortenInt(getECGoal("eterc"+c))+" IP"+(c==12?" in "+ec12TimeLimit+" second"+(ec12TimeLimit==1?"":"s")+" or less.":c==4?" in "+Math.max((16-(ECComps("eterc4")*4)),0)+" infinities or less.":"")
 }
 
 function EC8PurchasesDisplay(){
@@ -1033,15 +1033,15 @@ function doFeatureProgress() {
 			res = fluc_save.energy
 			reqFormat = shortenDimensions(res)
 			reqNum = 11
-			req = shortenCosts(reqNum) + " Fluctuant Energy"
+			req = shortenInt(reqNum) + " Fluctuant Energy"
 			percentage = res / reqNum
 			feature = "???"
 		}
 	} else if (str.unl()) {
 		res = player.money
-		resFormat = shortenCosts
-		reqNum = pow10(Math.pow(10, 13.5))
-		req = shortenCosts(reqNum) + " antimatter"
+		resFormat = shortenInt
+		reqNum = d_pow10(13.5)
+		req = shortenInt(reqNum) + " antimatter"
 		percentage = res.log(reqNum)
 		feature = "Fluctuate"
 	} else if (PCs.unl()) {
@@ -1082,13 +1082,13 @@ function doFeatureProgress() {
 		feature = "Dilation (approximately)"
 	} else if (pH.did("infinity")) {
 		res = player.infinityPoints
-		reqNum = Number.MAX_VALUE
+		reqNum = INF
 		req = reqNum + " Infinity points"
 		percentage = res.log(reqNum)
 		feature = "Eternity"
 	} else {
 		res = player.money
-		reqNum = Number.MAX_VALUE
+		reqNum = INF
 		req = reqNum + " antimatter"
 		percentage = res.log(reqNum)
 		feature = "Infinity"

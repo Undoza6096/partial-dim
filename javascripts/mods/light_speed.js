@@ -44,7 +44,7 @@ let LIGHT_SPEED = {
 		el("ls_" + id + "_text").textContent = shorten(speed)
 	},
 	changeOption(id) {
-		let speed = Math.pow(10, el("ls_" + id).value / 10 - 3)
+		let speed = m_pow10(el("ls_" + id).value / 10 - 3)
 		el("ls_" + id + "_text").textContent = shorten(speed)
 		if (speed == 1) delete aarMod.ls[id]
 		else aarMod.ls[id] = speed

@@ -305,32 +305,32 @@ function reduceDimCosts(upg) {
 }
 
 function galacticUpgradeSpanDisplay() {
-	el('galcost33').innerHTML = shortenCosts(getGalaxyUpgradeCost(33))
+	el('galcost33').innerHTML = shortenInt(getGalaxyUpgradeCost(33))
 	if (inNGM(3)) {
-		el('galcost24').textContent = shortenCosts(1e3)
-		el('galcost34').textContent = shortenCosts(1e17)
+		el('galcost24').textContent = shortenInt(1e3)
+		el('galcost34').textContent = shortenInt(1e17)
 	}
 	if (inNGM(4)) {
-		el('galcost25').textContent = shortenCosts(1e3)
-		el('galcost35').textContent = shortenCosts(2e3)
-		el('galcost16').textContent = shortenCosts(1e16)
-		el('galcost26').textContent = shortenCosts(1e18)
-		el('galcost36').textContent = shortenCosts(1e22)
-		el('galcost41').textContent = shortenCosts(1e23)
-		el('galcost42').textContent = shortenCosts(1e25)
-		el('galcost43').textContent = shortenCosts(1e28)
-		el('galcost44').textContent = shortenCosts(1e31)
-		el('galcost45').textContent = shortenCosts(1e34)
-		el('galcost46').textContent = shortenCosts(1e40) 
+		el('galcost25').textContent = shortenInt(1e3)
+		el('galcost35').textContent = shortenInt(2e3)
+		el('galcost16').textContent = shortenInt(1e16)
+		el('galcost26').textContent = shortenInt(1e18)
+		el('galcost36').textContent = shortenInt(1e22)
+		el('galcost41').textContent = shortenInt(1e23)
+		el('galcost42').textContent = shortenInt(1e25)
+		el('galcost43').textContent = shortenInt(1e28)
+		el('galcost44').textContent = shortenInt(1e31)
+		el('galcost45').textContent = shortenInt(1e34)
+		el('galcost46').textContent = shortenInt(1e40) 
 	} else if (player.infinityUpgrades.includes("postinfi63")) {
-		el("galcost41").textContent = shortenCosts(E("1e3800"))
-		el("galcost42").textContent = shortenCosts(E("1e4000"))
-		el("galcost43").textContent = shortenCosts(E("1e4200"))
+		el("galcost41").textContent = shortenInt(E("1e3800"))
+		el("galcost42").textContent = shortenInt(E("1e4000"))
+		el("galcost43").textContent = shortenInt(E("1e4200"))
 	}
 	if (player.infinityUpgrades.includes("postinfi63")) {
-		el("galcost51").textContent = shortenCosts(E("1e5500"))
-		el("galcost52").textContent = shortenCosts(E("1e8000"))
-		el("galcost53").textContent = shortenCosts(E("1e25000"))
+		el("galcost51").textContent = shortenInt(E("1e5500"))
+		el("galcost52").textContent = shortenInt(E("1e8000"))
+		el("galcost53").textContent = shortenInt(E("1e25000"))
 	}
 }
 
@@ -605,7 +605,7 @@ let galMults = {
 		}
 		let l = Math.max(player.galacticSacrifice.galaxyPoints.log10() - 5e4, 0)
 		if (hasAch("r123")) exp += Math.min(.005, l / 2e8)
-		if (!player.break) x = x.min(Number.MAX_VALUE)
+		if (!player.break) x = x.min(INF)
 		if (hasAch("r113")) exp += exp/60
 		if (exp > .01) exp = Math.log10(10000 * exp)/200
 		if (x.gt(1)){

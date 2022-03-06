@@ -60,9 +60,9 @@ function maxTheorems() {
 	gainTT = Math.floor(player.eternityPoints.div(player.timestudy.epcost).plus(1).log2())
 	if (gainTT > 0 && canBuyTTWithEP()) {
 		player.timestudy.theorem += gainTT
-		player.eternityPoints = player.eternityPoints.sub(Decimal.pow(2, gainTT).sub(1).times(player.timestudy.epcost))
+		player.eternityPoints = player.eternityPoints.sub(pow2(gainTT).sub(1).times(player.timestudy.epcost))
 		if (!break_infinity_js && isNaN(player.eternityPoints.logarithm)) player.eternityPoints = E(0)
-		player.timestudy.epcost = player.timestudy.epcost.times(Decimal.pow(2, gainTT))
+		player.timestudy.epcost = player.timestudy.epcost.times(pow2(gainTT))
 	}
 
 	updateTimeStudyButtons(true)
@@ -91,9 +91,9 @@ function updateTheoremButtons() {
 		el("theoremep").style.bottom = (offset - 75) + "px"
 
 		el("theoremam").className = player.money.gte(player.timestudy.amcost) ? "timetheorembtn" : "timetheorembtnlocked"
-		el("theoremam").innerHTML = "+1 Time Theorem<br>Cost: " + shortenCosts(player.timestudy.amcost)
+		el("theoremam").innerHTML = "+1 Time Theorem<br>Cost: " + shortenInt(player.timestudy.amcost)
 		el("theoremip").className = player.infinityPoints.gte(player.timestudy.ipcost) ? "timetheorembtn" : "timetheorembtnlocked"
-		el("theoremip").innerHTML = "+1 Time Theorem<br>Cost: " + shortenCosts(player.timestudy.ipcost) + " IP"
+		el("theoremip").innerHTML = "+1 Time Theorem<br>Cost: " + shortenInt(player.timestudy.ipcost) + " IP"
 		el("theoremep").className = player.eternityPoints.gte(player.timestudy.epcost) && canBuyTTWithEP() ? "timetheorembtn" : "timetheorembtnlocked"
 		el("theoremep").innerHTML = (!canBuyTTWithEP() ? "(requires 1 Time Dimension)" : "+1 Time Theorem<br>Cost: " + shortenDimensions(player.timestudy.epcost) + " EP")
 
@@ -384,7 +384,7 @@ function updateTimeStudyButtons(changed, forceupdate = false) {
 	el("dilstudy6").style.display = player.meta ? "" : "none"
 	el("masteryportal").style.display = player.masterystudies ? "" : "none"
 	if (tmp.ngp3) {
-		el("masteryportal").innerHTML = mTs.unl() ? "Mastery portal<span>Continue into mastery studies.</span>" : !hasDilationStudy(1) ? "To be continued...." : "Mastery portal (" + (hasDilationStudy(6) ? "66%: requires "+shortenCosts(1e100)+" dilated time upgrade)" : "33%: requires meta-dimensions)") 
+		el("masteryportal").innerHTML = mTs.unl() ? "Mastery portal<span>Continue into mastery studies.</span>" : !hasDilationStudy(1) ? "To be continued...." : "Mastery portal (" + (hasDilationStudy(6) ? "66%: requires "+shortenInt(1e100)+" dilated time upgrade)" : "33%: requires meta-dimensions)") 
 		el("masteryportal").className = mTs.unl() ? "dilationupg" : "timestudylocked"
 	}
 }
@@ -774,7 +774,7 @@ let tsMults = {
 		if (tmp.ngp3 && hasAch("ngpp15")) {
 			let str = Math.min(Math.log2(db / 2e6 + 2), 10)
 			str *= Math.min(str, 10) * 3e-6
-			x = x.max(Decimal.pow(2, db * str))
+			x = x.max(pow2(db * str))
 		}
 		return x
 	},

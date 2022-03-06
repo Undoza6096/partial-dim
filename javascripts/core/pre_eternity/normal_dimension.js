@@ -271,14 +271,14 @@ function multiplyPC5Costs(cost, tier) {
 		for (var i = 1; i <= 8; i++) {
 			if (player[tiers[i] + "Cost"].e <= cost.e) {
 				player[tiers[i] + "Cost"] = player[tiers[i] + "Cost"].times(player.costMultipliers[i-1])
-				if (player[tiers[i] + "Cost"].gte(Number.MAX_VALUE)) player.costMultipliers[i-1] = player.costMultipliers[i-1].times(10)
+				if (player[tiers[i] + "Cost"].gte(INF)) player.costMultipliers[i-1] = player.costMultipliers[i-1].times(10)
 			}
 		}
 	} else {
 		for (var i = 1; i <= 8; i++) {
 			if (player[tiers[i] + "Cost"].e >= cost.e) {
 				player[tiers[i] + "Cost"] = player[tiers[i] + "Cost"].times(player.costMultipliers[i-1])
-				 if (player[tiers[i] + "Cost"].gte(Number.MAX_VALUE)) player.costMultipliers[i-1] = player.costMultipliers[i-1].times(10)
+				 if (player[tiers[i] + "Cost"].gte(INF)) player.costMultipliers[i-1] = player.costMultipliers[i-1].times(10)
 			}
 		}
 	}
@@ -391,7 +391,7 @@ function recordBought(name, num) {
 function costIncreaseActive(cost) {
 	if (tmp.ngC) return true
 	if (inNC(10) || player.currentChallenge == "postc1" || player.infinityUpgradesRespecced != undefined) return false
-	return cost.gte(Number.MAX_VALUE) || player.currentChallenge === 'postcngmm_2';
+	return cost.gte(INF) || player.currentChallenge === 'postcngmm_2';
 }
 
 function haveSixDimensions() {
@@ -495,7 +495,7 @@ function buyBulkDimension(tier, bulk, auto) {
 	if (((!inNC(5) && player.currentChallenge != "postc5") || player.tickspeedBoosts != undefined) && !inNC(9) && !costIncreaseActive(player[name + "Cost"])) {
 		let mult = getDimensionCostMultiplier(tier)
 		let max = Number.POSITIVE_INFINITY
-		if (!inNC(10) && player.currentChallenge != "postc1" && player.infinityUpgradesRespecced == undefined) max = Math.ceil(Decimal.div(Number.MAX_VALUE, cost).log(mult) + 1)
+		if (!inNC(10) && player.currentChallenge != "postc1" && player.infinityUpgradesRespecced == undefined) max = Math.ceil(Decimal.div(INF, cost).log(mult) + 1)
 		var toBuy = Math.min(Math.min(Math.floor(resource.div(cost).times(mult-1).add(1).log(mult)), bulk-bought), max)
 		getOrSubResource(tier, Decimal.pow(mult, toBuy).sub(1).div(mult-1).times(cost))
 		recordBought(name, toBuy*10)

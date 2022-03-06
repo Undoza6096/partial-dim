@@ -55,9 +55,9 @@ let ETER_UPGS = {
 		mult() {
 			if (player.boughtDims) return player.timeShards.div(1e12).plus(1)
 			if (tmp.ngC) return Decimal.pow(6250 / Math.max(Math.min(infchallengeTimes, 6250), 6.1), 500 / Math.max(infchallengeTimes, 6.1))
-			return Decimal.pow(2, 300 / Math.max(infchallengeTimes, 6.1))
+			return pow2(300 / Math.max(infchallengeTimes, 6.1))
 		},
-		desc: () => "Infinity Dimension multiplier based on " + (player.boughtDims ? "Time Shards. (x/"+shortenCosts(1e12) + " + 1)" : "sum of Infinity Challenge times.")
+		desc: () => "Infinity Dimension multiplier based on " + (player.boughtDims ? "Time Shards. (x/"+shortenInt(1e12) + " + 1)" : "sum of Infinity Challenge times.")
 	},
 	4: {
 		unl: () => true,
@@ -141,7 +141,7 @@ let ETER_UPGS = {
 				let cost = E(this[i].cost)
 				let mult = this[i].mult && this[i].mult()
 
-				el("eter" + i).innerHTML = this[i].desc() + (mult ? "<br>Currently: " + shorten(mult) + "x" : "") + "<br>Cost: " + shortenCosts(cost) + " EP" 
+				el("eter" + i).innerHTML = this[i].desc() + (mult ? "<br>Currently: " + shorten(mult) + "x" : "") + "<br>Cost: " + shortenInt(cost) + " EP" 
 			}
 		}
 

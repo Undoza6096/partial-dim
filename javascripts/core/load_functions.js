@@ -96,7 +96,7 @@ function setPreEterIfUndefined(){
 	if (player.autoCrunchMode === undefined) player.autoCrunchMode = "amount"
 	if (player.challengeTarget === undefined) {
 		player.challengeTarget = 0
-		if (player.currentChallenge != "") player.challengeTarget = Number.MAX_VALUE
+		if (player.currentChallenge != "") player.challengeTarget = INF
 	}
 }
 
@@ -104,7 +104,7 @@ function setPreNGp3IfUndefined(){
         if (player.lastTenEternities === undefined) player.lastTenEternities = [[600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1], [600*60*24*31, 1]]
 	if (player.respec === undefined) player.respec = false
 	if (player.eternityChalls === undefined) player.eternityChalls = {}
-	if (player.eternityChallGoal === undefined) player.eternityChallGoal = E(Number.MAX_VALUE)
+	if (player.eternityChallGoal === undefined) player.eternityChallGoal = E(INF)
 	if (player.currentEternityChall === undefined) player.currentEternityChall = ""
 	if (player.eternityChallUnlocked === undefined) player.eternityChallUnlocked = 0
 	if (player.etercreq === undefined) player.etercreq = 0
@@ -1285,7 +1285,7 @@ function doERSv0tov102(){
                 player.dead=true
                 for (d=1;d<9;d++) {
                         var name = TIER_NAMES[d]
-                        if (costMults[d].lt(player.costMultipliers[d-1])) player[name+"Bought"] += (Math.round(Decimal.div(player.costMultipliers[d-1],costMults[d]).log(player.dimensionMultDecrease))+Math.ceil(Decimal.div(Number.MAX_VALUE,initCost[d]).log(costMults[d]))-1)*10
+                        if (costMults[d].lt(player.costMultipliers[d-1])) player[name+"Bought"] += (Math.round(Decimal.div(player.costMultipliers[d-1],costMults[d]).log(player.dimensionMultDecrease))+Math.ceil(Decimal.div(INF,initCost[d]).log(costMults[d]))-1)*10
                         else player[name+"Bought"] += Decimal.div(player[name+"Cost"],initCost[d]).log(costMults[d])*10
                         if (player[name+"Bought"]>0) {
                                 if (d>1) player.dead=false
@@ -1762,7 +1762,7 @@ function updateNGp3DisplayStuff(){
 	el('autoAssign').textContent="Auto: O"+(qu_save.autoOptions.assignQK?"N":"FF")
 	el('autoAssignRotate').textContent="Rotation: "+(qu_save.autoOptions.assignQKRotate>1?"Left":qu_save.autoOptions.assignQKRotate?"Right":"None")
 	el("ghostifyAnimBtn").textContent="Ghostify: O"+(player.options.animations.ghostify?"N":"FF")
-	el("gphUnl").textContent="To unlock Ghostly Photons, you need to get "+shortenCosts(pow10(6e9))+" antimatter while your universe is Big Ripped first."
+	el("gphUnl").textContent="To unlock Ghostly Photons, you need to get "+shortenInt(pow10(6e9))+" antimatter while your universe is Big Ripped first."
 	updateBLUnlockDisplay()
 	el("odSlider").value=Math.round((tmp.bl.odSpeed-1)/4*50)
 	for (var g=1;g<=br.limit;g++) el("typeToExtract"+g).className=tmp.bl.typeToExtract==g?"chosenbtn":"storebtn"
@@ -1903,7 +1903,6 @@ function onLoad(noOffline) {
 	tmp.ngmX = calcNGMX()
 	if (tmp.ngmX) aarMod.ngmX = tmp.ngmX
 	ngC.compile()
-	ngSg.compile()
 
 	pH.reset()
 	ls.reset()
@@ -2129,7 +2128,7 @@ function setupNGP31Versions() {
 
 function checkNGM(imported) {
 	var temp = imported || player
-	var td1PowerDiv = Decimal.pow(2, player.timeDimension1.bought).div(player.timeDimension1.power).toNumber()
+	var td1PowerDiv = pow2(player.timeDimension1.bought).div(player.timeDimension1.power).toNumber()
 	if (Math.round(td1PowerDiv) == 100) return 2.2
 	if (Math.round(td1PowerDiv*8) == 5) return 2.1
 	if (Math.round(td1PowerDiv) == 5) return 2
@@ -2155,7 +2154,7 @@ function load_game(noOffline, init) {
 		if (break_infinity_js) Decimal = Decimal_BI
 		initCost = [null, E(10), E(1e2), E(1e4), E(1e6), E(1e9), E(1e13), E(1e18), E(1e24)]
 		costMults = [null, E(1e3), E(1e4), E(1e5), E(1e6), E(1e8), E(1e10), E(1e12), E(1e15)]
-		setUnlocks = [Decimal.pow(Number.MAX_VALUE, 2.9)]
+		setUnlocks = [pow_inf(2.9)]
 	}
 	loadICData()
 	if (infiniteCheck) exportInfiniteSave()
@@ -2472,7 +2471,7 @@ function conToDeciTD(){
 
 function conToDeciPreEter(){
         player.infinityPoints = E(player.infinityPoints)
-        el("eternitybtn").style.display = ((player.infinityPoints.gte(Number.MAX_VALUE) && player.infDimensionsUnlocked[7]) || getEternitied() > 0) ? "inline-block" : "none"
+        el("eternitybtn").style.display = ((player.infinityPoints.gte(INF) && player.infDimensionsUnlocked[7]) || getEternitied() > 0) ? "inline-block" : "none"
 
         conToDeciPreInf()
         player.infinitied = c_parse(player.infinitied)

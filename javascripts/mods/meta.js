@@ -107,7 +107,7 @@ function getMDDescription(tier) {
 	else {
 		let a = shortenDimensions(player.meta[tier].amount)
 		if (aarMod.logRateChange === 2 || player.meta.antimatter.e >= 1e6) return a
-		let b = boughtEnd + ' (+' + formatValue(player.options.notation, getMDRateOfChange(tier), 2, 2) + dimDescEnd
+		let b = boughtEnd + ' (+' + formatQuick(getMDRateOfChange(tier), 2, 2) + dimDescEnd
 		return a+b
 	}
 }
@@ -290,7 +290,7 @@ function getExtraDimensionBoostPower(ma) {
 	let l2 = maFinal.log(2)
 	if (l2 > 1024) {
 		if (aarMod.nguspV) l2 = Math.pow(l2 * 32, 2/3)
-		maFinal = Decimal.pow(2, l2)
+		maFinal = pow2(l2)
 	}
 	return maFinal
 }
@@ -362,11 +362,11 @@ function updateMetaDimensions () {
 		showDim = showDim || canBuyMetaDimension(tier)
 		el(tier + "MetaRow").style.display = showDim ? "" : "none"
 		if (showDim) {
-			el(tier + "MetaD").textContent = DISPLAY_NAMES[tier] + " Meta Dimension x" + formatValue(player.options.notation, getMDMultiplier(tier), 2, 1)
+			el(tier + "MetaD").textContent = DISPLAY_NAMES[tier] + " Meta Dimension x" + shortenMoney(getMDMultiplier(tier))
 			el("meta" + tier + "Amount").textContent = getMDDescription(tier)
-			el("meta" + tier).textContent = autod ? "Auto: " + (player.autoEterOptions["md" + tier] ? "ON" : "OFF") : "Cost: " + formatValue(player.options.notation, player.meta[tier].cost, useTwo, 0) + " MA"
+			el("meta" + tier).textContent = autod ? "Auto: " + (player.autoEterOptions["md" + tier] ? "ON" : "OFF") : "Cost: " + formatQuick(player.meta[tier].cost, useTwo, 0) + " MA"
 			el('meta' + tier).className = autod ? "storebtn" : canAffordMetaDimension(player.meta[tier].cost) ? 'storebtn' : 'unavailablebtn'
-			el("metaMax"+tier).textContent = (autod ? (shiftDown ? "Singles: " : pH.did("ghostify") ? "" : "Cost: ") : "Until 10: ") + formatValue(player.options.notation, ((shiftDown && autod) ? player.meta[tier].cost : getMetaMaxCost(tier)), useTwo, 0) + " MA"
+			el("metaMax"+tier).textContent = (autod ? (shiftDown ? "Singles: " : pH.did("ghostify") ? "" : "Cost: ") : "Until 10: ") + formatQuick(((shiftDown && autod) ? player.meta[tier].cost : getMetaMaxCost(tier)), useTwo, 0) + " MA"
 			el('metaMax' + tier).className = canAffordMetaDimension((shiftDown && autod) ? player.meta[tier].cost : getMetaMaxCost(tier)) ? 'storebtn' : 'unavailablebtn'
 		}
 	}

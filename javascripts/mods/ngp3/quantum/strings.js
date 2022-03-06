@@ -72,7 +72,7 @@ let str = {
 				eff: (x) => x + 1,
 				effDisp: (x) => "Protect first " + x + " vibrations.",
 
-				req: (x) => Math.pow(2, x * x) * 8,
+				req: (x) => m_pow2(x * x) * 8,
 				res: () => str_save.energy,
 				resDisp: "Vibration Energy"
 			},

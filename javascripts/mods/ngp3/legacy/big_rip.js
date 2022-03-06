@@ -48,8 +48,8 @@ function getEMGain() {
 	let start = 10 //Starts at e1024.
 	if (log2log > start) { //every squaring there is a sqrt softcap
 		let capped = Math.min(Math.floor(Math.log10(Math.max(log2log + 2 - start, 1)) / Math.log10(2)), 20 - start)
-		log2log = (log2log - Math.pow(2, capped) - start + 2) / Math.pow(2, capped) + capped + start - 1
-		log = Math.pow(2, log2log)
+		log2log = (log2log - m_pow2(capped) - start + 2) / m_pow2(capped) + capped + start - 1
+		log = m_pow2(log2log)
 	}
 
 	if (!tmp.be) log /= 2
@@ -59,7 +59,7 @@ function getEMGain() {
 
 var breakUpgCosts = [1, 1e3, 2e6, 2e11, 8e17, 1e45, null, 1e290, E("1e350"), E("1e375"), E("1e2140"), E("1e2800"), E("1e3850")]
 function getBreakUpgCost(id) {
-	if (id == 7) return Decimal.pow(2, qu_save.breakEternity.epMultPower).times(1e5)
+	if (id == 7) return pow2(qu_save.breakEternity.epMultPower).times(1e5)
 	return breakUpgCosts[id - 1]
 }
 
@@ -83,7 +83,7 @@ function maxBuyBEEPMult() {
 	let cost = getBreakUpgCost(7)
 	if (!qu_save.breakEternity.eternalMatter.gte(cost)) return
 	let toBuy = Math.floor(qu_save.breakEternity.eternalMatter.div(cost).add(1).log(2))
-	let toSpend = Decimal.pow(2,toBuy).sub(1).times(cost).min(qu_save.breakEternity.eternalMatter)
+	let toSpend = pow2(toBuy).sub(1).times(cost).min(qu_save.breakEternity.eternalMatter)
 	qu_save.breakEternity.epMultPower += toBuy
 	qu_save.breakEternity.eternalMatter = qu_save.breakEternity.eternalMatter.sub(toSpend)
 	if (player.ghostify.milestones < 15) qu_save.breakEternity.eternalMatter = qu_save.breakEternity.eternalMatter.round()

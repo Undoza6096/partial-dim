@@ -1,5 +1,5 @@
 var pH = {
-	order: ["paradox", "accelerate", "galaxy", "infinity", "eternity", "interreality", "singularity", "quantum", "fluctuate", "ghostify"],
+	order: ["paradox", "accelerate", "galaxy", "infinity", "eternity", "interreality", "quantum", "fluctuate", "ghostify"],
 	names: {
 		infinity: "Infinity",
 		eternity: "Eternity",
@@ -17,18 +17,15 @@ var pH = {
 			return getGSAmount().gte(1) && !tmp.ri
 		},
 		infinity() {
-			return player.money.gte(Number.MAX_VALUE) && player.currentChallenge == "" && player.break
+			return player.money.gte(INF) && player.currentChallenge == "" && player.break
 		},
 		eternity() {
 			var id7unlocked = player.infDimensionsUnlocked[7]
 			if (getEternitied() >= 25 || (tmp.ngp3 && qu_save.bigRip.active)) id7unlocked = true
-			return player.infinityPoints.gte(player.currentEternityChall != "" ? player.eternityChallGoal : Number.MAX_VALUE) && id7unlocked
+			return player.infinityPoints.gte(player.currentEternityChall != "" ? player.eternityChallGoal : INF) && id7unlocked
 		},
 		interreality() {
 			return ECComps("eterc10") >= 1
-		},
-		singularity() {
-			return ngSg.can()
 		},
 		quantum() {
 			return QCs.inAny() ? QCs.getGoal() :
@@ -55,9 +52,6 @@ var pH = {
 		},
 		interreality() {
 			return inNGM(2)
-		},
-		singularity() {
-			return tmp.ngSg
 		},
 		quantum() {
 			return player.meta !== undefined
@@ -88,9 +82,6 @@ var pH = {
 		interreality() {
 			alert("Coming soon...")
 		},
-		singularity() {
-			alert("Coming soon...")
-		},
 		quantum() {
 			if (player.meta) {
 				if (!QCs.inAny()) quantum(false, false, 0)
@@ -111,7 +102,6 @@ var pH = {
 		infinity: "infinity",
 		eternity: "eternitystore",
 		interreality: "irTab",
-		singularity: "sgTab",
 		quantum: "quantumtab",
 		fluctuate: "flucTab",
 		ghostify: "ghostify"
@@ -123,7 +113,6 @@ var pH = {
 		infinity: "c",
 		eternity: "e",
 		interreality: "i",
-		singularity: "s",
 		quantum: "q",
 		fluctuate: "f",
 		ghostify: "g"
@@ -148,10 +137,7 @@ var pH = {
 			return player.eternities >= 1
 		},
 		interreality() {
-			return pH.did("singularity") || pH.did("quantum")
-		},
-		singularity() {
-			return ngSg.save.times >= 1
+			return pH.did("quantum")
 		},
 		quantum() {
 			return qu_save.times >= 1
@@ -176,7 +162,6 @@ var pH = {
 		infinity: ["postInfinityButton", "infinityPoints2", "infinitybtn"],
 		eternity: ["eternitybtn", "eternityPoints2", "eternitystorebtn"],
 		interreality: ["irReset", "irEmpty", "irTabBtn"],
-		singularity: ["sgReset", "sgEmpty", "sgTabBtn"],
 		quantum: ["quantumbtn", "quantumInfo", "quantumtabbtn"],
 		fluctuate: ["fluctuateReset", "fluctuateInfo", "fluctuateBtn"],
 		ghostify: ["ghostifybtn", "ghostparticles", "ghostifytabbtn"]

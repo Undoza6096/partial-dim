@@ -55,7 +55,7 @@ function checkPain(){
 }
 
 function checkSupersanic(){
-	if (player.money.gt(Math.pow(10,63))) giveAchievement("Supersanic");
+	if (player.money.gt(m_pow10(63))) giveAchievement("Supersanic");
 }
 
 function checkForEndMe() {
@@ -75,7 +75,7 @@ function checkYoDawg(){
 	if (!hasAch("r111") && player.lastTenRuns[9][1].neq(0)) {
 		let n = 0;
 		for (i = 0; i < 9; i++) {
-			if (player.lastTenRuns[i][1].gte(player.lastTenRuns[i+1][1].times(Number.MAX_VALUE))) n++
+			if (player.lastTenRuns[i][1].gte(player.lastTenRuns[i+1][1].times(INF))) n++
 		}
 		if (n == 9) giveAchievement("Yo dawg, I heard you liked infinities...")
 	}
@@ -92,7 +92,7 @@ function checkUniversalHarmony() {
 }
 
 function checkEPReqAchieve(){
-	if (player.eternityPoints.gte(Number.MAX_VALUE)) giveAchievement("But I wanted another prestige layer...")
+	if (player.eternityPoints.gte(INF)) giveAchievement("But I wanted another prestige layer...")
 	if (player.eternityPoints.gte("1e40000")) giveAchievement("In the grim darkness of the far endgame")
 	if (player.eternityPoints.gte("9e99999999")) giveAchievement("This achievement doesn't exist 3")
 }
@@ -122,7 +122,7 @@ function checkIPReqAchieve(){
 }
 
 function checkReplicantiBasedReqAchieve(){
-	if (player.replicanti.amount.gte(Number.MAX_VALUE) && player.thisInfinityTime < 600*30) giveAchievement("Is this safe?");
+	if (player.replicanti.amount.gte(INF) && player.thisInfinityTime < 600*30) giveAchievement("Is this safe?");
 	if (player.replicanti.galaxies >= 10 && player.thisInfinityTime < 150) giveAchievement("The swarm");
 	if (player.replicanti.galaxies >= 180 * player.galaxies && player.galaxies >= 1) giveAchievement("Popular music")
 	if (player.replicanti.amount.gt(E("1e20000"))) giveAchievement("When will it be enough?")
@@ -140,7 +140,7 @@ function checkMatterAMNDReqAchieve(){
 	if (player.money.gte("1e35000")) giveAchievement("I got a few to spare")
 	if (player.money.gt(pow10(80))) giveAchievement("Antimatter Apocalypse")
 	if (player.seventhAmount.gt(pow10(12))) giveAchievement("Multidimensional");
-	if ((player.matter.gte(2.586e15) && player.currentChallenge == "postc6") || player.matter.gte(Number.MAX_VALUE)) giveAchievement("It's not called matter dimensions is it?")
+	if ((player.matter.gte(2.586e15) && player.currentChallenge == "postc6") || player.matter.gte(INF)) giveAchievement("It's not called matter dimensions is it?")
 	if (getDimensionFinalMultiplier(1).gt(1e31)) giveAchievement("I forgot to nerf that")
 }
 
@@ -189,7 +189,7 @@ function checkOtherPreNGp3Achieve() {
 	if (player.infinitied >= 10) giveAchievement("That's a lot of infinites");
 	if (player.break) giveAchievement("Limit Break")
 	if (tmp.sacPow >= 600) giveAchievement("The Gods are pleased");
-	if (tmp.sacPow.gte(Number.MAX_VALUE)) giveAchievement("Yet another infinity reference")
+	if (tmp.sacPow.gte(INF)) giveAchievement("Yet another infinity reference")
 	if (tmp.sacPow.gte(pow10(9000)) && !inNC(11)) giveAchievement("IT'S OVER 9000")
 	if (player.currentChallenge.includes("post")) giveAchievement("Infinitely Challenging")
 	if (tmp.ec >= 50) giveAchievement("5 more eternities until the update")
@@ -230,7 +230,7 @@ function preHiggsNGp3AchieveCheck() {
 	let ableToGetRid5 = ableToGetRid2 && QCs.in(2) && player.dontWant
 	let ableToGetRid6 = ableToGetRid2 && QCs.in(6) && QCs.in(8)
 
-	if (player.meta.bestAntimatter.gte(Number.MAX_VALUE)) giveAchievement("I don't have enough fuel!")
+	if (player.meta.bestAntimatter.gte(INF)) giveAchievement("I don't have enough fuel!")
 	if (tmp.quUnl) giveAchievement("Sub-atomic")
 	if (usedQuarks.r.max(usedQuarks.g).max(usedQuarks.b).gt(0) && colorCharge.normal.chargeAmt.eq(0)) giveAchievement("Hadronization")
 	if (player.galaxies >= 1100 && !player.dilation.studies.includes(1)) giveAchievement("No more tax fraud!")
@@ -241,7 +241,7 @@ function preHiggsNGp3AchieveCheck() {
 	if (qMs.tmp.amt >= 21) giveAchievement("Special Relativity")
 	if (QCs.done(3)) giveAchievement("We are not going squared.")
 	if (
-		player.meta.bestAntimatter.gte(Decimal.pow(Number.MAX_VALUE, 2)) &&
+		player.meta.bestAntimatter.gte(pow_inf(2)) &&
 		player.meta[5].bought == 0 &&
 		player.meta[6].bought == 0 &&
 		player.meta[7].bought == 0 &&
@@ -302,7 +302,7 @@ function preHiggsNGp3AchieveCheck() {
 	}
 	if (FDs_save.meta.gte(1e15) && fluc_save.time <= 86400) giveAchievement("MAXIMUM OVERCHARGE")
 	if (QCs_save.qc1.boosts > 0 && player.dilation.tachyonParticles.eq(0)) giveAchievement("No dilation means no production.")
-	if (player.infinityPoints.gte(Decimal.pow(Number.MAX_VALUE, 1000)) && ableToGetRid5) giveAchievement("I don't want you to live anymore.")
+	if (player.infinityPoints.gte(pow_inf(1000)) && ableToGetRid5) giveAchievement("I don't want you to live anymore.")
 
 	return //WILL MOVE FOR UPCOMING UPDATES
 
@@ -329,7 +329,7 @@ function preHiggsNGp3AchieveCheck() {
 function atHiggsAchCheck(){
 	if (player.ghostify.ghostlyPhotons.enpowerments >= 25) giveAchievement("Bright as the Anti-Sun")
 	if (qu_save.quarks.log10() >= 4e4) giveAchievement("Are these another...")
-	if (player.ghostify.times >= Math.pow(Number.MAX_VALUE, 1/4)) giveAchievement("The Ghostliest Side")
+	if (player.ghostify.times >= Math.pow(INF, 1/4)) giveAchievement("The Ghostliest Side")
 	if (player.money.log10() >= 1e18) giveAchievement("Meta-Quintillion")
 }
 

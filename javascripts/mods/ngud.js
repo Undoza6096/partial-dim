@@ -82,7 +82,7 @@ function getBlackholeDimensionRateOfChange(tier) {
 function getBlackholeDimensionDescription(tier) {
 	if (!isBHDimUnlocked(tier + 1)) return getFullExpansion(player['blackholeDimension' + tier].bought)
 	else return shortenDimensions(player['blackholeDimension' + tier].amount) +
-		(aarMod.logRateChange !== 2 ? ' (+' + formatValue(player.options.notation, getBlackholeDimensionRateOfChange(tier), 2, 2) + dimDescEnd : "")
+		(aarMod.logRateChange !== 2 ? ' (+' + formatQuick(getBlackholeDimensionRateOfChange(tier), 2, 2) + dimDescEnd : "")
 }
 
 function getBlackholeUpgradeExponent() {
@@ -126,11 +126,11 @@ function updateBlackhole() {
 	drawBlackhole();
 	el("blackholePowAmount").innerHTML = shortenMoney(player.blackhole.power);
 	el("blackholePowPerSec").innerHTML = "You are getting " + shortenMoney(getBlackholeDimensionProduction(1)) + " black hole power per second.";
-	el("DilMultAmount").innerHTML = formatValue(player.options.notation, getBlackholePowerEffect(), 2, 2)
-	el("InfAndReplMultAmount").innerHTML = formatValue(player.options.notation, getBlackholePowerEffect().pow(1/3), 2, 2)
-	el("blackholeDil").innerHTML = "Feed the black hole with dilated time<br>Cost: "+shortenCosts(pow10(player.blackhole.upgrades.dilatedTime+(aarMod.nguspV?18:20)))+" dilated time";
-	el("blackholeInf").innerHTML = "Feed the black hole with banked infinities<br>Cost: "+formatValue(player.options.notation, Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round(), 1, 1)+" banked infinities";
-	el("blackholeRepl").innerHTML = "Feed the black hole with replicanti<br>Cost: "+shortenCosts(E("1e20000").times(Decimal.pow("1e1000", player.blackhole.upgrades.replicanti)))+" replicanti";
+	el("DilMultAmount").innerHTML = formatQuick(getBlackholePowerEffect(), 2, 2)
+	el("InfAndReplMultAmount").innerHTML = formatQuick(getBlackholePowerEffect().pow(1/3), 2, 2)
+	el("blackholeDil").innerHTML = "Feed the black hole with dilated time<br>Cost: "+shortenInt(pow10(player.blackhole.upgrades.dilatedTime+(aarMod.nguspV?18:20)))+" dilated time";
+	el("blackholeInf").innerHTML = "Feed the black hole with banked infinities<br>Cost: "+formatQuick(pow2(player.blackhole.upgrades.bankedInfinities).times(5e9).round(), 1, 1)+" banked infinities";
+	el("blackholeRepl").innerHTML = "Feed the black hole with replicanti<br>Cost: "+shortenInt(E("1e20000").times(Decimal.pow("1e1000", player.blackhole.upgrades.replicanti)))+" replicanti";
 	el("blackholeDil").className = canFeedBlackHole(1) ? 'eternityupbtn' : 'eternityupbtnlocked';
 	el("blackholeInf").className = canFeedBlackHole(2) ? 'eternityupbtn' : 'eternityupbtnlocked';
 	el("blackholeRepl").className = canFeedBlackHole(3) ? 'eternityupbtn' : 'eternityupbtnlocked';
@@ -140,7 +140,7 @@ function updateBlackhole() {
 				el("blackholeRow" + tier).style.display = ""
 				el("blackholeD" + tier).textContent = DISPLAY_NAMES[tier] + " Black Hole Dimension x" + shortenMoney(getBlackholeDimensionPower(tier));
 				el("blackholeAmount" + tier).textContent = getBlackholeDimensionDescription(tier);
-				el("blackholeMax" + tier).textContent = "Cost: " + shortenCosts(player["blackholeDimension"+tier].cost) + " EP";
+				el("blackholeMax" + tier).textContent = "Cost: " + shortenInt(player["blackholeDimension"+tier].cost) + " EP";
 				if (player.eternityPoints.gte(player["blackholeDimension" + tier].cost)) el("blackholeMax"+tier).className = "storebtn"
 				else el("blackholeMax"+tier).className = "unavailablebtn"
 			} else el("blackholeRow"+tier).style.display="none"
@@ -165,7 +165,7 @@ function canFeedBlackHole (i) {
 	if (i == 1) {
 		return pow10(player.blackhole.upgrades.dilatedTime + (aarMod.nguspV ? 18 : 20)).lte(player.dilation.dilatedTime)
 	} else if (i == 2) {
-		return Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round().lte(player.infinitiedBank)
+		return pow2(player.blackhole.upgrades.bankedInfinities).times(5e9).round().lte(player.infinitiedBank)
 	} else if (i == 3) {
 		return pow10(1e3 * player.blackhole.upgrades.replicanti + 2e4).lte(player.replicanti.amount)
 	}
@@ -186,7 +186,7 @@ function feedBlackHole(i, bulk) {
 			player.blackhole.upgrades.dilatedTime++
 		}
 	} else if (i == 2) {
-		let cost = Decimal.pow(2, player.blackhole.upgrades.bankedInfinities).times(5e9).round()
+		let cost = pow2(player.blackhole.upgrades.bankedInfinities).times(5e9).round()
 		if (bulk) {
 			let toBuy = Math.floor(Decimal.div(player.infinitiedBank, cost).plus(1).log(2))
 			let toSpend = pow10(1e3 * toBuy - 1).times(cost).round()

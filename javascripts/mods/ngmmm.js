@@ -73,7 +73,7 @@ function manualTickspeedBoost() {
 //v3.2
 function divideTickspeedIC5() {
 	if (player.currentChallenge != "postc5" || player.tickspeedBoosts == undefined) return
-	player.tickspeed = player.tickspeed.div(Decimal.pow(2, Math.pow(player.tickspeedBoosts, 1.5)))
+	player.tickspeed = player.tickspeed.div(pow2(Math.pow(player.tickspeedBoosts, 1.5)))
 }
 
 function getInitPostC3Power(){
