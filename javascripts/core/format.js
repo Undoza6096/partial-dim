@@ -88,13 +88,13 @@ function toTier2Abb(t2, aas) {
 	if (!t2) return ""
 
 	let tam = player.options.standard.useTam
-	let prefixes2 = tam ?
+	let abbs = tam ?
 		["", "M", "D", "Tr", "Te", "P", "H", "Hp", "Oc", "En"]
 	: [
-		["", "Mi", "Mc", "Na", aas ? "Pi" : "Pc", aas ? "Fem" : "Fm", "At", "Zep", "Yo", "Xe"],
-		["", "Me", "Du", "Tr", "Te", "Pe", "He", "Hp", "Ot", "En"],
-		["", "C", "Ic", "TCn", "TeC", "PCn", "HCn", "HpC", "OCn", "ECn"],
-		["", "Hc", "DHe", "THt", "TeH", "PHc", "HHe", "HpH", "OHt", "EHc"]
+		["", "Mi", "Mc", "Na", aas ? "Pi" : "Pc", "At", "Zp", "Yc", "Xn"],
+		["", "Me", "Du", "Tre", "Te", "Pe", "He", "Hp", "Ot", "En"],
+		["", "", "Is", "Trc", "Tec", "Pec", "Hec", "Hpc", "Otc", "Enc"],
+		["", "Hec", "DHc", "TrH", "TeH", "PeH", "HeH", "HpH", "OtH", "EnH"]
 	]
 	// Now supporting Tamara's illions!
 	// https://tamaramacadam.me/maths/largenumbers/illions.html
@@ -107,19 +107,19 @@ function toTier2Abb(t2, aas) {
 
 	if (tam) {
 		if (h > 0) {
-			if (h >= 2) r += prefixes2[h]
+			if (h >= 2) r += abbs[h]
 			r += "c"
 		}
 		if (t > 0) {
-			if (t >= 2) r += prefixes2[t]
+			if (t >= 2) r += abbs[t]
 			r += "d"
 		}
-		r += prefixes2[o] + "n"
+		r += abbs[o] + "n"
 	} else {
-		if (t2 < 10 && !tam) return standardize(prefixes2[0][t2], aas)
-		if (t == 1 && o == 0) r += "Vc"
-		else r += prefixes2[1][o] + prefixes2[2][t]
-		r += prefixes2[3][h]
+        if (t2 < 10 && !tam) return abbs[0][t2]
+        if (t == 1 && o == 0) r += "Vec"
+        else r += abbs[1][o] + abbs[2][t]
+        r += abbs[3][h]
 	}
 
 	return standardize(r, aas)
