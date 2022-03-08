@@ -529,85 +529,13 @@ button, div.storebtn {
 	color: #ff3f00 !important
 }
 
-#dilstudy14.dilationupgbought, .bigripbtn, .quickBigRip, .gluonupgradebought.bigrip {
-	background-color: #5be567 !important;
-	color: #191919 !important;
-	box-shadow: 1px 2px rgba(229,229,229,0.4)
-}
-
-#dilstudy14.dilationupg, .bigripbtn:hover, .quickBigRip:hover, .gluonupgrade.bigrip {
-	background-color: #7ee586 !important;
-	color: #191919 !important;
-	box-shadow: 1px 2px rgba(229,229,229,0.4)
-}
-
-#dilstudy14.dilationupg:hover, .gluonupgrade.bigrip:hover {
-	background-color: #a0e5a6 !important
-}
-
-.gluonupgradebought.bigripoff {
-	background-color: #999999 !important;
-	color: #e50000 !important;
-	box-shadow: 1px 2px rgba(229,229,229,0.4)
-}
-
-.SSAmount {
-	color: #5be567 !important
-}
-
-.ghostifybtn, .brCompleted {
-	border: none !important;
-	border-radius: 0px !important;
-	border-color: transparent !important;
-	box-shadow: inset 0px 0px 24px 0px black, 1px 2px rgba(229,229,229,0.4)
-}
-
-.ghostifybtn:hover {
-	border-color: rgba(255,255,255,0.5);
-	box-shadow: inset 0px 0px 12px 0px #420072, 1px 2px rgba(229,229,229,0.4)
-}
-
-.aarexmodsghostifybtn {
-	background: linear-gradient(#0c0033, #2e0033);
-	border-radius: 4px;
-	box-shadow: inset 0px 0px 24px 0px black, 1px 2px rgba(229,229,229,0.4);
-	font-weight: bold;
-	transition-duration: 0.2s;
-	animation: ghostifytext 4s linear infinite
-}
-
-.aarexmodsghostifybtn:hover {
-	background: linear-gradient(#0c0033, #2e0033);
-	box-shadow: inset 0px 0px 12px 0px #420072, 1px 2px rgba(229,229,229,0.4)
-}
-
-.neutrinos {
-	color: #5f5f5f
-}
-
-#GHPAmount, #quantumedBMAmount {
-	animation: ghostifytext 4s linear infinite
+#qftabbtn {
+    background: linear-gradient(#00ff00, #bfff00) !important;
+	color: #dfffdf !important
 }
 
 #bugExport b, .warning {
 	color: #e50000
-}
-
-#gphtabbtn button {
-	background-color: #bfaf5f !important;
-	color: #191919 !important
-}
-
-#gphtabbtn button:hover {
-	background-color: #bcae67 !important
-}
-
-.gphAmount {
-	color: #bfaf5f
-}
-
-.ghr {
-	color: #ccc8b7
 }
 
 .orange {
