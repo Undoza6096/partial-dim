@@ -90,6 +90,7 @@ function quarkGain(base) {
 			r = Decimal.pow(r.log10(), 10).add(1)
 			r = r.times(Math.max(3 / (r.add(1).log10() / 10 + 1), 1))
 		}
+		if (hasAch("ng3p36")) r = r.times(3)
 	}
 	return r
 }

@@ -406,7 +406,7 @@ function setR17Tooltip() {
 	//ng3p38/////
 
 	//ACHIEVEMENT ROW 17
-	max.setAttribute('ach-tooltip', "Reach " + shortenInt(1e15) + " Metastable Energy in 3-hour Fluctuate run.")
+	max.setAttribute('ach-tooltip', "After Fluctuate, gain 10x more Quarks within any Quantum Challenge. Reward: Gain 3x more Quarks.")
 	noDil.setAttribute('ach-tooltip', "Get a Replicanti Compressor without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
 }
 
