@@ -144,11 +144,8 @@ let ff = {
 			if (fluc.energy >= 15) p2.push(2)
 			if (fluc.energy >= 18) p2.push(3)
 			if (fluc.energy >= 21) p2.push(4)
-			for (var i = 0; i < p2.length; i++) if (!a[2].includes(p2[i]) && !a[2].includes(-p2[i])) p.push(i)
-			for (var i = 0; i < p.length; i++) {
-				d.a.push(ff.wrap(c[0] - p[i]))
-				d.a.push(ff.wrap(c[c.length-1] + p[i]))
-			}
+			for (var i = 0; i < p2.length; i++) if (!a[2].includes(p2[i])) p.push(i)
+			for (var i = 0; i < p.length; i++) d.a.push(c[c.length-1] + p[i])
 		}
 	},
 
@@ -209,7 +206,7 @@ let ff = {
 		return fluc_save.energy - ff_tmp.spent
 	},
 	arcUnl(x) {
-		return ff_tmp.pkUnl >= Math.ceil(x / 3)
+		return ff_save.data.length >= Math.floor(x / 3) && ff_tmp.pkUnl >= Math.ceil(x / 3)
 	},
 	cost(x) {
 		if (!x) x = 1
@@ -246,22 +243,17 @@ let ff = {
 		for (var i = 0; i < a.length; i++) {
 			var j = a[i]
 			var nx = a[i+1]
-			if (j < 0) {
-				r.push(ff.wrap(s - n))
-				n += j
-			}
 			if ((!nx || nx > 0) && m == 0) {
 				r.push(s)
 				m = 1
 			}
 			if (j > 0) {
 				p += j
-				r.push(ff.wrap(s + p))
+				r.push(s + p)
 			}
 		}
 		return r
 	},
-	wrap: (x) => ((x - 1) % 18) + 1,
 
 	powerStr(x) {
 		var r = 0

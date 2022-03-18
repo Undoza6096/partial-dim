@@ -171,7 +171,7 @@ let qMs = {
 	},
 	has(id) {
 		var d = qMs[id]
-		return (d.best ? qu_save.bestMP >= d.req : qMs.tmp.amt >= id) || evalData(d.forceGot)
+		return (tmp.ngp3 && d.best ? qu_save.bestMP >= d.req : qMs.tmp.amt >= id) || evalData(d.forceGot)
 	},
 	isOn(id) {
 		return qMs.has(id) && !qu_save.disabledRewards[id] && !qMs.forceOff(id)

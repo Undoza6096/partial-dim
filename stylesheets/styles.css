@@ -2591,7 +2591,7 @@ td.grey {
 
 .ff_btn {
 	border: 2px solid rgba(0, 0, 0, 0.25);
-	font-family: "Monospacevar(--font)";
+	font-family: var(--font);
 	background: #3f1f00;
 	box-shadow: inset 0px 0px 36px #ffdfdf, inset 0px 0px 36px #ffbfdf;
 	text-shadow: 0px 0px 6px #ff003f;
