@@ -97,7 +97,7 @@ function getMetaBoostPower() {
 
 	let exp = 1
 	if (tmp.ngp3 && hasAch("ngpp14")) exp = 1.05
-	if (enB.active("glu", 6) && pos.on()) exp *= enB_tmp.eff.glu6
+	if (enB.active("glu", 6) && pos.on() && !hasAch("ng3pr12")) exp *= enB_tmp.eff.glu6
 	return Math.pow(r, exp)
 }
 
@@ -256,14 +256,17 @@ function canAffordMetaDimension(cost) {
 	return cost.lte(player.meta.antimatter);
 }
 
+function cantSingleMetaDim(x) {
+	return moreEMsUnlocked() && (pH.did("quantum") || getEternitied() >= tmp.ngp3_em[3]) && (x > 1 || player.meta[1].bought > 0)
+}
+
 for (let i = 1; i <= 8; i++) {
 	el("meta" + i).onclick = function () {
-		if (moreEMsUnlocked() && (pH.did("quantum") || getEternitied() >= tmp.ngp3_em[3])) player.autoEterOptions["md" + i] = !player.autoEterOptions["md" + i]
+		if (cantSingleMetaDim(i)) player.autoEterOptions["md" + i] = !player.autoEterOptions["md" + i]
 		else metaBuyOneDimension(i)
 	}
 	el("metaMax" + i).onclick = function () {
-		if (shiftDown && moreEMsUnlocked() && (pH.did("quantum") || getEternitied() >= tmp.ngp3_em[3])) metaBuyOneDimension(i)
-		else metaBuyManyDimension(i);
+		metaBuyManyDimension(i);
 	}
 }
 
@@ -357,17 +360,18 @@ function updateMetaDimensions () {
 	updateOverallMetaDimensionsStuff()
 	let showDim = false
 	let useTwo = player.options.notation == "Logarithm" ? 2 : 0
-	let autod = moreEMsUnlocked() && (pH.did("quantum") || getEternitied() >= tmp.ngp3_em[3])
 	for (let tier = 8; tier > 0; tier--) {
+		let single = !cantSingleMetaDim(tier)
+
 		showDim = showDim || canBuyMetaDimension(tier)
 		el(tier + "MetaRow").style.display = showDim ? "" : "none"
 		if (showDim) {
 			el(tier + "MetaD").textContent = DISPLAY_NAMES[tier] + " Meta Dimension x" + shortenMoney(getMDMultiplier(tier))
 			el("meta" + tier + "Amount").textContent = getMDDescription(tier)
-			el("meta" + tier).textContent = autod ? "Auto: " + (player.autoEterOptions["md" + tier] ? "ON" : "OFF") : "Cost: " + formatQuick(player.meta[tier].cost, useTwo, 0) + " MA"
-			el('meta' + tier).className = autod ? "storebtn" : canAffordMetaDimension(player.meta[tier].cost) ? 'storebtn' : 'unavailablebtn'
-			el("metaMax"+tier).textContent = (autod ? (shiftDown ? "Singles: " : pH.did("ghostify") ? "" : "Cost: ") : "Until 10: ") + formatQuick(((shiftDown && autod) ? player.meta[tier].cost : getMetaMaxCost(tier)), useTwo, 0) + " MA"
-			el('metaMax' + tier).className = canAffordMetaDimension((shiftDown && autod) ? player.meta[tier].cost : getMetaMaxCost(tier)) ? 'storebtn' : 'unavailablebtn'
+			el("meta" + tier).textContent = !single ? "Auto: " + (player.autoEterOptions["md" + tier] ? "ON" : "OFF") : "Cost: " + formatQuick(player.meta[tier].cost, useTwo, 0) + " MA"
+			el('meta' + tier).className = !single ? "storebtn" : canAffordMetaDimension(player.meta[tier].cost) ? 'storebtn' : 'unavailablebtn'
+			el("metaMax"+tier).textContent = (!single ? (pH.did("fluctuate") ? "" : "Cost: ") : "Until 10: ") + formatQuick(getMetaMaxCost(tier), useTwo, 0) + " MA"
+			el('metaMax' + tier).className = canAffordMetaDimension(getMetaMaxCost(tier)) ? 'storebtn' : 'unavailablebtn'
 		}
 	}
 	var isMetaShift = player.meta.resets < 4
