@@ -401,10 +401,12 @@ function checkAchievement(id) {
 function checkAchievementRow(id) {
 	//Mod check
 	let ngp3 = id.split("ng3p")[1]
+	let ngp3r = id.split("ng3pr")[1]
 	if (id.split("ngm5p")[1]) return inNGM(5)
 	if (id.split("ngud")[1]) return player.exdilation != undefined
 	if (id.split("ngpp")[1]) return player.meta != undefined
-	if (ngp3) return tmp.ngpX >= 3
+	if (ngp3r) return tmp.ngpX >= 3
+	if (ngp3) return tmp.ngpX >= 3 && ngp3 <= 3
 
 	//Vanilla check
 	let r = parseInt(id.split("r")[1])
@@ -441,7 +443,6 @@ function giveAchievement(name, noUpdate) {
 		QCs.updateTmp()
 		QCs.updateDisp()
 	}
-	if (name == "Stop blocking me!") el('autoReset').style.display = ""
 	if (name == "To the new dimension!") qu_save.bigRip.bestGals = 1
 	if (name == "Quantum doesn't take so long") {
 		updateAutobuyers()

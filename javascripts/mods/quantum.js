@@ -28,7 +28,6 @@ function quantum(auto, force, attrs, mode, quick) {
 	if (aarMod.quantumConf && !(auto || force)) if (!confirm(player.masterystudies ? "Quantum will reset everything Eternity resets, and including all Eternity Content. You will gain a quark and unlock various upgrades." + (inNGM(2) ? " WARNING! THIS EXITS NG-- MODE DUE TO BALANCING REASONS!" : ""):"WARNING! Quantum wasn't fully implemented in NG++, so if you go Quantum now, you will gain quarks, but they'll have no use. Everything up to and including Eternity features will be reset.")) return
 	if (!pH.did("quantum")) if (!confirm("Are you sure you want to do this? You will lose everything you have!")) return
 
-
 	var implode = !auto && !force && !pH.did("ghostify") && tmp.quUnl && !QCs.unl()
 	if (implode) {
 		implosionCheck = 2

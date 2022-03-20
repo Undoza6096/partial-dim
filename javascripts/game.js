@@ -868,7 +868,9 @@ function doNGPlusThreeNewPlayer(){
 	for (var g = 1; g < br.limits[maxBLLvl]; g++) player.ghostify.bl.glyphs.push(0)
 	player.options.animations.ghostify = true
 	aarMod.ghostifyConf = true
+	aarMod.ngp3Build = 20220320
 	tmp.ngp3 = true
+	tmp.ngpX = 3
 }
 
 function doEternityRespeccedNewPlayer(){
