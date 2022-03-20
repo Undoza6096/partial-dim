@@ -4,43 +4,46 @@ let ff = {
 	canUse: () => ff_tmp.unl && (fluc_save.energy > 1 || str_save.energy >= 1),
 
 	data: {
-		all: [null, "alt", "pow", "free", "syn", "upg", "share"],
+		all_str: [null, "alt", "pow", "free", "syn", "upg", "share"],
+		all_gen: [null, "ph", "ph", "ph", "ph", "ph", "ph"],
+		all_req: [null, 1, 2, 3, 6, 7, 10],
 		modes: ["Arc", "Remove"],
+		sides: ["Strings", "Boosts"],
 		alt: {
-			req: 1,
 			title: "Altitude",
 			eff: (s) => Math.pow(s, 0.75) * 0.1,
 			desc: (x) => "Increases the altitudes by " + shorten(x) + "."
 		},
 		pow: {
-			req: 2,
 			title: "Power",
 			eff: (s) => Math.log2(s / 2 + 1) / 3 + 1,
 			desc: (x) => "Multiplies the power gain by " + shorten(x) + "x."
 		},
 		free: {
-			req: 3,
 			title: "Freebie",
 			eff: (s) => s,
 			desc: (x) => "Decreases the power requirement by -" + formatReductionPercentage(x) + "."
 		},
 		syn: {
-			req: 6,
 			title: "Synthesis",
 			eff: (s) => Math.sqrt(s / 2 + 1),
 			desc: (x) => "Strengthens Strings by altitudes."
 		},
 		upg: {
-			req: 7,
 			title: "Upgrade",
 			eff: (s) => Math.log10(s * 9 + 1),
 			desc: (x) => "Unlocks a new power, and reduce it by " + formatReductionPercentage(x) + "%."
 		},
 		share: {
-			req: 10,
 			title: "Sharing",
 			eff: (s) => Math.log2(s / 2 + 1) / 3 + 1,
 			desc: (x) => "Shares altitudes to the right by " + formatPercentage(x) + "."
+		},
+
+		ph: {
+			title: "Placeholder",
+			eff: (s) => 1,
+			desc: (x) => "Placeholder."
 		}
 	},
 
@@ -66,6 +69,7 @@ let ff = {
 		if (!data.mode) data.mode = 0
 
 		this.switchMode(true)
+		this.switchSide(true)
 		this.updateTmp()
 	},
 	reset() {
@@ -90,7 +94,7 @@ let ff = {
 		var save = ff_save.data
 
 		d.pkUnl = 0
-		for (var i = 1; i < data.all.length; i++) if (fluc_save.energy >= ff.data[ff.data.all[i]].req) d.pkUnl++
+		for (var i = 1; i < data.all_req.length; i++) if (fluc_save.energy >= data.all_req[i]) d.pkUnl++
 
 		d.spent = 0
 		d.linked = {}
@@ -105,10 +109,8 @@ let ff = {
 			d.spent += ff.cost(arc.length)
 			d.shown.push(a[0])
 			d.pos[a[0]] = i
-			if (a[1]) {
-				d.used.push(a[1])
-				d.pkPos[a[1]] = a[0]
-			}
+			d.used.push(i + 1)
+
 			for (var h = 0; h < arc.length; h++) {
 				var p = Math.ceil(arc[h] / 3)
 				d.linked[p] = (d.linked[p] || 0) + Math.sqrt(Math.abs(arc[h] - arc[0]) + 1)
@@ -126,9 +128,9 @@ let ff = {
 		d.eff = {}
 		for (var i = 1; i <= 6; i++) {
 			if (d.used.includes(i)) {
-				var p1 = ff_tmp.pkPos[i]
-				d.pow[i] = d.linked[Math.ceil(p1 / 3)]
-				d.eff[i] = ff.data[ff.data.all[i]].eff(d.pow[i])
+				d.pow[i] = d.linked[i]
+				d.eff["str_" + i] = ff.data[ff.data.all_str[i]].eff(d.pow[i])
+				d.eff["gen_" + i] = ff.data[ff.data.all_gen[i]].eff(d.pow[i])
 			}
 		}
 	},
@@ -139,11 +141,7 @@ let ff = {
 			var a = ff_save.data[d.x]
 			var c = ff.calcArc(a)
 			var p = []
-			var p2 = [1,2,3]
-			if (fluc.energy >= 12) p2.push(1)
-			if (fluc.energy >= 15) p2.push(2)
-			if (fluc.energy >= 18) p2.push(3)
-			if (fluc.energy >= 21) p2.push(4)
+			var p2 = [1,1,2]
 			for (var i = 0; i < p2.length; i++) if (!a[2].includes(p2[i])) p.push(i)
 			for (var i = 0; i < p.length; i++) d.a.push(c[c.length-1] + p[i])
 		}
@@ -154,7 +152,7 @@ let ff = {
 			var pos = ff_tmp.pos[i]
 			if (pos !== undefined) {
 				var pk = pos != undefined && ff_save.data[pos][1]
-				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data.all[pk]].desc(ff_tmp.eff[pk]) : ""
+				el("ff_pk_"+i+"_desc").textContent = pk ? ff.data[ff.data["all_"+["str","gen"][ff_save.side]][pk]].desc(ff_tmp.eff[["str","gen"][ff_save.side]+"_"+pk]) : ""
 				el("ff_pk_"+i+"_pow").innerHTML = pk && shiftDown ? " (" + shorten(ff_tmp.pow[pk]) + ")" : ""
 			}
 		}
@@ -171,13 +169,13 @@ let ff = {
 
 			var pk = pos != undefined && ff_save.data[pos][1]
 			el("ff_pk_"+i).style.display = ff_tmp.shown.includes(i) ? "" : "none"
-			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data.all[pk]].title : "None"
+			el("ff_pk_"+i+"_name").textContent = pk ? ff.data[ff.data["all_"+["str","gen"][ff_save.side]][pk]].title : "None"
 		}
 		el("ff_spent").textContent = shorten(ff_tmp.spent) + " / " + getFullExpansion(fluc_save.energy)
 
-		var nxt = ff.data[ff.data.all[ff_tmp.pkUnl + 1]]
+		var nxt = ff.data.all_req[ff_tmp.pkUnl + 1]
 		el("ff_pk_next").style.display = nxt ? "" : "none"
-		el("ff_pk_next").textContent = nxt && (nxt.title + " perk unlocks at " + getFullExpansion(nxt.req) + " Fluctuant Energy.")
+		el("ff_pk_next").textContent = "Next perk unlocks at " + getFullExpansion(nxt) + " Fluctuant Energy."
 
 		el("ff_req").style.display = ff.canUse() ? "none" : ""
 		el("ff_div").style.display = ff.canUse() ? "" : "none"
@@ -264,8 +262,8 @@ let ff = {
 	perkPos(x) {
 		return ff_tmp.pos[x]
 	},
-	perkEff(x) {
-		return ff_tmp.eff[x]
+	perkEff(type, x) {
+		return ff_tmp.eff[type + "_" + x]
 	},
 	perkActive(x) {
 		return ff_tmp.pow && ff_tmp.pow[x]
@@ -299,7 +297,7 @@ let ff = {
 				ff.updateChooseTmp()
 			} else {
 				if (!ff.canArc(x)) return
-				ff_save.data.push([x, 0, []])
+				ff_save.data.push([x, ff_save.data.length + 1, []])
 				ff.updateTmp()
 			}
 			ff.updateDisplays()
@@ -315,19 +313,6 @@ let ff = {
 			ff.updateTmp()
 			ff.updateDisplays()
 			restartQuantum()
-		} else if (mode == "perk") {
-			var data = ff_save.data[ff_tmp.pos[x]]
-			var newV = (data[1] || 0) + 1
-			while (ff_tmp.used.includes(newV)) newV++
-
-			var name = ff.data.all[newV]
-			if (newV == ff.data.all.length || fluc_save.energy < ff.data[name].req) newV = 0
-			data[1] = newV
-
-			el("ff_pk_"+x+"_name").textContent = newV ? ff.data[name].title : "None"
-			el("ff_pk_"+x+"_desc").textContent = newV ? evalData(ff.data[name].desc) : ""
-			ff.updateTmp()
-			restartQuantum()
 		}
 	},
 	switchMode(update) {
@@ -340,7 +325,15 @@ let ff = {
 			ff.updateDisplays()
 		}
 	},
-	
+	switchSide(update) {
+		if (!tmp.ngp3) return
+		if (!update) ff_save.side = (ff_save.side + 1) % 2
+		if (!ff_save.side) ff_save.side = 0
+		el("ff_side").textContent = "Side: " + ff.data.sides[ff_save.side]
+
+		if (!update) ff.updateDisplays()
+	},
+
 	exportPreset() {
 		let str = ""
 		let letters = " abcdefghijklmnopqrstuvwxyz"

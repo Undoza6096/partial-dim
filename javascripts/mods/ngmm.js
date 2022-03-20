@@ -795,14 +795,13 @@ function calcNGMX(data) {
 }
 
 function exitNGMM() {
-	delete tmp.ngmX
+	delete aarMod.ngmX
 	delete player.galacticSacrifice
 	delete player.tickspeedBoosts
 	delete player.tdBoosts
 	delete player.pSac
 
-	tmp.ngmX = calcNGMX()
-	tmp.ngmX = tmp.ngmX
+	tmp.ngmX = 0
 	el("gSacrifice").style.display = "none"
 	pH.reset()
 }

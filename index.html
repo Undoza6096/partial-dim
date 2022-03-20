@@ -1530,16 +1530,13 @@
 					</tr>
 					<tr>
 						<td>
-							<div class="storebtn" style="color:black; width: 198px; height: 55px; font-size:130%; text-align: center;"><b>Nanospeed: <span id="ls_nf_text">1.00</span>x</b><input id="ls_nf" style="width: 170px;" type="range" min="0" max="70" value="30" class="slider" onchange="ls.changeOption('nf')"></div>
-						</td>
-						<td>
 							<div class="storebtn" style="color:black; width: 198px; height: 55px; font-size:130%; text-align: center;"><b>Branch speed: <span id="ls_tod_text">1.00</span>x</b><input id="ls_tod" style="width: 170px;" type="range" min="0" max="70" value="30" class="slider" onchange="ls.changeOption('tod')"></div>
 						</td>
-					</tr>
-					<tr>
 						<td>
 							<div class="storebtn" style="color:black; width: 198px; height: 55px; font-size:130%; text-align: center;"><b>Photonic Flow: <span id="ls_gph_text">1.00</span>x</b><input id="ls_gph" style="width: 170px;" type="range" min="0" max="70" value="30" class="slider" onchange="ls.changeOption('gph')"></div>
 						</td>
+					</tr>
+					<tr>
 						<td>
 							<div class="storebtn" style="color:black; width: 198px; height: 55px; font-size:130%; text-align: center;"><b>Bosonic Speed: <span id="ls_bl_text">1.00</span>x</b><input id="ls_bl" style="width: 170px;" type="range" min="0" max="70" value="30" class="slider" onchange="ls.changeOption('bl')"></div>
 						</td>
@@ -1564,7 +1561,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(3/18/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(3/19/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5035,7 +5032,7 @@
 				<button class="storebtn" onclick="ff.respec()">Respec</button>
 				<button class="storebtn" onclick="ff.exportPreset()">Export</button>
 				<button class="storebtn" onclick="ff.importPreset()">Import</button>
-				<button class="storebtn" onclick="ff.switchSide()">Side: Strings</button>
+				<button class="storebtn" id="ff_side" onclick="ff.switchSide()">Side: Strings</button>
 				<br>
 				<span id="ff_pk_next">Next Perk unlocks at 3 Fluctuant Energy.</span>
 				<table id="ff_table" align="center" style="margin: auto"></table>

@@ -140,7 +140,7 @@ let str = {
 		data.vibrated = vibrated.length
 		for (var i = 0; i < data.vibrated; i++) this.onVibrate(vibrated[i])
 		for (var i = 1; i <= 18; i++) data.totalAlt += data.alt[i] || 0
-		if (ff.perkActive(6)) for (var i = 7; i <= 18; i++) if (data.alt[i - 6]) data.alt[i] = (data.alt[i] || 0) + data.alt[i - 6] * ff.perkEff(6) / 5
+		if (ff.perkActive(6)) for (var i = 7; i <= 18; i++) if (data.alt[i - 6]) data.alt[i] = (data.alt[i] || 0) + data.alt[i - 6] * ff.perkEff("str", 6) / 5
 		str_save.spent = str.veCost(data.vibrated)
 
 		//Powers
@@ -186,8 +186,8 @@ let str = {
 		if (!data.unl) return
 
 		data.str = Math.log10(Math.log10(str_save.energy * 3 + 1) + 1) * 1.5 + 1
-		if (ff.perkActive(2)) data.str *= ff.perkEff(2)
-		if (ff.perkActive(4)) data.str *= Math.log10(data.totalAlt * ff.perkEff(4) / 2 + 1) + 1
+		if (ff.perkActive(2)) data.str *= ff.perkEff("str", 2)
+		if (ff.perkActive(4)) data.str *= Math.log10(data.totalAlt * ff.perkEff("str", 4) / 2 + 1) + 1
 
 		//Boosts
 		data.effs = {}
@@ -325,7 +325,7 @@ let str = {
 			var d = Math.abs(p)
 			var y = p + x
 			var add = 0.17 - 0.13 * d + 0.25 * ((d + 1) % 2)
-			if (ff.perkActive(1)) add += ff.perkEff(1)
+			if (ff.perkActive(1)) add += ff.perkEff("str", 1)
 			if (fluc.unl() && fluc_tmp.temp && add < 0) add /= fluc_tmp.temp
 			str_tmp.alt[y] = (str_tmp.alt[y] || 0) + add
 		}
@@ -350,8 +350,8 @@ let str = {
 	req(t, x) {
 		var r = str.data.effs[t + x].req
 		r -= str.upgEff(3).pow || 0
-		if (ff.perkActive(3)) r -= ff.perkEff(3)
-		if (ff.perkActive(5) && t == "c") r /= ff.perkEff(5)
+		if (ff.perkActive(3)) r -= ff.perkEff("str", 3)
+		if (ff.perkActive(5) && t == "c") r /= ff.perkEff("str", 5)
 		return r
 	},
 

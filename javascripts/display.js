@@ -196,16 +196,6 @@ function quantumStatDisplay(){
 	}
 }
 
-function bestGhostifyDisplay(){
-	if (!pH.shown("ghostify")) el("ghostifyStatistics").style.display = "none"
-	else {
-		el("ghostifyStatistics").style.display = ""
-		el("ghostified").textContent = "You have became a ghost and passed Big Ripped universes " + getFullExpansion(player.ghostify.times) + " times."
-		el("thisGhostify").textContent = "You have spent " + timeDisplay(player.ghostify.time) + " in this Ghostify."
-		el("bestGhostify").textContent = "Your fastest Ghostify is in " + timeDisplay(player.ghostify.best) + "."
-	}
-}
-
 function dilationStatsDisplay(){
 	if (player.dilation.times) el("dilated").textContent = "You have succesfully dilated "+getFullExpansion(player.dilation.times)+" times."
 	else el("dilated").textContent = ""
@@ -388,7 +378,6 @@ function STATSDisplay(){
 	bestInfinityDisplay()
 	bestEternityDisplay()
 	quantumStatDisplay()
-	bestGhostifyDisplay()
 	dilationStatsDisplay()
 	infoScaleDisplay()
 }
