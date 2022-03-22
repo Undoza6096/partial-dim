@@ -708,7 +708,7 @@ function canBuyMasteryStudy(type, id) {
 		if (mTs.unlockReqConditions[id] && !mTs.unlockReqConditions[id]()) return false
 
 		//Death Mode
-		if (tmp.dtMode && mTs.latestBoughtRow <= 26 && (id != "t264" && id != "t265") && (hasMTS(264) || hasMTS(265))) return false
+		if (tmp.dtMode && row <= 26 && mTs.latestBoughtRow <= 26 && (id != 264 && id != 265) && (hasMTS(264) || hasMTS(265))) return false
 
 		//QC7
 		if (QCs.in(7)) return (row <= 26 && isInfinityMoralsApplied()) || !mTs.spentRows[row] || mTs.spentRows[row] < mTs.studyRows[row] - 1
