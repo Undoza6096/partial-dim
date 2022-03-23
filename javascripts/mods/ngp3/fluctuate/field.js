@@ -138,11 +138,15 @@ let ff = {
 		var d = ff_tmp.choose
 		d.a = []
 		if (d.x != undefined) {
-			var a = ff_save.data[d.x]
-			var c = ff.calcArc(a)
+			var data = ff_save.data[d.x]
+			var a = data[2]
+			var c = ff.calcArc(data)
 			var p = []
-			var p2 = [1,1,2]
-			for (var i = 0; i < p2.length; i++) if (!a[2].includes(p2[i])) p.push(i)
+			for (var i = 1; i <= 2; i++) {
+				var x = 0
+				for (var j = 0; j < a.length; j++) if (a[j] == i) x++
+				if (x < 2) p.push(i)
+			}
 			for (var i = 0; i < p.length; i++) d.a.push(c[c.length-1] + p[i])
 		}
 	},
@@ -208,7 +212,7 @@ let ff = {
 	},
 	cost(x) {
 		if (!x) x = 1
-		return Math.pow((2.5 * (x - 1) + 1) / 3, 0.6)
+		return Math.pow((2 * (x - 1) + 1) / 3, 0.75)
 	},
 	canArc(x) {
 		if (!ff.arcUnl(x)) return
