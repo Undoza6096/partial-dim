@@ -978,8 +978,11 @@ var enB = {
 		},
 
 		chargeReq(x, next, lvl) {
+			var scaling = 1
+			if (PCs.milestoneDone(42)) scaling /= Math.sqrt(1 - (PCs_save.lvl - 1) / 28)
+			if (str.unl() && str_tmp.effs) scaling /= str_tmp.effs.c1
+
 			var lvl = lvl || this.lvl(x, next)
-			var scaling = PCs.milestoneDone(42) ? Math.sqrt(1 - (PCs_save.lvl - 1) / 28) : 1
 			var req = this[x].chargeReq *
 				Math.pow(1.5, Math.max((pos_tmp.cloud && pos_tmp.cloud.total) || 0, 2) * scaling) *
 				m_pow2((lvl - this[x].tier))

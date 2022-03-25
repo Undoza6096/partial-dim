@@ -5,7 +5,7 @@ let ff = {
 
 	data: {
 		all_str: [null, "alt", "pow", "free", "syn", "upg", "share"],
-		all_gen: [null, "ph", "ph", "ph", "ph", "ph", "ph"],
+		all_gen: [null, "qk", "ph2", "ph3", "ph4", "ph5", "ph6"],
 		all_req: [null, 1, 2, 3, 6, 7, 10],
 		modes: ["Arc", "Remove"],
 		sides: ["Strings", "Boosts"],
@@ -40,11 +40,36 @@ let ff = {
 			desc: (x) => "Shares altitudes to the right by " + formatPercentage(x) + "."
 		},
 
-		ph: {
+		qk: {
+			title: "Quarks",
+			eff: (s) => Math.log2(s / 3 + 1) + 1,
+			desc: (x) => "You gain " + shorten(x) + "x more Quarks."
+		},
+		ph2: {
 			title: "Placeholder",
 			eff: (s) => 1,
 			desc: (x) => "Placeholder."
-		}
+		},
+		ph3: {
+			title: "Placeholder",
+			eff: (s) => 1,
+			desc: (x) => "Placeholder."
+		},
+		ph4: {
+			title: "Placeholder",
+			eff: (s) => 1,
+			desc: (x) => "Placeholder."
+		},
+		ph5: {
+			title: "Placeholder",
+			eff: (s) => 1,
+			desc: (x) => "Placeholder."
+		},
+		ph6: {
+			title: "Placeholder",
+			eff: (s) => 1,
+			desc: (x) => "Placeholder."
+		},
 	},
 
 	setup() {

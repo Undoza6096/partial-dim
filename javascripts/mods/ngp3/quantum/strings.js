@@ -19,8 +19,8 @@ let str = {
 			},
 			c1: {
 				req: 10,
-				eff: (x) => x,
-				disp: (x) => "???"
+				eff: (x) => Math.sqrt(x / 5 + 1),
+				disp: (x) => formatReductionPercentage(x) + "% more equal charge"
 			},
 			a2: {
 				req: 1.1,
