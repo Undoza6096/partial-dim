@@ -3,8 +3,8 @@ let str = {
 
 	//Data
 	data: {
-		letters: ["α", "β", "γ"],
-		names: ["Alpha", "Beta", "Gamma"],
+		letters: ["α", "β", "γ", "Δ"],
+		names: ["Alpha", "Beta", "Gamma", "Delta"],
 		pos: {},
 		effs: {
 			a1: {
@@ -53,8 +53,8 @@ let str = {
 			},
 			c3: {
 				req: 10,
-				eff: (x) => x,
-				disp: (x) => "???"
+				eff: (x) => Math.log2(x / 3 + 2),
+				disp: (x) => "^" + shorten(x) + " to EC14 softcap start"
 			}
 		},
 		upgs: {

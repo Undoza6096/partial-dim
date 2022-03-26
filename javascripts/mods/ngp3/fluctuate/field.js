@@ -5,7 +5,7 @@ let ff = {
 
 	data: {
 		all_str: [null, "alt", "pow", "free", "syn", "upg", "share"],
-		all_gen: [null, "qk", "ph2", "ph3", "ph4", "ph5", "ph6"],
+		all_gen: [null, "qk", "et", "ph3", "ph4", "ph5", "ph6"],
 		all_req: [null, 1, 2, 3, 6, 7, 10],
 		modes: ["Arc", "Remove"],
 		sides: ["Strings", "Boosts"],
@@ -45,10 +45,10 @@ let ff = {
 			eff: (s) => Math.log2(s / 3 + 1) + 1,
 			desc: (x) => "You gain " + shorten(x) + "x more Quarks."
 		},
-		ph2: {
-			title: "Placeholder",
-			eff: (s) => 1,
-			desc: (x) => "Placeholder."
+		et: {
+			title: "Eternal",
+			eff: (s) => Math.log2(s / 3 + 2),
+			desc: (x) => "EC14 softcap starts " + shorten(x) + " later."
 		},
 		ph3: {
 			title: "Placeholder",
