@@ -283,11 +283,15 @@ var PCs = {
 		if (fluc.unl() && fluc_tmp.temp) relDiv += fluc_tmp.temp.pc
 
 		var scale = 1
-		if (str.unl() && str_tmp.effs) scale /= str_tmp.effs.b2
+		var omegaScale = 5
+		if (str.unl() && str_tmp.effs) {
+			scale /= str_tmp.effs.b2
+			omegaScale /= str_tmp.effs.b3
+		}
 		var mul = PCs_save.comps.length * Math.max(PCs_save.comps.length / 4, 3) * scale + //Completion Scaling
 			(Math.floor(pos / 10) - 1) + //Row Scaling
 			PCs_tmp.row_comps[Math.floor(pos / 10)] - //Row Completion Scaling
-			(PCs_tmp.row_comps[5] + PCs_tmp.row_comps[6] + PCs_tmp.row_comps[7]) * 5 //Omega Sets
+			(PCs_tmp.row_comps[5] + PCs_tmp.row_comps[6] + PCs_tmp.row_comps[7]) * omegaScale //Omega Sets
 		if (pos >= 50) mul += Math.floor(pos / 10) - 4
 
 		var r = qc1.pow(qc2.log(INF) / relDiv)

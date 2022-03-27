@@ -34,12 +34,12 @@ let str = {
 			b2: {
 				req: 2,
 				eff: (x) => Math.log10(x / 4 + 1) + 1,
-				disp: (x) => "-" + formatPercentage(x-1) + "% to PC completion scaling"
+				disp: (x) => "-" + formatPercentage(x-1,2) + "% to PC completion scaling"
 			},
 			c2: {
 				req: 10,
-				eff: (x) => x,
-				disp: (x) => "???"
+				eff: (x) => 1 / (Math.log10(x / 4 + 1) / 4 + 1),
+				disp: (x) => formatReductionPercentage(x,3) + "% Omega PC scaling"
 			},
 			a3: {
 				req: 2,
