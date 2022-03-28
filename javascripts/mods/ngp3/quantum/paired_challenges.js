@@ -276,8 +276,8 @@ var PCs = {
 		if (typeof(list) == "number") list = this.convBack(list)
 		pos = pos || PCs_save.in
 
-		var qc1 = QCs.data[list[0]].goalMA
-		var qc2 = QCs.data[list[1]].goalMA
+		var qc1 = QCs.getBaseGoal(list[0])
+		var qc2 = QCs.getBaseGoal(list[1])
 		var div = PCs.data.goal_divs[list[0]] + PCs.data.goal_divs[list[1]] + 1
 		var relDiv = div
 		if (fluc.unl() && fluc_tmp.temp) relDiv += fluc_tmp.temp.pc

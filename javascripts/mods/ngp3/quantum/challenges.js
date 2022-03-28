@@ -652,12 +652,17 @@ var QCs = {
 	getGoalDisp() {
 		return this.hasSecondaryGoal() ? " and " + this.data[QCs_tmp.in[0]].goalDisp() : ""
 	},
+	getBaseGoal(x) {
+		let r = E(this.data[x].goalMA)
+		if (fluc.unl()) r = r.div(ff.perkEff("gen", 4))
+		return r
+	},
 	getGoalMA(x, mod) {
 		if (!x) {
 			if (PCs.in()) return PCs.goal()
 			x = QCs_save.in[0]
 		}
-		if (x) r = this.data[x].goalMA
+		if (x) r = this.getBaseGoal()
 		if (str.unl() && str_tmp.effs) r = r.pow(1 / str_tmp.effs.a2)
 		return r
 	},
