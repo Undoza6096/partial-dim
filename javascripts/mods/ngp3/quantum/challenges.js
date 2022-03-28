@@ -654,7 +654,7 @@ var QCs = {
 	},
 	getBaseGoal(x) {
 		let r = E(this.data[x].goalMA)
-		if (fluc.unl()) r = r.div(ff.perkEff("gen", 4))
+		if (ff.unl()) r = r.div(ff.perkEff("gen", 4))
 		return r
 	},
 	getGoalMA(x, mod) {

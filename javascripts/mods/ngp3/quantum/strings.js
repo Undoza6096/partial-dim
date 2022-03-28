@@ -267,7 +267,7 @@ let str = {
 		if (hasAch("ng3pr18")) r += 0.2
 		if (hasAch("ng3p32")) r += fluc_tmp.temp.str
 		if (hasAch("ng3p33")) r += 0.15
-		if (fluc.unl()) r += ff.perkEff("gen", 3)
+		if (ff.unl()) r += ff.perkEff("gen", 3)
 		return r
 	},
 	veUnspent() {

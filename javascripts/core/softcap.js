@@ -85,7 +85,7 @@ var softcap_data = {
 			start() {
 				let r = E(1e12)
 				if (str.unl() && str_tmp.effs) r = r.pow(str_tmp.effs.c3)
-				r = r.times(ff.perkEff("gen", 2))
+				if (ff.unl()) r = r.times(ff.perkEff("gen", 2))
 				return r
 			},
 			pow: 5,

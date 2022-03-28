@@ -52,12 +52,12 @@ let ff = {
 		},
 		fm: {
 			title: "Foamic",
-			eff: (s) => Math.sqrt(x / 2 + 1) - 1,
+			eff: (s) => Math.sqrt(s / 2 + 1) - 1,
 			desc: (x) => "Gain " + shorten(x) + " extra Vibration Energy."
 		},
 		es: {
 			title: "Ease",
-			eff: (s) => E(20).pow(x),
+			eff: (s) => E(20).pow(s),
 			desc: (x) => "Divide QC goals by " + shortenCosts(x) + "x."
 		},
 		ph5: {
