@@ -808,11 +808,11 @@ var enB = {
 				}
 			},
 			disp(x) {
-				return pos.on() ? "Positrons on: Meta-Dimension Boosts are <span style='font-size: 18px'>" + formatPercentage(x - 1) + "%</span> stronger."
+				return pos.on() && !hasAch("ng3pr12") ? "Positrons on: Meta-Dimension Boosts are <span style='font-size: 18px'>" + formatPercentage(x - 1) + "%</span> stronger."
 				: (hasAch("ng3pr12") ? "" : "Positrons off: ") + "You gain <span style='font-size: 18px'>+" + shorten(x) + "</span> extra Positronic Charge."
 			},
 			dispFull(x) {
-				return pos.on() ? "Positrons on: Meta-Dimension Boosts are " + formatPercentage(x - 1) + "% stronger."
+				return pos.on() && !hasAch("ng3pr12") ? "Positrons on: Meta-Dimension Boosts are " + formatPercentage(x - 1) + "% stronger."
 				: (hasAch("ng3pr12") ? "" : "Positrons off: ") + "You gain +" + shorten(x) + " extra Positronic Charge."
 			}
 		},
