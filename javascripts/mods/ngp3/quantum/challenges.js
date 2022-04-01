@@ -662,7 +662,7 @@ var QCs = {
 			if (PCs.in()) return PCs.goal()
 			x = QCs_save.in[0]
 		}
-		if (x) r = this.getBaseGoal()
+		if (x) r = this.getBaseGoal(x)
 		if (str.unl() && str_tmp.effs) r = r.pow(1 / str_tmp.effs.a2)
 		return r
 	},

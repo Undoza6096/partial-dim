@@ -5,7 +5,7 @@ let ff = {
 
 	data: {
 		all_str: [null, "alt", "pow", "free", "syn", "upg", "share"],
-		all_gen: [null, "qk", "et", "fm", "es", "ph5", "ph6"],
+		all_gen: [null, "qk", "et", "fm", "es", "inf", "ph6"],
 		all_req: [null, 1, 2, 3, 6, 7, 10],
 		modes: ["Arc", "Remove"],
 		sides: ["Strings", "Boosts"],
@@ -47,23 +47,23 @@ let ff = {
 		},
 		et: {
 			title: "Eternal",
-			eff: (s) => Math.sqrt(s / 10 + 1),
-			desc: (x) => "EC14 softcap starts " + shorten(x) + " later."
+			eff: (s) => Math.sqrt(s / 5 + 1),
+			desc: (x) => "EC14 softcap starts ^" + shorten(x) + " later."
 		},
 		fm: {
 			title: "Foamic",
-			eff: (s) => Math.sqrt(s / 2 + 1) - 1,
+			eff: (s) => Math.sqrt(s * 2 + 1) - 1,
 			desc: (x) => "Gain " + shorten(x) + " extra Vibration Energy."
 		},
 		es: {
 			title: "Ease",
-			eff: (s) => E(20).pow(s),
-			desc: (x) => "Divide QC goals by " + shortenCosts(x) + "x."
+			eff: (s) => E(10).pow(Math.pow(s, 2)),
+			desc: (x) => "Divide QC goals by /" + shorten(x) + "."
 		},
-		ph5: {
-			title: "Placeholder",
-			eff: (s) => 1,
-			desc: (x) => "Placeholder."
+		inf: {
+			title: "Inflate",
+			eff: (s) => 2 - 1 / Math.sqrt(s / 5 + 1),
+			desc: (x) => "Gain ^" + x.toFixed(3) + " Infinitied stat."
 		},
 		ph6: {
 			title: "Placeholder",

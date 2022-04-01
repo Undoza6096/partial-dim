@@ -161,7 +161,7 @@ function getInfinitiedGain() {
 	if (hasTS(32)) infGain *= tsMults[32]()
 	if (tmp.ngp3 && hasAch("ngpp18")) infGain *= 10
 	if (hasAch("r133") && player.meta) infGain = c_mul(player.dilation.dilatedTime.pow(.25).max(1), infGain)
-	if (dev.boosts.tmp[5]) infGain = c_mul(infGain, Decimal.pow(infGain, dev.boosts.tmp[5] - 1))
+	if (ff.unl()) infGain = c_mul(infGain, Decimal.pow(infGain, ff.perkEff("gen", 5) - 1))
 	return c_add(infGain, hasAch("r87") && inNGM(2) ? 249 : 0)
 }
 
