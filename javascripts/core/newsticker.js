@@ -499,6 +499,8 @@ amNewsArray = [
 ["~<: NEXTA COMMUNINC: CONSTELLA' THE STARS ~:> Stellarika Aarex's speaking to Sollings: The infamous \"Kibb's Point\" [<.>] has been disintegrated! aSAN~1,318,273^{*.*++} has been landed in release, featuring unseen methods extending to Kibb's Axioms! Be warned! Monstrous Xaliens pulled a nefarious abduct against aSAN~1,318,271! One is that -=>> is a numerous burst to (1,(((1,1,2),2)),2) arrays! Our megalo-arithmetic lab is working tediously for a drone evaluating their n...", "tmp.ngp3", "am282"],
 ["It's 2023. Aarex managed to release an content update, but inflation seems to force him to reduce the formulas or underestimate the growth rate.", "tmp.ngp3", "am283"],
 ["We are getting close to the true nature of Quantum. More to seem soon...", "isAtEndGame()", "am284"],
+["~<: NEXTA COMMUNINC: CONSTELLA' THE STARS ~:> It seems that Fluctuant Field are messing up our quantum field...", "ff.unl()", "am285"],
+["There is no April Fools 2022 event for my incremental games. :)", "tmp.ngp3", "am286"],
 /*NEXT ID: am285*/
 ]
 googolShown = false
