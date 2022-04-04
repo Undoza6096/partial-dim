@@ -1663,7 +1663,7 @@ function changeSaveDesc(saveId, placement) {
 				msg += "Time Theorems: " + getFullExpansion(getTotalTT(temp)) + ", Challenge completions: " + totalChallengeCompletions
 			} else if (temp.eternities>(temp.aarexModifications.newGameMinusVersion?-20:0)) msg += "Eternity points: " + shortenDimensions(E(temp.eternityPoints)) + ", Eternities: " + temp.eternities.toString().replace(/\B(?=(\d{3}) + (?!\d))/g, ",") + ", Time Theorems: " + getTotalTT(temp)
 			else if (temp.achievements.includes("r51")) {
-				msg += ", Infinity points: " + shortenDimensions(E(temp.infinityPoints))
+				msg += "Infinity points: " + shortenDimensions(E(temp.infinityPoints))
 				if (temp.infDimensionsUnlocked[0]) msg += ", Infinity Power: " + shorten(new Decays(temp.infinityPower))
 
 				if (temp.replicanti.gal) msg += ", Max Replicated Galaxies: " + getFullExpansion(temp.replicanti.gal)
@@ -1673,7 +1673,7 @@ function changeSaveDesc(saveId, placement) {
 					for (var i = 0; i < temp.challenges.length; i++) if (temp.challenges[i].includes("postc")) comps++
 					msg += ", Infinity Challenges: " + getFullExpansion(comps)
 				}
-			} else if (temp.infinited > 0 || temp.challenges.length > 0) msg += ", Infinity points: " + shortenDimensions(E(temp.infinityPoints)) +
+			} else if (temp.infinited > 0 || temp.challenges.length > 0) msg += "Infinity points: " + shortenDimensions(E(temp.infinityPoints)) +
 				", Challenge completions: " + getFullExpansion(temp.challenges.length)
 			else if (temp.galacticSacrifice && temp.galacticSacrifice.times) msg += ", Galaxy points: " + shortenDimensions(E(temp.galacticSacrifice.galaxyPoints))
 			else msg += "Dimension Boosts: " + getFullExpansion(temp.resets) +
