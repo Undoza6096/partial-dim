@@ -1024,7 +1024,7 @@ function doFeatureProgress() {
 			reqNum = 11
 			req = shortenInt(reqNum) + " Fluctuant Energy"
 			percentage = res / reqNum
-			feature = "???"
+			feature = "Quantum Field"
 		}
 	} else if (str.unl()) {
 		res = player.money
