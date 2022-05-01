@@ -372,9 +372,9 @@ function setR16Tooltip() {
 	let seriously = el("Seriously, I already got rid of you.")
 
 	//ACHIEVEMENT ROW 16
-	memories.setAttribute('ach-tooltip', "Reach " + shorten(pow_inf(2)) + " meta-antimatter without buying 5th - 8th Meta Dimensions. Reward: Even Meta Dimensions boost odd Meta Dimensions.")
-	morals.setAttribute('ach-tooltip', "Reach " + shortenInt(1e85) + " TT in any Quantum Challenge. Reward: Start with first 10 Mastery Studies in completed QCs and Paired Challenges.")
-	intergal.setAttribute('ach-tooltip', "Get " + getFullExpansion(3e7) + " Eighth Dimensions without " + (tmp.dtMode ? "" : "max ") + "Replicated Galaxies. Reward: Starting at " + shortenInt(pow10(1750)) + " MA, meta-antimatter greatly boosts itself.")
+	memories.setAttribute('ach-tooltip', "Reach " + shorten(pow_inf(2)) + " meta-antimatter without 5th - 8th Meta Dimensions. Reward: Even Meta Dimensions boost odd Meta Dimensions.")
+	morals.setAttribute('ach-tooltip', "Get " + shortenInt(1e85) + " TT in a Quantum Challenge. Reward: Start with first 10 Mastery Studies in completed QC / PCs.")
+	intergal.setAttribute('ach-tooltip', "Get " + getFullExpansion(3e7) + " Eighth Dimensions without " + (tmp.dtMode ? "" : "max ") + "Replicated Galaxies. Reward: Meta-antimatter boosts itself.")
 	seriously.setAttribute('ach-tooltip', "Get " + shortenInt(pow10(2e7)) + " Eternity Points with at least 5 excluded Positronic Boosts. Reward: Charging Positronic Boosts requires less, and you can buy Mastery Studies in a row above the latest bought row.")
 }
 
@@ -389,7 +389,7 @@ function setR16p5Tooltip() {
 	//ng3pr17/////
 	let rid = el("Get rid of you by yourself...") 
 
-	mayhem.setAttribute('ach-tooltip', "Max out Mastery Studies in QC1. Reward: You keep Mastery Studies except in QC1 and QC7.")
+	mayhem.setAttribute('ach-tooltip', "Get all Mastery Studies in QC1. Reward: You keep Mastery Studies except in QC1 and QC7.")
 	cantGet.setAttribute('ach-tooltip', "Reach " + shortenInt(pow10(Math.PI * 1e11)) + " antimatter in Eternity Challenge 11. Reward: You gain 5x more Dilated Time, Time Theorems, and Quarks, and can reduce the gluon gains by 50%.")
 	rid.setAttribute('ach-tooltip', "Get " + shortenInt(pow10(1600)) + " MA in any QC without vibrations. Reward: +0.2 extra Vibration Energy.")
 }
@@ -406,8 +406,8 @@ function setR17Tooltip() {
 	//ng3p38/////
 
 	//ACHIEVEMENT ROW 17
-	max.setAttribute('ach-tooltip', "After Fluctuate, gain 10x more Quarks within any Quantum Challenge. Reward: Gain 3x more Quarks.")
-	noDil.setAttribute('ach-tooltip', "Get a Replicanti Compressor without having Tachyon Particles. Reward: Boost the TP gain for first 5 dilation runs.")
+	max.setAttribute('ach-tooltip', "Get 10x more aQ within any Quantum Challenge after Fluctuating. Reward: Gain 3x more aQ.")
+	noDil.setAttribute('ach-tooltip', "Get a Compressor without Tachyon Particles. Reward: Boost the TP gain for first 5 dilations.")
 }
 
 function setR18Tooltip() {
