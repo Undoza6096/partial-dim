@@ -501,7 +501,7 @@ amNewsArray = [
 ["We are getting close to the true nature of Quantum. More to seem soon...", "isAtEndGame()", "am284"],
 ["~<: NEXTA COMMUNINC: CONSTELLA' THE STARS ~:> It seems that Fluctuant Field are messing up our quantum field...", "ff.unl()", "am285"],
 ["There is no April Fools 2022 event for my incremental games. :)", "tmp.ngp3", "am286"],
-["Hello, there. You might see recent updates in months, but still... be patient! ~ Aarex, Lightning Incrementalist", "tmp.ngp3", "am287"],
+["Hello there. You might see recent updates in few months, but still... be patient! ~ Aarex, Lightning Incrementalist", "tmp.ngp3", "am287"],
 ["Fly on, zappie. Altar awaits your adventure- oh wait. Is Spectraglow coming to get me? Whatever...", "tmp.ngp3", "am288"],
 /*NEXT ID: am285*/
 ]
