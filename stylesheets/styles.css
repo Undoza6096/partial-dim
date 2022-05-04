@@ -2607,6 +2607,20 @@ td.grey {
 	border-radius: 6px;
 	font-size: 10px
 }
+#ff_table_new button {
+	width: 96px;
+	height: 96px;
+	border-radius: 6px
+}
+#ff_table_new .sml {
+	width: 24px;
+	height: 24px;
+	border-radius: 6px
+}
+#ff_table_new .big {
+	width: 120px;
+	height: 120px;
+}
 #ff_table button b {
 	font-size: 12px
 }

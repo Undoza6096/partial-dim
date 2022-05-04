@@ -369,8 +369,8 @@ let ff = {
 		for (var i = 0; i < ff_save.data.length; i++) {
 			let d = ff_save.data[i]
 			str += letters[d[0]] + letters[d[1] || 0]
-			for (var i = 0; i < d[2].length; i++) {
-				let s = d[2][i]
+			for (var j = 0; j < d[2].length; j++) {
+				let s = d[2][j]
 				if (s < 0) str += letters[-s]
 				else str += letters[s]
 			}

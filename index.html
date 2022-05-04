@@ -1561,7 +1561,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.7: Quantum Overseer)</p>
-				<p class="warning" id='versionDescAlpha'>(4/30/22a Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(5/3/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -5017,13 +5017,13 @@
 		<table class="table" align="center" style="margin: auto">
 			<tr>
 				<td><button class="secondarytabbtn" onclick="fluc.showTab('ffTab')">Fluctuant Field</button></td>
+				<td><button class="secondarytabbtn" onclick="fluc.showTab('ffTab_new')">New FF</button></td>
 				<td><button class="secondarytabbtn" id="qftabbtn" onclick="fluc.showTab('qfTab')">Quantum Field</button></td>
 				<!--<td><button class="secondarytabbtn">Particle Decay</button></td>-->
 				<!--<td><button class="secondarytabbtn">Spatial Decay</button></td>-->
 			</tr>
 		</table>
 		<div class="flucTab" id="ffTab">
-			<b class="warning">I might scrapping this in exchange of Quantum Field I planned...</b>
 			<b class="warning" id="ff_req" style="font-size: 20px">You need to get at least 1 Vibration Energy before using this mechanic.</b>
 			<div id="ff_div">
 				<span id="ff_spent_disp" style="font-size: 20px">You have associated <span id="ff_spent" class="flucEne"></span> Fluctuant Energy to this field.</span>
@@ -5040,6 +5040,114 @@
 				<br>
 				<b class="warning">Arc Kinds are coming soon!</b>
 			</div>
+			<br><br>
+			<div class="footer bottom"></div>
+		</div>
+		<div class="flucTab" id="ffTab_new">
+			<span style="font-size: 20px">You have associated <span class="flucEne">0</span> Fluctuant Energy.</span><br>
+			<button class="storebtn">Respec</button>
+			<button class="storebtn">Export</button>
+			<button class="storebtn">Import</button>
+			<table id="ff_table_new" align="center" style="margin: auto">
+				<tr>
+					<td>
+					</td>
+					<td>
+						<button class="chosenbtn sml"></button>
+					</td>
+					<td>
+						<button class="chosenbtn sml"></button>
+					</td>
+					<td>
+						<button class="chosenbtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Boosts
+					</td>
+					<td>
+						<button class="storebtn big">Boost something by ???</button>
+					</td>
+					<td>
+						<button class="storebtn big">Boost something by ???</button>
+					</td>
+					<td>
+						<button class="unavailablebtn big">Boost something by ???</button>
+					</td>
+					<td>
+						<button class="unavailablebtn big">Boost something by ???</button>
+					</td>
+					<td>
+						<button class="unavailablebtn big">Boost something by ???</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+					<td>
+						<button class="unavailablebtn sml"></button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Parallel #1
+					</td>
+					<td>
+						<button class="unavailablebtn">Extend<br>(requires 1 FE)</button>
+					</td>
+					<td>
+						<button class="unavailablebtn">Extend<br>(requires 2 FE)</button>
+					</td>
+					<td>
+						<button class="ff_btn">Deflect<br>(associates 10% more)</button>
+					</td>
+					<td>
+						<button class="storebtn">Extend<br>(requires ??? FF)</button>
+					</td>
+					<td>
+						<button class="storebtn">Extend<br>(requires ??? FF)</button>
+					</td>
+				</tr>
+				<tr style="display: none">
+					<td>
+						Parallel #2
+					</td>
+					<td>
+						<button class="unavailablebtn">Extend<br>(requires 1 FE)</button>
+					</td>
+					<td>
+						<button class="unavailablebtn">Extend<br>(requires 2 FE)</button>
+					</td>
+					<td>
+						<button class="ff_btn">Deflect<br>(associates 10% more)</button>
+					</td>
+					<td>
+						<button class="storebtn">Extend<br>(requires ??? FF)</button>
+					</td>
+					<td>
+						<button class="storebtn">Extend<br>(requires ??? FF)</button>
+					</td>
+				</tr>
+			</table>
 			<br><br>
 			<div class="footer bottom"></div>
 		</div>
