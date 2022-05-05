@@ -393,3 +393,63 @@ let FLUCTUANT_FIELD = ff
 	3. DISTANCE 4.
 	4. PERKS THAT AFFECT THE ENTIRE GAME.
 */
+
+let ff_new = {
+	setup() {
+		return {
+			p1: [], //[pos, deflect]
+			p2: []
+		}
+	},
+	data: {
+		1: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		2: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		3: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		4: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		5: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		6: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		7: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+		8: {
+			eff: (x) => 1,
+			desc: (x) => "Boost something by " + shorten(x) + "x",
+			req: 0
+		},
+	},
+	updateTab() {
+		
+	},
+	updateTmp() {
+		
+	},
+	updateTmpOnTick() {
+		
+	},
+}
