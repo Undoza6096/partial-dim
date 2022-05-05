@@ -298,7 +298,6 @@ function setupHTMLAndData() {
 	setupAutobuyerHTMLandData()
 	setupDilationUpgradeList()
 	setupMasteryStudiesHTML()
-	pos.setupHTML()
 	QCs.setupDiv()
 	setupBraveMilestones()
 	setupBosonicExtraction()
@@ -1687,7 +1686,7 @@ function changeSaveDesc(saveId, placement) {
 
 				if (quantum.qc && quantum.qc.comps >= 7) msg += ", Paired Challenges: " + (quantum.pc ? getFullExpansion(quantum.pc.best || 0) : "This has been rewritten while you are away!")
 				else if (temp.masterystudies.includes('d8')) msg += ", Quantum Challenges: " + (quantum.qc ? getFullExpansion(quantum.qc.comps) : "This has been rewritten while you are away!")
-				else if (temp.masterystudies.includes('d7')) msg += ", Positronic Charge: " + (quantum.pos ? getFullExpansion(quantum.pos.eng) : "This has been rewritten while you are away!")
+				else if (temp.masterystudies.includes('d7')) msg += "This has been rewritten while you are away!"
 				else msg += ", Best quantum: " + timeDisplayShort(quantum.best)
 			}
 		} else if (temp.dilation && temp.dilation.studies.includes(1)) {

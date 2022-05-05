@@ -286,7 +286,6 @@ function getTotalRGs() {
 
 function getEffectiveRGs(type = "rg") {
 	let rg = type == "eg" ? tmp.extraRG || 0 : player.replicanti.galaxies
-	if (pos.on()) rg -= pos_save.gals[type].sac
 	if (QCs.in(4) && QCs_save.qc4[QCs_tmp.qc4.type] == type) rg = 0
 	return rg
 }
@@ -344,12 +343,6 @@ function getReplicantiIntervalMult() {
 	if (player.exdilation != undefined) interval = interval.div(getBlackholePowerEffect().pow(1/3))
 	if (player.dilation.upgrades.includes('ngpp1') && aarMod.nguspV && !aarMod.nguepV) interval = interval.div(player.dilation.dilatedTime.max(1).pow(0.05))
 	if (player.dilation.upgrades.includes("ngmm9")) interval = interval.div(getDil72Mult())
-	if (enB.active("pos", 2)) {
-		var pos2_log = enB_tmp.eff.pos2.mult.log10()
-		if (pos2_log > 1e5) pos2_log = Math.pow(pos2_log / 1e5, 3/4) * 1e5
-		if (PCs.milestoneDone(32)) pos2_log *= tmp.rep.str //Replicante Tunneling + Clovers
-		interval = interval.div(Decimal.pow(10, pos2_log))
-	}
 	if (tmp.ngC && ngC.tmp) interval = interval.div(ngC.tmp.rep.eff1)
 	return interval
 }

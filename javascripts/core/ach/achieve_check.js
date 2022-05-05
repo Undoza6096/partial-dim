@@ -226,7 +226,7 @@ function preHiggsNGp3AchieveCheck() {
 	//Able to get "Rid of you"
 	let ableToGetRid2 = checkEmpty && player.dilation.active
 	let ableToGetRid3 = ableToGetRid2
-	let ableToGetRid4 = pos.unl() && pos_tmp.cloud.exclude >= 5
+	let ableToGetRid4 = false
 	let ableToGetRid5 = ableToGetRid2 && QCs.in(2) && player.dontWant
 	let ableToGetRid6 = ableToGetRid2 && QCs.in(6) && QCs.in(8)
 
@@ -255,14 +255,7 @@ function preHiggsNGp3AchieveCheck() {
 	//ROW 16.5
 	if (mTs.bought == mTs.timeStudies.length && QCs.in(1)) giveAchievement("Mastery Mayhem")
 	if (str.unl()) giveAchievement("Completing the Quantum")
-	if (!hasAch("ng3pr13")) {
-		var cond = 0
-		for (var i = 1; i <= 12; i++) {
-			if (enB.pos.charged(i) && enB.pos.chargeEff(i) >= 8) cond++
-			if (cond >= 6) break
-		}
-		if (cond >= 6) giveAchievement("Bursted Em All!")
-	}
+	//giveAchievement("Bursted Em All!")
 	if (qu_save.expEnergy >= 1) giveAchievement("The Power of Science!")
 	if (!hasAch("ng3pr15") && str.unl()) {
 		var cond = 0

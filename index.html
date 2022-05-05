@@ -1567,8 +1567,8 @@
 				<p id='versionDescCreator'>Created by Aarex.</p>
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
-				<p id='versionDescBeta'>(Beta v0.62: String Manifold)</p>
-				<p class="warning" id='versionDescAlpha'>(1/7/22a Alpha Build)</p>
+				<p id='versionDescBeta'>(Beta v0.63: String Manifold)</p>
+				<p class="warning" id='versionDescAlpha'>(5/5/22a Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -4387,7 +4387,7 @@
 		<span style="font-size: 15px">You have <span class="QKAmount" id="quarkEnergy" style="font-size:30px">0.0</span> Quantum Energy.</span>
 		<span id="qe_info" style="display: none">
 			<span id="quarkEnergyMult" style="font-size: 15px">(1.00x)</span>
-			<br>You have made a best-ever of <span id="bestQE" style="font-size:15px">0.0</span> energy. (no divisors)
+			<br>Best Quantum Energy: <span id="bestQE" style="font-size:15px">0.0</span>
 			<br>Quantum efficiency: <span id="qeEff" style="font-size:15px"></span> (<span id="qeFrac"></span>)
 		</span>
 		<table class="table" align="center" style="margin: auto">
@@ -4772,183 +4772,7 @@
 			</table>
 		</div>
 		<div class='quantumtab' id='positrons'>
-		<b class="fluc_boost" id="fluc_boost_pos"></b>
-		If Positrons are on, then Meta-Dimension Boosts and Quantum Energy are sacrificed for Positrons...
-		<br>
-		which allow Galaxies to be sacrificed for Positronic Charge!
-		<br><br>
-		Note: Toggling Positrons restarts your Quantum run!
-		<table class="qTable">
-			<tr>
-				<td class="yellow">
-					<span id="pos_formula"></span>
-					<br>
-					<span id="pos_amt" style="font-size:25px">0</span> Positrons
-					<br>
-					<button class="storebtn" id="pos_toggle" style="width: 180px" onclick="pos.toggle()"></button>
-				</td>
-				<td class="yellow light">
-					<span id="pos_charge_formula"></span>
-					<br>
-					<span id="enB_pos_eng" style="font-size:25px">0.0</span> Positronic Charge
-				</td>
-				<td>
-					<button class="storebtn" id="enB_pos_buy" style="width: 180px; height: 60px" onclick="ENTANGLED_BOOSTS.buy('pos')">Unlock/Master Boosts</span><br><span id="enB_pos_cost" style="font-size: 10px"></span></button>
-					<br>
-					<span id="enB_pos_next"></span>
-				</td>
-			</tr>
-		</table>
-		<button id="pos_tab" class='secondarytabbtn' style="width: 180px" onclick="pos.switchTab()"></button>
-		<div id="pos_cloud_div" style="vertical-align: top">
-			Note: You can swap Positronic Boosts, only if they are mastered, and are in different tiers.<br>
-			Note 2: Swaps take effect when you start a Quantum run with Positrons on.<br>
-			<b class="warning" id="pos_cloud_disabled">WARNING! Swaps have been disabled in this quantum!</b>
-			<p id="pos_cloud_total" style="font-size: 15px"></p>
-			<table class="qTable_2col">
-				<tr>
-					<td class="pos_tier" id="pos_cloud1_cell"></td>
-					<td>
-						<button class="storebtn longbtn" id="pos_cloud1_toggle" onclick="QCs.data[2].switch(1)">Disable</button>
-					</td>
-				</tr>
-				<tr>
-					<td id="pos_cloud1_boosts" colspan=2></td>
-				</tr>
-				<tr>
-					<td class="pos_tier" id="pos_cloud2_cell"></td>
-					<td>
-						<button class="storebtn longbtn" id="pos_cloud2_toggle" onclick="QCs.data[2].switch(2)">Disable</button>
-					</td>
-				</tr>
-				<tr>
-					<td id="pos_cloud2_boosts" colspan=2></td>
-				</tr>
-				<tr>
-					<td class="pos_tier" id="pos_cloud3_cell"></td>
-					<td>
-						<button class="storebtn longbtn" id="pos_cloud3_toggle" onclick="QCs.data[2].switch(3)">Disable</button>
-					</td>
-				</tr>
-				<tr>
-					<td id="pos_cloud3_boosts" colspan=2></td>
-				</tr>
-			</table>
-			<button class="storebtn" style="width: 120px" onclick="pos.clearSwaps()">Clear</button>
-			<span id="pos_apply_div">
-				<button class="storebtn" style="width: 120px" onclick="pos.cancelSwaps()">Cancel</button>
-				<button class="storebtn" style="width: 120px" onclick="pos.applySwaps()">Apply</button>
-				<br>
-			</span>
-			<button class="storebtn" onclick="pos.exportPreset()">Export Cloud</button>
-			<button class="storebtn" onclick="pos.importPreset()">Import Cloud</button>
-		</div>
-		<div id="pos_boost_div" style="vertical-align: top">
-			<div id="entangle_div_pos">
-				<button id="entangle_rg_pos" style="width: 60px; height: 60px" onclick="ENTANGLED_BOOSTS.choose('rg')">RG</button>
-				<button id="entangle_gb_pos" style="width: 60px; height: 60px" onclick="ENTANGLED_BOOSTS.choose('gb')">GB</button>
-				<button id="entangle_br_pos" style="width: 60px; height: 60px" onclick="ENTANGLED_BOOSTS.choose('br')">BR</button>
-			</div>
-			<span id="pos_cloud_req"></span>
-			<table class="qTable">
-				<tr>
-					<td id="enB_pos1">
-						<b id="enB_pos1_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos1_type"></span>
-						<br>
-						Quantum efficiency is based on Replicantis <span id="enB_pos1_eff" style="font-size: 18px"></span>, but the denominator is decreased to 1.
-					</td>
-					<td id="enB_pos2">
-						<b id="enB_pos2_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos2_type"></span>
-						<br>
-						<span style="font-size: 18px">Unlock Meta-Accelerator.</span>
-						<br>
-						(with a base multiplier of <span id="enB_pos2_eff" style="font-size: 15px"></span>, based on time since quantum)
-						<br>
-						(at Meta Dimensions tab)
-					</td>
-					<td id="enB_pos3">
-						<b id="enB_pos3_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos3_type"></span>
-						<br>
-						Galaxies raise the per-10 multiplier by <span id="enB_pos3_eff" style="font-size: 18px"></span>.
-					</td>
-				</tr>
-				<tr>
-					<td id="enB_pos4">
-						<b id="enB_pos4_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos4_type"></span>
-						<br>
-						Quantum requires <span id="enB_pos4_eff" style="font-size: 18px"></span> instead. <span id="enB_pos4_exp" style="font-size: 15px"></span>
-					</td>
-					<td id="enB_pos5">
-						<b id="enB_pos5_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos5_type"></span>
-						<br>
-						Reduce the gluon penalties by <span id="enB_pos5_eff" style="font-size: 18px"></span>.
-					</td>
-					<td id="enB_pos6">
-						<b id="enB_pos6_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos6_type"></span>
-						<br>
-						Raise all Time Dimensions by <span id="enB_pos6_eff" style="font-size: 18px"></span>.
-					</td>
-				</tr>
-				</tr>
-					<td id="enB_pos7">
-						<b id="enB_pos7_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos7_type"></span>
-						<br>
-						Tachyon particles speed up <span id="enB_pos2_mention_1"></span> production by <span id="enB_pos7_eff" style="font-size: 18px"></span>.
-					</td>
-					<td id="enB_pos8">
-						<b id="enB_pos8_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos8_type"></span>
-						<br>
-						EC14 reward is <span id="enB_pos8_eff" style="font-size: 18px"></span> closer to ^1.
-					</td>
-					<td id="enB_pos9">
-						<b id="enB_pos9_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos9_type"></span>
-						<br>
-						Meta Accelerator slowdown starts <span id="enB_pos9_eff" style="font-size: 18px"></span> later, but also slows down the acceleration.
-					</td>
-				</tr>
-				<tr>
-					<td id="enB_pos10">
-						<b id="enB_pos10_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos10_type"></span>
-						<br>
-						Infinitied stat raises itself by <span id="enB_pos10_eff" style="font-size: 18px"></span>.
-					</td>
-					<td id="enB_pos11">
-						<b id="enB_pos11_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos11_type"></span>
-						<br>
-						Eternity Points boost Anti-Quarks by <span id="enB_pos11_eff" style="font-size: 18px"></span>. <span id="enB_pos11_info" style="font-size: 15px"></span>
-					</td>
-					<td id="enB_pos12">
-						<b id="enB_pos12_name" style="font-size: 24px"></b>
-						<br>
-						<span id="enB_pos12_type"></span>
-						<br>
-						Replicantis add <span id="enB_pos12_eff" style="font-size: 18px"></span> to <span id="enB_pos2_mention_2"></span> cap.
-					</td>
-				</tr>
-			</table>
-		</div>
+			Gone.
 		</div>
 		<div class='quantumtab' id='strings'>
 			<p id="str_unl">Complete 8 PC completions to unlock String.</p>

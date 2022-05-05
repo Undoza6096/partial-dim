@@ -249,7 +249,6 @@ function doFluctuateResetStuff(layer = 6) {
 	if (!qMs.isObtained(29)) str.reset()
 	if (!qMs.isObtained(28)) PCs.reset()
 	QCs.reset(!qMs.isObtained(27))
-	if (!qMs.isObtained(28)) pos.reset()
 
 	fluc_save.bestAM = E(0)
 	fluc_save.time = 0
@@ -447,7 +446,6 @@ function getQuantumOnGhostifyData(bm, nBRU, nBEU){
 			gb: E(0),
 			br: E(0)
 		},
-		pos: pos.setup(),
 		qc: QCs.setup(),
 		multPower: {
 			rg: 0,

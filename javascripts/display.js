@@ -57,7 +57,7 @@ function dimensionTabDisplay(){
 		}
 	}
 
-	setAndMaybeShow("mp10d", aarMod.newGameMult || (shiftDown && pos.unl()), function() {
+	setAndMaybeShow("mp10d", aarMod.newGameMult, function() {
 		let pow = getDimensionPowerMultiplier("non-random")
 		return 'Multiplier per 10 Dimensions: ' + shorten(pow) + 'x' +
 			(shiftDown ? ", " + shortenCosts(pow.pow(player.firstBought / 10)) + "x to First Dimensions" : "")
@@ -1045,10 +1045,10 @@ function doFeatureProgress() {
 		req = reqNum + " QC completions"
 		percentage = res / reqNum
 		feature = "Paired Challenges"
-	} else if (pos.unl()) {
-		res = pos_save.energy
-		reqNum = 5
-		req = reqNum + " Positronic Charge"
+	} else if (false) {
+		res = 0
+		reqNum = 100
+		req = "???"
 		percentage = res / reqNum
 		feature = "Quantum Challenges"
 	} else if (tmp.quUnl) {

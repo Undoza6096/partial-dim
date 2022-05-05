@@ -30,7 +30,7 @@ let qMs = {
 		},
 		rl: {
 			name: "Relativistic",
-			unl: () => pos.unl(),
+			unl: () => true,
 			targ: () => E(player.dilation.bestTP || 0),
 			targDisp: shorten,
 			targKind: "TP",

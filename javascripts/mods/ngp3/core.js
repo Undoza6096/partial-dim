@@ -41,14 +41,14 @@ var quantumTabs = {
 		uquarks: updateQuarksTab,
 		gluons: updateGluonsTab,
 		speedruns: qMs.updateDisplayOnTick,
-		positrons: pos.updateTab,
+		positrons: () => {},
 		strings: str.updateDispOnTick
 	}
 }
 
 function updateQuantumTabs() {
 	el("quarkEnergy").textContent = shorten(qu_save.quarkEnergy)
-	el("quarkEnergyMult").textContent = "(" + (tmp.qe.div != 1 && shiftDown ? shorten(tmp.qe.mult) + "x, /" + shorten(tmp.qe.div) : shorten(tmp.qe.mult.div(tmp.qe.div)) + "x") + ")"
+	el("quarkEnergyMult").textContent = "(" + shorten(tmp.qe.mult) + "x)"
 
 	el("qw_info").style.display = shiftDown ? "" : "none"
 	el("qe_info").style.display = shiftDown ? "" : "none"
@@ -942,13 +942,13 @@ function setupSaveDataNGP3() {
 	}
 
 	//Quantum
-	pos_save = (qu_save && qu_save.pos)
+	pos_save = {}
 	QCs_save = (qu_save && qu_save.qc)
 	PCs_save = (qu_save && qu_save.pc)
 	str_save = (qu_save && qu_save.str)
 
-	pos_tmp.unl = pos.unl(true)
-	pos.compile()
+	//pos_tmp.unl = pos.unl(true)
+	//pos.compile()
 
 	QCs_tmp.unl = QCs.unl(true)
 	QCs.compile()
@@ -987,7 +987,7 @@ function updateQuantumTemp(update) {
 	QCs.updateTmp()
 	PCs.updateTmp()
 	str.updateTmp()
-	pos.updateTmp()
+	//pos.updateTmp()
 
 	if (update) {
 		QCs.updateDisp()
@@ -1000,19 +1000,15 @@ function updateAutoApplyDisp(toggle) {
 	if (toggle) {
 		if (!aarMod.autoApply) {
 			if (!confirm("This will reset upcoming changes. Are you sure do you want to turn this on?")) return
-			if (pos_tmp.cloud && pos_tmp.cloud.sum >= 4) {
-				pos_tmp.cloud.next = {... pos_save.swaps}
-				pos.updateCloud()
-			}
 		}
 		aarMod.autoApply = !aarMod.autoApply
 	}
 
 	var on = aarMod.autoApply
-	el("autoApply").style.display = pos_tmp.cloud && pos_tmp.cloud.sum >= 4 ? "" : "none"
+	el("autoApply").style.display = "none"
 	el("autoApply").textContent = "Auto-apply changes: " + (on ? "ON" : "OFF")
 
-	el("pos_apply_div").style.display = on ? "none" : ""
+	//el("pos_apply_div").style.display = on ? "none" : ""
 	//el("str_apply_div").style.display = on ? "none" : ""
 }
 
@@ -1049,19 +1045,22 @@ var ngp3Welcomes = {
 		0.6: "<b class='lime'>Strings!</b> Can you vibrate a string of boosts, which adjusts them at a sawtooth rate?",
 		0.61: "<b class='lime'>Strings, again!</b> Yes, I decided to rework Strings for better balancing and less confusion. This also removes Nerfed modifier and reworks Entangled Boosters and Perks.",
 		0.611: "<b class='lime'>PC8 combinations!</b> Due to a severe bug for QC8, I am releasing an extra update, which PC8 combinations are slightly easier! (+ some String-era buffs)",
-		0.62: () => "<b class='green'>Mostly Paired Challenges + Strings!</b> Yep. This update reworks the gameplay of Paired Challenges and Strings. Any suggestion is welcomed in Discord, and I will implement yours if accepted."
+		0.62: () => "<b class='green'>Mostly Paired Challenges + Strings!</b> Yep. This update reworks the gameplay of Paired Challenges and Strings. Any suggestion is welcomed in Discord, and I will implement yours if accepted.",
+		0.63: () => "<b class='yellow'>Positrons!</b> That's unexpected... Another rework to Positrons? :)<br><br>Any suggestion is welcomed in Discord, and I will implement yours if accepted."
 	},
 	verbs: {
 		0.61: "reworks",
 		0.611: "nerfs",
-		0.62: "rebalances"
+		0.62: "rebalances",
+		0.63: "reworks",
 	},
 	goals: {
 		0.5: () => getFullExpansion(8) + " PC combinations + " + shortenCosts(Decimal.pow(10, 1e13)) + " antimatter",
 		0.6: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
 		0.61: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
 		0.611: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
-		0.62: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter"
+		0.62: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter",
+		0.63: () => shortenCosts(Decimal.pow(10, Math.pow(10, 13.5))) + " antimatter"
 	}
 }
 

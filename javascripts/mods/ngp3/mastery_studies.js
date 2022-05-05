@@ -116,7 +116,7 @@ var mTs = {
 			return qu_save.bestEnergy.gte(tmp.exMode ? 5.3 : 3)
 		},
 		d8() {
-			return pos_save.eng.gte(5)
+			return false
 		}
 	},
 	unlockReqDisplays: {
@@ -357,7 +357,7 @@ var mTs = {
 			return pH.did("quantum")
 		},
 		r27() {
-			return pos.unl()
+			return mTs.has("d7")
 		}
 	},
 	studyUnl: [],
@@ -628,14 +628,10 @@ function getMasteryStudyCostMult(id) {
 }
 
 function buyingD7Changes() {
-	pos_tmp.unl = true
 	el("positronstabbtn").style.display = ""
 
 	showTab("quantumtab")
 	showQuantumTab("positrons")
-
-	enB.update("pos")
-	pos.updateTmp()
 }
 
 function buyingDilStudyForQC() {

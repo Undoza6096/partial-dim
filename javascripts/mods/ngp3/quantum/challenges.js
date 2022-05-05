@@ -305,42 +305,23 @@ var QCs = {
 		},
 		2: {
 			unl: () => true,
-			desc: "You must disable a tier from Positronic Cloud, but some Quantum content are changed/disabled.",
-			goal: () => pos_save.eng.gte(7),
-			goalDisp: () => shortenCosts(7) + " Positronic Charge",
-			goalMA: Decimal.pow(Number.MAX_VALUE, 2.4),
+			desc: "???",
+			goal: () => true,
+			goalDisp: () => "???",
+			goalMA: new Decimal(1/0),
 			hint: "",
 
-			rewardDesc: (x) => "Quantum Power boosts color charge by " + shorten(x) + "x.",
+			rewardDesc: (x) => "???",
 			rewardEff(str) {
-				str = str || colorCharge.normal.charge || E(0)
-				return str.div(3).add(1).pow((enB.glu.boosterExp() || 1) / 6)
+				return 1
 			},
 
-			perkDesc: (x) => "Mastered Entangled Boosts are 50% stronger, but mastery requires " + shortenCosts(500) + " Quantum Power. Also, they are always active.",
+			rewardDesc: (x) => "???",
 			perkEff() {
 				return 1
 			},
-			perkToggle: true,
 
-			overlapReqs: [1/0, 1/0],
-
-			updateCloudDisp() {
-				if (!pos_tmp.cloud) return
-
-				let unl = futureBoost("exclude_any_qc") ? QCs.inAny() : QCs.in(2)
-				for (let t = 1; t <= 3; t++) {
-					el("pos_cloud" + t + "_toggle").parentElement.style.display = unl && pos_tmp.cloud[t] ? "" : "none"
-					el("pos_cloud" + t + "_cell").colspan = unl && pos_tmp.cloud[t] ? 1 : 2
-					if (unl) el("pos_cloud" + t + "_toggle").className = (QCs_save.qc2 == t ? "chosenbtn" : "storebtn") + " longbtn"
-				}
-			},
-			switch(x) {
-				if (QCs_save.qc2 == x) return
-				if (!confirm("This will restart your run. Are you sure?")) return
-				QCs_save.qc2 = x
-				restartQuantum()
-			}
+			overlapReqs: [1/0, 1/0]
 		},
 		3: {
 			unl: () => true,
@@ -729,7 +710,6 @@ var QCs = {
 
 		//In Quantum Challenges
 		this.data[1].updateDisp()
-		this.data[2].updateCloudDisp()
 		this.data[4].updateDisp()
 		this.data[5].updateDisp()
 		this.data[8].updateDisp()

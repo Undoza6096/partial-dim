@@ -60,7 +60,6 @@ function getDilTimeGainPerSecond() {
 	if (tmp.ngp3) {
 		if (hasAch("r138")) gain = gain.times(tmp.ngp3_exp ? 2 : 1.5)
 		if (hasAch("ng3p11")) gain = gain.times(Math.min(Math.max(Math.log10(player.eternityPoints.max(1).log10()) / 2, 1) / 2, 2.5))
-		if (enB.active("pos", 2)) gain = gain.times(enB_tmp.eff.pos2.mult)
 		if (hasBosonicUpg(15)) gain = gain.times(tmp.blu[15].dt)
 	}
 	if (tmp.quActive && tmp.ngp3_mul) gain = gain.times(colorBoosts.b) //Color Powers (NG*+3)
@@ -673,7 +672,6 @@ function resetDilationGalaxies() {
 
 function getEffectiveTGs() {
 	let tg = player.dilation.freeGalaxies
-	if (pos.on()) tg -= pos_save.gals.tg.sac
 	if (QCs.in(4) && QCs_save.qc4[QCs_tmp.qc4.type] == "tg") tg = 0
 	return tg
 }

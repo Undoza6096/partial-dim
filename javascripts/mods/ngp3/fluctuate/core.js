@@ -143,8 +143,6 @@ let fluc = {
 		el("the_end").style.display = fluc_save.energy >= 11 ? "" : "none"
 
 		//Temp: Temporary boosts
-		el("fluc_boost_pos").style.display = fluc.unl() ? "" : "none"
-		el("fluc_boost_pos").textContent = "Fluctuate Boost [Temp]: " + formatReductionPercentage(fluc_tmp.temp.pos) + "% equal to all tiers"
 		el("fluc_boost_pc").style.display = fluc.unl() ? "" : "none"
 		el("fluc_boost_pc").textContent = "Fluctuate Boost [Temp]: +^" + fluc_tmp.temp.pc.toFixed(2) + " to PC goal reduction sum"
 		el("fluc_boost_str").style.display = fluc.unl() ? "" : "none"

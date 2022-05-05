@@ -121,7 +121,6 @@ function getTimeDimensionPower(tier) {
 
 function getTimeDimensionExp() {
 	let ret = 1
-	if (enB.active("pos", 6)) ret = enB_tmp.eff.pos6
 	return ret
 }
 

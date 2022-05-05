@@ -271,15 +271,12 @@ dev.boosts = {
 		},
 	},
 	2: {
-		name: "Excited Positrons",
+		name: "",
 		unl() {
-			return pos.on()
+			return false
 		},
 		eff(x) {
-			//Excited Positrons: Antimatter multiplies Positrons.
-			if (x === undefined) x = player.money
-			x = Math.pow(x.add(1).log10() / 1e11 + 1, 0.15)
-			return x
+			return new Decimal(1)
 		}
 	},
 	3: {
