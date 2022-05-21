@@ -250,7 +250,7 @@ function preHiggsNGp3AchieveCheck() {
 	if (player.timestudy.theorem >= 1e85 && !QCs.isntCatched()) giveAchievement("Infinity Morals")
 	if (PCs_save.comps.length >= 3) giveAchievement("Twice in a row")
 	if (player.eightBought >= 3e7 && (tmp.dtMode ? getTotalRG() : player.replicanti.galaxies) == 0) giveAchievement("Intergalactic")
-	if (player.eternityPoints.e >= 2e7 && ableToGetRid4) giveAchievement("Seriously, I already got rid of you.")
+	//if (player.eternityPoints.e >= 2e7 && ableToGetRid4) giveAchievement("Seriously, I already got rid of you.")
 
 	//ROW 16.5
 	if (mTs.bought == mTs.timeStudies.length && QCs.in(1)) giveAchievement("Mastery Mayhem")
