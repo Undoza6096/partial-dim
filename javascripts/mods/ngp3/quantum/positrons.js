@@ -4,9 +4,9 @@ let pos = {
 		return {
 			s: []
 		}
-	}
+	},
 
-	order: ["r1", "b1", "b2", "b3", "r2", "b4", "r3"]
+	order: ["r1", "b1", "b2", "b3", "r2", "b4", "r3"],
 	boosts: {
 		1: {
 			name: "???",
