@@ -2463,6 +2463,13 @@ td.grey {
 	text-shadow: 0px 0px 6px #bf0000, 2px 1px 3px #bf0000, -2px -1px 3px #bf0000
 }
 
+#positrons .pos_btn {
+	font-size: 10px
+}
+#positrons .pos_btn.big {
+    width: 120px !important;
+    height: 120px !important;
+}
 #positrons .pos_btn.chosenbtn {
     background: #eeff32;
 	border-color: #8e991e;
