@@ -1568,7 +1568,7 @@
 				<br>
 				<p id='modVersionDescUpdate'>(Update v3.0: Quantum Refluncation)</p>
 				<p id='versionDescBeta'>(Beta v0.63: Positronic Recall)</p>
-				<p class="warning" id='versionDescAlpha'>(5/31/22 Alpha Build)</p>
+				<p class="warning" id='versionDescAlpha'>(6/8/22 Alpha Build)</p>
 				<b class="warning" id='warningBeta'>THIS UPDATE IS CURRENTLY IN BETA, ANYTHING CAN BREAK</b>
 				<br>
 				<br>
@@ -4772,62 +4772,37 @@
 			</table>
 		</div>
 		<div class='quantumtab' id='positrons'>
-			<b class='warning'>Currently as a draft yet.</b><br>
-			<span style="font-size: 20px">
-				<span id="pos_eng" style="font-size: 35px">0.00</span>
-				Positronic Charge
-			</span>
-			<span>(Based on Galaxies and Replicated Galaxies)</span>
-			<table class="table pos_table" align="center" style="display: none">
+			<span id="pos_timer">Rotating in 5 seconds...</span>
+			<table class="table pos_table" align="center">
 				<tr>
-					<td>
-						<button class="storebtn pos_btn" onclick="pos.ignore(1)">Ignore Galaxies</button>
-					</td>
-					<td>
-						<button class="storebtn pos_btn" onclick="pos.ignore(2)">Ignore Replicated Galaxies</button>
-					</td>
-					<td>
-						<button class="storebtn pos_btn" onclick="pos.ignore(3)">Ignore Tachyonic Galaxies</button>
-					</td>
-					<td>
-						<button class="chosenbtn2 pos_btn" onclick="pos.ignore(4)">Ignore Meta-Dimension Boosts</button>
-					</td>
-					<td>
-						<button class="chosenbtn2 pos_btn" onclick="pos.ignore(5)">Ignore Quantum Energy</button>
-					</td>
+					<td><button class="storebtn pos_btn">Galaxies<br>(0 Energy)</button></td>
+					<td><button class="storebtn pos_btn">Unlock Quantum Energy<br>(??? QE)</button></td>
+					<td><button class="storebtn pos_btn">Unlock Replicantis<br>(??? QE)</button></td>
+					<td><button class="storebtn pos_btn">Unlock Compressors<br>(??? QE)</button></td>
+				</tr>
+				<tr>
+					<td><button class="storebtn pos_btn big">Boost something by 1.00x.</button></td>
+					<td><button class="unavailablebtn pos_btn big">(Requires ??? QE)</button></td>
+					<td><button class="unavailablebtn pos_btn big">(Requires ??? QE)</button></td>
+					<td><button class="unavailablebtn pos_btn big">(Requires ??? QE)</button></td>
 				</tr>
 			</table>
 			<table class="table pos_table" align="center">
-				<!-- POSITRONIC ROW -->
 				<tr>
-					<td>
-						<button class="chosenbtn pos_btn big" onclick="pos.unlock(1)"><b>Boost #1</b><br>Boost something by 1.00x</button>
-					</td>
-					<td>
-						<button class="chosenbtn pos_btn big" onclick="pos.unlock(2)"><b>Boost #2</b><br>Boost something by 1.00x</button>
-					</td>
-					<td>
-						<button class="storebtn pos_btn big" onclick="pos.unlock(3)"><b>Unlock</b><br>(10 Positronic Charge)</button>
-					</td>
-					<td>
-						<button class="unavailablebtn pos_btn big" onclick="pos.unlock(4)"><b>???</b></button>
-					</td>
-					<td>
-						<button class="unavailablebtn pos_btn big" onclick="pos.unlock(5)"><b>???</b></button>
-					</td>
-					<td>
-						<button class="unavailablebtn pos_btn big" onclick="pos.unlock(6)"><b>???</b></button>
-					</td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
+					<td><button class="unavailablebtn pos_btn">???</button></td>
 				</tr>
-				<tr>
-					<td>
-						<button class="storebtn pos_btn sml" onclick="pos.supercharge(1)">Supercharge</button>
-					</td>
-					<td>
-						<button class="storebtn pos_btn sml" onclick="pos.supercharge(2)">Supercharge</button>
-					</td>
-				</tr>
-			</table>
+			</table><br>
+			<b class="warning">Boosts decay over time, and can be upgraded below!</b><br>
+			<table class="table" align="center" style="margin: auto"><tr>
+				<td><button class="storebtn str_upg" style="width: 240px; height: 160px"><b style="font-size: 15px">Stability</b><br>Reduce the decay by 1.00x.<br>(Requires: ??? QE)</button></td>
+				<td><button class="storebtn str_upg" style="width: 240px; height: 160px"><b style="font-size: 15px">Preservation</b><br>First 0 boosts never decay.<br>(Requires: ??? QE)</button></td>
+				<td><button class="storebtn str_upg" style="width: 240px; height: 160px"><b style="font-size: 15px">Spread</b><br>Sources apply to 0 following boosts.<br>(Requires: ??? QE)</button></td>
+			</tr></table>
 			<!-- Boosts: -->
 			<!-- 1. Meta-Antimatter effect is raised (^log(x)^0.5) -->
 			<!-- 2. Quantum Efficiency is raised. -->
