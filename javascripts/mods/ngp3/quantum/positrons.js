@@ -3,24 +3,11 @@ let pos = {
 	setup() {
 		return {
 			unl: 0,
-			ignore: { 3: true, 4: true },
-			charge: 0,
-			supercharge: {}
+			res: [1],
+			time: 5,
+			line: [1,2,3,4],
+			upgs: [0,0,0]
 		}
-	},
-
-	unlock(x) {
-		
-	},
-	supercharge(x) {
-		
-	},
-	ignore(x) {
-		
-	},
-
-	charge() {
-		return 0
 	},
 
 	boosts: [
