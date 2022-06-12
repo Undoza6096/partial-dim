@@ -89,7 +89,7 @@ function getQKGain(){
 
 function getQCtotalTime(){
 	var temp = 0
-	var count = 0
+	var count = 1
 	for (var i = 1; i <= 8; i++){
 		if (tmp.qu.challengeRecords[i]) {
 			temp += tmp.qu.challengeRecords[i]
